@@ -1,0 +1,87 @@
+<!DOCTYPE html> 
+<html>
+<head>
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+
+<body> 
+<div data-role="page" id="index">
+
+	<div data-role="header">
+		<h1>Login</h1>
+	</div>
+    
+	<div data-role="content" class="app">	
+		<form id="loginForm" >
+      
+      			<label> Erabiltzailea: </label>
+      			<input type="text" id="username" name="username">
+      
+      			<label> Pasahitza: </label>
+     			<input type="password" id="password" name="password" >
+				
+      			<input type="submit" value="Saioa Hasi" id="Login">
+      
+    	</form>			   
+	</div>
+	 
+</div>
+<script>
+/*$(document).ready(function(){
+if (window.localStorage.getItem('username')==null || window.localStorage.getItem('pass')==null){
+	app.initialize();
+}else{
+	var pass=window.localStorage.getItem('pass');
+	var user=window.localStorage.getItem('username');
+	loginfitx = "http://localhost/login.php?jsoncallback=?"
+		$.getJSON( loginfitx, { usuario:user ,password:pass})
+		.done(function(loginerantzuna) {
+			if(loginerantzuna.validacion == "ok"){
+				/// ondo balidatzen bada, menura joan
+				$.mobile.changePage("menu.html")
+			  
+			}else{
+				alert("Errorea logeatzean.")
+				app.initialize();
+			}
+	  
+		})
+		return false;
+}
+});*/
+$('#index').on('pageinit', function() {
+});
+$('#loginForm').submit(function() { 
+	// erabiltzailearen datuak bildu
+	var user = $("#username").val()
+	var pass = $("#password").val()
+	alert(user)
+		loginfitx = "Proiektua/PHP/login.php?jsoncallback=?"
+		$.getJSON( loginfitx, { usuario:user ,password:pass})
+		.done(function(loginerantzuna) {
+			if(loginerantzuna.onarpena == "ok"){
+				alert("Kontua zuzena erregistratu da, aurrera.")
+				/// ondo balidatzen bada, menura joan
+				$.mobile.changePage("menu.html")
+			}else{
+				alert("Errorea, saiatu berriro.")
+			}
+		})
+		return false;
+		//$.mobile.changePage("menu.html")
+});
+</script>
+</body>
+</html>
