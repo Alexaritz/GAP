@@ -50,7 +50,9 @@ $('#loginForm').submit(function() {
 			alert(loginerantzuna.mezua)
 			if(loginerantzuna.onarpena == "ok"){
 				/// ondo balidatzen bada, menura joan
-				$.mobile.changePage("menu.html")
+				window.localStorage.setItem('username',user);
+				window.localStorage.setItem('password',pass);
+				$.mobile.changePage("abisuaBidali.html")
 			}
 		})
 		return false;

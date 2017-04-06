@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html>
+<head>
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+
+<body> 
+<div data-role="page" id="abisuaBidali">
+
+	<div data-role="header">
+		<h1>Login</h1>
+	</div>
+    
+	<div data-role="content" class="app">	
+		<form id="abisuForm" >
+  
+			<select id="kodeS" name="kodeS" <!--class="main-form"-->>
+				<option value="">Hautatu bat</option>
+				<option value="1">Tentsio barik</option>
+			</select>
+			
+			<input type="submit" value="Bidali" id="Login">
+      
+    	</form>			   
+	</div>
+	 
+</div>
+<script>
+$(document).ready(function(){
+var user = window.localStorage.getItem('username');
+		kodefitx = "PHP/kodeak.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			$(koderantzuna).each(function (index, o) {
+				var $option = $("<option/>").attr("value", o.izena).text(o.izena);
+				$('#kodeS').append($option);
+			});
+		})
+		.fail(function(koderantzuna, error) {
+			console.log(error)
+		})
+		return false;
+});
+</script>
+</body>
+</html>
