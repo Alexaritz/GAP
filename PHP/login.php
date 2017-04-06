@@ -20,10 +20,10 @@ $erantzuna = array();
 		$erab = $mysqli->query( "SELECT * FROM erabiltzailea WHERE username=('$user') and password=('$pass')" );
 		$num_rows=mysqli_num_rows($erab);
 		if ($num_rows> 0){
-			$erantzuna["mensaje"] = "Datu zuzenak.";
+			$erantzuna["mezua"] = "Datu zuzenak.";
 			$erantzuna["onarpena"] = "ok";
 		}else{
-			$erantzuna["mensaje"] = "Erabiltzaile eta pasahitz okerrak.";
+			$erantzuna["mezua"] = "Erabiltzaile eta pasahitz okerrak.";
 			$erantzuna["onarpena"] = "error";
 		}
 
