@@ -52,7 +52,8 @@ $('#loginForm').submit(function() {
 				/// ondo balidatzen bada, menura joan
 				window.localStorage.setItem('username',user);
 				window.localStorage.setItem('password',pass);
-				$.mobile.changePage("abisuaBidali.html")
+				window.location.replace("abisuaBidali.html");
+				//$.mobile.pageContainer.pagecontainer("change", "abisuaBidali.html");
 			}
 		})
 		return false;

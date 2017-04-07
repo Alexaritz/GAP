@@ -2,7 +2,7 @@
 /* user + pass jaso*/
 $user = $_GET['usuario'];
 
-session_start();
+//session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 $usuario = "u199017461_sgta";//root u199017461_sgta
 $password = "n1fXhn9qyo";//n1fXhn9qyo
@@ -16,15 +16,16 @@ if ($mysqli->connect_error) {
 
 $erantzuna = array(); 
 
-		$erab = $mysqli->query( "SELECT izena FROM akatskodea" );
+		$erab = $mysqli->query( "SELECT izena FROM akatskodea WHERE kodea=4" );
 		$num_rows=mysqli_num_rows($erab);
-		echo $num_rows;
+		//echo $num_rows;
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);
 		}
-
+		$erantzuna=json_encode( $erantzuna );
+		echo $erantzuna;
 /*emaitza json formatura bihurtzen da*/
-$resultadosJson = json_encode($erantzuna);
+//$resultadosJson = $erantzuna;
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */
-echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+//echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 ?>
