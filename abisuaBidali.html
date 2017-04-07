@@ -48,8 +48,6 @@
   
 			<select id="kodeS" name="kodeS" <!--class="main-form"-->>
 				<option value="">Hautatu bat</option>
-				<option value="1">Tentsio barik</option>
-				<option value="2">Segurtasunek salto</option>
 			</select>
 			<textarea name="mezua" id="mezua"  placeholder="Idatzi deskribapena..."></textarea>
 			Date: <div id="datepicker-container">
@@ -77,13 +75,15 @@ var user = window.localStorage.getItem('username');
 		kodefitx = "PHP/kodeak.php?jsoncallback=?"
 		$.getJSON( kodefitx, { usuario:user})
 		.done(function(koderantzuna) {
+			console.log("ONDO")
 			$(koderantzuna).each(function (index, o) {
 				var $option = $("<option/>").attr("value", o.izena).text(o.izena);
 				$('#kodeS').append($option);
 			});
 		})
-		.fail(function(koderantzuna, error) {
-			console.log(error)
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
 		})
 		return false;
 });

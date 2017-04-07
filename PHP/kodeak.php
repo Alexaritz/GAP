@@ -16,16 +16,15 @@ if ($mysqli->connect_error) {
 
 $erantzuna = array(); 
 
-		$erab = $mysqli->query( "SELECT izena FROM akatskodea WHERE kodea=4" );
+		$erab = $mysqli->query( "SELECT izena FROM akatskodea" );
 		$num_rows=mysqli_num_rows($erab);
 		//echo $num_rows;
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);
 		}
-		$erantzuna=json_encode( $erantzuna );
-		echo $erantzuna;
+		$resultadosJson=json_encode( $erantzuna );
+		//echo $erantzuna;
 /*emaitza json formatura bihurtzen da*/
-//$resultadosJson = $erantzuna;
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */
-//echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 ?>
