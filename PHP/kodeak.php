@@ -18,12 +18,10 @@ $erantzuna = array();
 
 		$erab = $mysqli->query( "SELECT izena FROM akatskodea" );
 		$num_rows=mysqli_num_rows($erab);
-		//echo $num_rows;
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);
 		}
 		$resultadosJson=json_encode( $erantzuna );
-		//echo $erantzuna;
 /*emaitza json formatura bihurtzen da*/
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */
 echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
