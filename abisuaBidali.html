@@ -35,27 +35,30 @@
 <div data-role="page" id="abisuaBidali">
 
 	<div data-role="header">
-	<a onclick="location.href = 'menua.html';" style="position: fixed;left: 0;" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a>
-	<a onclick="location.href = 'amaitu.html';" style="position: fixed;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a>
+	<a onclick="location.href = 'menua.html';" style="position: absolute;left: 0;" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a>
+	<a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a>
 		<h1>Abisua bidali</h1>
 	</div>
-    
 	<div data-role="content" class="app">	
 		<form id="abisuForm" >
-  
-			<select id="kodeS" name="kodeS">
-				<option value="">Hautatu bat</option>
-			</select>
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a "><select id="kodeS" name="kodeS">
+							<option value="">Akats kodea aukeratu</option>
+						</select></div>
+				<div class="ui-block-b"><select id="kodeS" name="kodeS">
+							<option value="">Lehentasuna aukeratu</option>
+							<option value="Baxua">Baxua</option>
+							<option value="Normala">Normala</option>
+							<option value="Premiazkoa">Premiazkoa</option>
+						</select></div>	   
+			</fieldset>
       		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
 			<textarea name="mezua" id="mezua"  placeholder="Idatzi deskribapena..."></textarea>
-			Arazo hasiera: <div id="datepicker-container">
+			<div id="datepicker-container">
 			  <div id="datepicker-center">
-					<div id="datepicker" align="center" ></div>
+					<div id="datepicker" align="center" >Arazo hasiera: </div>
 			  </div>
 			</div>
-			<br>  
-			1. premia?<input type="checkbox" id="cbox1" value="first_checkbox"/>
-			<br>
 			<input type="submit" value="Bidali" id="Login">
       
     	</form>			   
@@ -65,6 +68,7 @@
 <script>
 
 $(document).ready(function(){
+$('#kodeS').parent().parent().css('width','auto');
  $( "#datepicker" ).datepicker();
 var user = window.localStorage.getItem('username');
 		kodefitx = "PHP/kodeak.php?jsoncallback=?"
