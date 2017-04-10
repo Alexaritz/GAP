@@ -1,0 +1,98 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIRE MEZUAK</title>
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- Include the jQuery Mobile library -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body> 
+
+<div data-role="page" id="nireAbisuak">
+
+	<div data-role="header">
+		<a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a>
+		<h1>Bidalitako abisuak</h1>
+	</div>
+	
+	<div data-role="content" id="div1">	
+		<form id="form">
+		<ul data-role="listview">
+		  <li data-role="collapsible" data-iconpos="right" data-inset="false">
+			<h2>Abisuak</h2>
+			<ul data-role="listview" data-theme="b" id="mySelectID" name="mySelectID">
+			</ul>
+		  </li> 
+		</ul>
+		</form>
+	</div>
+
+	 
+</div>
+
+<script>
+
+$(document).ready(function(){
+var user = window.localStorage.getItem('username');
+		erabfitx = "http://sgta.esy.es/niremezuak.php?jsoncallback=?"
+		$.getJSON(erabfitx, { usuario:user})
+		.done(function(loginerantzuna) {
+			$(loginerantzuna).each(function (index, m) {
+				var li= $("<li/>");
+				var link = $('<a/>').attr("href", '#').text("Hartzailea: "+m.partner+ "    //   Gaia: "+ m.gaia);
+				var linka=link.attr("id", m.id);
+				linka.attr("onClick", "zuu(this.id); return false;");
+				console.log(linka);
+				//var $option = $("<option/>").attr("value", o.username).text(o.username);				
+				li.append(link)
+				$('#mySelectID').append(li);
+				$('#mySelectID').listview('refresh')
+			});
+			
+  
+	})
+	return false;
+
+
+
+
+});
+
+function zuu(a){
+	window.localStorage.setItem('mezid',a);
+	window.location.replace("mezuXehetasunak.html");
+}
+
+$(document).ready(function(){
+var partner = window.localStorage.getItem('username');
+		erabfitx2 = "http://sgta.esy.es/jasotakomezuak.php?jsoncallback2=?"
+		$.getJSON(erabfitx2, { socio:partner})
+		.done(function(mezuerantzuna) {
+			$(mezuerantzuna).each(function (index, m) {
+				var li2= $("<li/>");
+				var link2 = $('<a/>').attr("href", '#').text("Igorlea: "+m.username+ "       //    Gaia: "+ m.gaia);
+				var linka2=link2.attr("id", m.id);
+				linka2.attr("onClick", "zuu(this.id); return false;");
+				console.log(linka2);
+				//var $option = $("<option/>").attr("value", o.username).text(o.username);
+				li2.append(link2)
+				$('#mySelectID2').append(li2);
+				$('#mySelectID2').listview('refresh')
+			});
+			
+  
+	})
+	return false;
+});
+
+
+</script>
+
+</body>
+</html>

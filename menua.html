@@ -1,8 +1,11 @@
 <!DOCTYPE html> 
 <html>
+
+
 <head>
 <!-- Include meta tag to ensure proper rendering and touch zooming -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MENUA</title>
 <!-- Include jQuery Mobile stylesheets -->
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 <!-- Include the jQuery library -->
@@ -12,13 +15,20 @@
 </head>
 <body> 
 
-<script>
+<div data-role="page" id="menu">
+	<div data-role="header">
+		<a onclick="location.href = 'amaitu.html';" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a>
+		<h1>MENUA</h1>
+	</div>
+	
+	<div data-role="content">	
+		<input type="button" value="Abisua Bidali" id="abisuaBidali" onclick="location.href = 'abisuaBidali.html';"/>
+		<input type="button" value="Bidalitako Abisuak" id="nireAbisuak" onclick="location.href = 'nireAbisuak.html';"/>
+	</div>
+	 
+</div>
 
-$(document).ready(function(){
-localStorage.removeItem('username');
-localStorage.removeItem('pass');
-window.location.replace("index.html");
-});
+<script>
 
 </script>
 

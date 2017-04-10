@@ -19,13 +19,14 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
 <style>
 #datepicker-container{
   text-align:center;
 }
 #datepicker-center{
   display:inline-block;
-  margin:0 auto;
+  margin-right:0 auto;
 }
 </style>
 </head>
@@ -34,18 +35,20 @@
 <div data-role="page" id="abisuaBidali">
 
 	<div data-role="header">
-	<a onclick="location.href = 'amaitu.html';" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a>
-		<h1>Abisua Bidali</h1>
+	<a onclick="location.href = 'menua.html';" style="position: fixed;left: 0;" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a>
+	<a onclick="location.href = 'amaitu.html';" style="position: fixed;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a>
+		<h1>Abisua bidali</h1>
 	</div>
     
 	<div data-role="content" class="app">	
 		<form id="abisuForm" >
   
-			<select id="kodeS" name="kodeS" <!--class="main-form"-->>
+			<select id="kodeS" name="kodeS">
 				<option value="">Hautatu bat</option>
 			</select>
+      		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
 			<textarea name="mezua" id="mezua"  placeholder="Idatzi deskribapena..."></textarea>
-			Date: <div id="datepicker-container">
+			Arazo hasiera: <div id="datepicker-container">
 			  <div id="datepicker-center">
 					<div id="datepicker" align="center" ></div>
 			  </div>
@@ -69,7 +72,7 @@ var user = window.localStorage.getItem('username');
 		.done(function(koderantzuna) {
 			console.log("ONDO")
 			$(koderantzuna).each(function (index, o) {
-				var $option = $("<option/>").attr("value", o.izena).text(o.izena);
+				var $option = $("<option/>").attr("value", o.kodea).text(o.izena);
 				$('#kodeS').append($option);
 			});
 		})
