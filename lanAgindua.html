@@ -1,26 +1,21 @@
-<!DOCTYPE html> 
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>collapsible demo</title>
+  
 
-<!-- Include meta tag to ensure proper rendering and touch zooming -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Include jQuery Mobile stylesheets -->
-<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-
-<!-- Include the jQuery library -->
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<!-- Include the jQuery Mobile library -->
-<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
+  <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
 <!-- Egutegia inportatu-->
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-<style>
+  <style>
 #datepicker-container{
   text-align:center;
 }
@@ -28,7 +23,16 @@
   display:inline-block;
   margin-right:0 auto;
 }
+.ui-tabs .ui-tabs-nav li{
+    display: inline-block;
+	margin: 0;
+}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor{
+float:none;
+}
+ui-link ui-btn ui-tabs-anchor{
 
+}
 @media all and (max-width: 22em) {
     .my-breakpoint .ui-block-a,
     .my-breakpoint .ui-block-b{
@@ -38,55 +42,78 @@
   }
 </style>
 </head>
-
-<body> 
-<div data-role="page" id="abisuaBidali">
-
-	<div class="ui-grid-b" data-role="header">
+<body>
+  <div class="ui-grid-b" data-role="header">
 		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" style="position: absolute;left: 0;" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
 		<div class="ui-block-b"><center><p>Abisua bidali</p></center></div>
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
-		 <div data-role="navbar">
+	</div>
+  <div role="main" class="ui-content">
+    <div data-role="tabs" id="tab1">
+		  <div data-role="navbar" >
 			<ul>
-				<li><a href="lanaOsatu.html">One</a></li>
-				<li><a href="abisuaBidali.html">Two</a></li>
+			  <li><a href="#fragment-1" class="ui-btn-active">Abisua Editatu</a></li>
+			  <li><a href="#fragment-2">Abisua Osatu</a></li>
 			</ul>
-		</div><!-- /navbar -->
-	</div>
-	<div data-role="content" class="app">	
-		<form id="abisuForm" >
-			<fieldset class="ui-grid-a my-breakpoint">
-				<div class="ui-block-a">
-					<select id="kodeS" name="kodeS">
-							<option value="">Akats kodea</option>
-					</select>
+		</div>
+      <div id="fragment-1">
+        <div data-role="content" class="app">	
+			<form id="abisuForm" >
+				<fieldset class="ui-grid-a my-breakpoint">
+					<div class="ui-block-a">
+						<select id="kodeS" name="kodeS">
+								<option value="">Akats kodea</option>
+						</select>
+					</div>
+					<div class="ui-block-b">
+						<select id="lehentasuna" name="lehentasuna">
+								<option value="">Lehentasuna</option>
+								<option value="Baxua">Baxua</option>
+								<option value="Normala">Normala</option>
+								<option value="Premiazkoa">Premiazkoa</option>
+						</select>
+					</div>	   
+				</fieldset>
+				<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
+				<textarea name="mezua" id="mezua"  placeholder="Deskribapena..."></textarea>
+				
+				<div id="datepicker-container">
+				  <div id="datepicker-center">
+						<div id="datepicker" align="center" >Arazo hasiera: </div>
+				  </div>
 				</div>
-				<div class="ui-block-b">
-					<select id="kodeS" name="kodeS">
-							<option value="">Lehentasuna</option>
-							<option value="Baxua">Baxua</option>
-							<option value="Normala">Normala</option>
-							<option value="Premiazkoa">Premiazkoa</option>
-					</select>
-				</div>	   
-			</fieldset>
-      		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
-			<textarea name="mezua" id="mezua"  placeholder="Deskribapena..."></textarea>
-			<div id="datepicker-container">
-			  <div id="datepicker-center">
-					<div id="datepicker" align="center" >Arazo hasiera: </div>
-			  </div>
-			</div>
-			<input type="file" capture="camera" accept="image/*" id="JustChooseAnID">
-			<input type="submit" value="Bidali" id="Login" data-theme="b">
-    	</form>			   
-	</div>
-	 
-</div>
+				<input type="file" capture="camera" accept="image/*" id="JustChooseAnID">
+				<input type="submit" value="Gorde" id="Login" data-theme="b">
+			</form>			   
+		</div>
+      </div>
+      <div id="fragment-2">
+        <div data-role="content" class="app">	
+			<form id="abisuForm" >
+				<fieldset class="ui-grid-a my-breakpoint">
+					<div class="ui-block-a">
+						<select id="saila" name="saila">
+								<option value="">Saila</option>
+						</select>
+					</div>
+					<div class="ui-block-b">
+						<select id="arduraduna" name="arduraduna">
+								<option value="">Arduraduna</option>
+						</select>
+					</div>	   
+				</fieldset>
+				<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
+				<textarea name="mezua" id="mezua"  placeholder="Deskribapena..."></textarea>
+				<input type="submit" value="Gorde" id="Login" data-theme="b">
+			</form>			   
+		</div>
+      </div>
+    </div>
+  </div>
 <script>
 
 $(document).ready(function(){
-$('#kodeS').parent().parent().css('width','auto');
+//$('#kodeS').parent().parent().css('width','auto');
  $( "#datepicker" ).datepicker();
 var user = window.localStorage.getItem('username');
 		kodefitx = "PHP/kodeak.php?jsoncallback=?"
@@ -106,4 +133,5 @@ var user = window.localStorage.getItem('username');
 });
 </script>
 </body>
+ 
 </html>
