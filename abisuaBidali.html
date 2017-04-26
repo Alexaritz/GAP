@@ -13,21 +13,7 @@
 
 <!-- Include the jQuery Mobile library -->
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
-<!-- Egutegia inportatu-->
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
 <style>
-#datepicker-container{
-  text-align:center;
-}
-#datepicker-center{
-  display:inline-block;
-  margin-right:0 auto;
-}
 
 @media all and (max-width: 22em) {
     .my-breakpoint .ui-block-a,
@@ -36,6 +22,20 @@
       float:none;
     }
   }
+  @media all and (max-width: 30em) {
+    .my-breakpointb .ui-block-a,
+    .my-breakpointb .ui-block-b{
+      width: 100%;
+      float:none;
+    }
+  }
+#custom-fieldset .ui-controlgroup-controls {
+    width: 99.5%;
+}
+
+#custom-fieldset .ui-controlgroup-controls .ui-select {
+    width: 33.33%;
+}
 </style>
 </head>
 
@@ -51,26 +51,41 @@
 		<form id="abisuForm" >
 			<fieldset class="ui-grid-a my-breakpoint">
 				<div class="ui-block-a">
-					<select id="kodeS" name="kodeS">
-							<option value="">Akats kodea</option>
+					<select id="arazoM" name="arazoM">
+							<option value="">Arazo mota</option>
 					</select>
 				</div>
 				<div class="ui-block-b">
-					<select id="kodeS" name="kodeS">
+					<select id="arduraduna" name="arduraduna">
+							<option value="">Arduraduna</option>
+					</select>
+				</div>	      
+			</fieldset>
+			<fieldset class="ui-grid-a my-breakpointb">
+			<div class="ui-block-a">
+			<fieldset data-role="controlgroup" data-type="horizontal" id="custom-fieldset">
+							<select id="eraikina" name="eraikina" class="myselector">
+									<option value="">Eraikina</option>
+							</select>
+							<select id="pisua" name="pisua" class="myselector">
+									<option value="">Pisua</option>
+							</select>
+							<select id="gela" name="gela" class="myselector">
+									<option value="">Gela</option>
+							</select>
+			</fieldset>
+			</div>
+			<div class="ui-block-b" >
+					<select id="lehentasuna" name="lehentasuna">
 							<option value="">Lehentasuna</option>
 							<option value="Baxua">Baxua</option>
 							<option value="Normala">Normala</option>
 							<option value="Premiazkoa">Premiazkoa</option>
 					</select>
-				</div>	   
+				</div>	
 			</fieldset>
       		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
 			<textarea name="mezua" id="mezua"  placeholder="Deskribapena..."></textarea>
-			<div id="datepicker-container">
-			  <div id="datepicker-center">
-					<div id="datepicker" align="center" >Arazo hasiera: </div>
-			  </div>
-			</div>
 			<input type="file" capture="camera" accept="image/*" id="JustChooseAnID">
 			<input type="submit" value="Bidali" id="Login" data-theme="b">
     	</form>			   
@@ -80,16 +95,14 @@
 <script>
 
 $(document).ready(function(){
-$('#kodeS').parent().parent().css('width','auto');
- $( "#datepicker" ).datepicker();
 var user = window.localStorage.getItem('username');
-		kodefitx = "PHP/kodeak.php?jsoncallback=?"
+		kodefitx = "PHP/arazoMota.php?jsoncallback=?"
 		$.getJSON( kodefitx, { usuario:user})
 		.done(function(koderantzuna) {
 			console.log("ONDO")
 			$(koderantzuna).each(function (index, o) {
 				var $option = $("<option/>").attr("value", o.kodea).text(o.izena);
-				$('#kodeS').append($option);
+				$('#arazoM').append($option);
 			});
 		})
 		.fail(function(koderantzuna,textStatus, error) {

@@ -16,7 +16,7 @@ if ($mysqli->connect_error) {
 
 $erantzuna = array(); 
 
-		$erab = $mysqli->query( "SELECT izena FROM akatskodea" );
+		$erab = $mysqli->query( "SELECT izena FROM arazoMota" );
 		$num_rows=mysqli_num_rows($erab);
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);

@@ -1,38 +1,20 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html> 
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>collapsible demo</title>
-  
 
-  <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-  
-<!-- Egutegia inportatu-->
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <style>
-#datepicker-container{
-  text-align:center;
-}
-#datepicker-center{
-  display:inline-block;
-  margin-right:0 auto;
-}
-.ui-tabs .ui-tabs-nav li{
-    display: inline-block;
-	margin: 0;
-}
-.ui-tabs .ui-tabs-nav .ui-tabs-anchor{
-float:none;
-}
-ui-link ui-btn ui-tabs-anchor{
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 
-}
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+
 @media all and (max-width: 22em) {
     .my-breakpoint .ui-block-a,
     .my-breakpoint .ui-block-b{
@@ -40,15 +22,30 @@ ui-link ui-btn ui-tabs-anchor{
       float:none;
     }
   }
+  @media all and (max-width: 30em) {
+    .my-breakpointb .ui-block-a,
+    .my-breakpointb .ui-block-b{
+      width: 100%;
+      float:none;
+    }
+  }
+#custom-fieldset .ui-controlgroup-controls {
+    width: 99.5%;
+}
+
+#custom-fieldset .ui-controlgroup-controls .ui-select {
+    width: 33.33%;
+}
 </style>
 </head>
-<body>
-  <div class="ui-grid-b" data-role="header">
+
+<body> 
+<div data-role="page" id="abisuaBidali">
+<div class="ui-grid-b" data-role="header">
 		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" style="position: absolute;left: 0;" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
 		<div class="ui-block-b"><center><p>Abisua bidali</p></center></div>
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
-  <div role="main" class="ui-content">
     <div data-role="tabs" id="tab1">
 		  <div data-role="navbar" >
 			<ul>
@@ -58,34 +55,48 @@ ui-link ui-btn ui-tabs-anchor{
 		</div>
       <div id="fragment-1">
         <div data-role="content" class="app">	
-			<form id="abisuForm" >
-				<fieldset class="ui-grid-a my-breakpoint">
-					<div class="ui-block-a">
-						<select id="kodeS" name="kodeS">
-								<option value="">Akats kodea</option>
-						</select>
-					</div>
-					<div class="ui-block-b">
-						<select id="lehentasuna" name="lehentasuna">
-								<option value="">Lehentasuna</option>
-								<option value="Baxua">Baxua</option>
-								<option value="Normala">Normala</option>
-								<option value="Premiazkoa">Premiazkoa</option>
-						</select>
-					</div>	   
-				</fieldset>
-				<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
-				<textarea name="mezua" id="mezua"  placeholder="Deskribapena..."></textarea>
-				
-				<div id="datepicker-container">
-				  <div id="datepicker-center">
-						<div id="datepicker" align="center" >Arazo hasiera: </div>
-				  </div>
+		<form id="abisuForm" >
+			<fieldset class="ui-grid-a my-breakpoint">
+				<div class="ui-block-a">
+					<select id="arazoM" name="arazoM">
+							<option value="">Arazo mota</option>
+					</select>
 				</div>
-				<input type="file" capture="camera" accept="image/*" id="JustChooseAnID">
-				<input type="submit" value="Gorde" id="Login" data-theme="b">
-			</form>			   
-		</div>
+				<div class="ui-block-b">
+					<select id="arduraduna" name="arduraduna">
+							<option value="">Arduraduna</option>
+					</select>
+				</div>	   
+			</fieldset>
+			<fieldset class="ui-grid-a my-breakpointb">
+			<div class="ui-block-a">
+			<fieldset data-role="controlgroup" data-type="horizontal" id="custom-fieldset">
+							<select id="eraikina" name="eraikina" class="myselector">
+									<option value="">Eraikina</option>
+							</select>
+							<select id="pisua" name="pisua" class="myselector">
+									<option value="">Pisua</option>
+							</select>
+							<select id="gela" name="gela" class="myselector">
+									<option value="">Gela</option>
+							</select>
+			</fieldset>
+			</div>
+			<div class="ui-block-b" >
+					<select id="lehentasuna" name="lehentasuna">
+							<option value="">Lehentasuna</option>
+							<option value="Baxua">Baxua</option>
+							<option value="Normala">Normala</option>
+							<option value="Premiazkoa">Premiazkoa</option>
+					</select>
+				</div>	
+			</fieldset>
+      		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena">
+			<textarea name="mezua" id="mezua"  placeholder="Deskribapena..."></textarea>
+			<input type="file" capture="camera" accept="image/*" id="JustChooseAnID">
+			<input type="submit" value="Bidali" id="Login" data-theme="b">
+    	</form>			   
+	</div>
       </div>
       <div id="fragment-2">
         <div data-role="content" class="app">	
@@ -113,16 +124,14 @@ ui-link ui-btn ui-tabs-anchor{
 <script>
 
 $(document).ready(function(){
-//$('#kodeS').parent().parent().css('width','auto');
- $( "#datepicker" ).datepicker();
 var user = window.localStorage.getItem('username');
-		kodefitx = "PHP/kodeak.php?jsoncallback=?"
+		kodefitx = "PHP/arazoMota.php?jsoncallback=?"
 		$.getJSON( kodefitx, { usuario:user})
 		.done(function(koderantzuna) {
 			console.log("ONDO")
 			$(koderantzuna).each(function (index, o) {
 				var $option = $("<option/>").attr("value", o.kodea).text(o.izena);
-				$('#kodeS').append($option);
+				$('#arazoM').append($option);
 			});
 		})
 		.fail(function(koderantzuna,textStatus, error) {
@@ -133,5 +142,4 @@ var user = window.localStorage.getItem('username');
 });
 </script>
 </body>
- 
 </html>
