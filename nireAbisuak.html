@@ -11,6 +11,23 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- Include the jQuery Mobile library -->
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+.ui-grid-a>.ui-block-a, .ui-grid-a>.ui-block-b{
+width:49%;
+}
+.ui-block-a, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e{
+margin:0.5%;
+}
+@media all and (max-width: 44em) {
+    .my-breakpoint .ui-block-a,
+    .my-breakpoint .ui-block-b{
+      width: 100%;
+      float:none;
+    }
+  }
+</style>
+
+
 </head>
 <body> 
 
@@ -18,37 +35,66 @@
 
 	<div data-role="header">
 		<a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a>
-		<h1>Bidalitako abisuak</h1>
+		<h1>Nire abisuak</h1>
 	</div>
+	<fieldset class="ui-grid-a my-breakpoint">
+		<div class="ui-block-a">
+			<!--<div data-role="content" id="div1">-->
+				<form id="form">
+					<div data-role="collapsible" data-theme="b" data-content-theme="b" >
+						<h2>Esleitutako Abisuak</h2>
+						<ul data-role="listview" data-filter="true" >
+							<li data-role="list-divider" data-filtertext="Ostirala, Urriak 8, 2010">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
+							<li><a href="#">
+							<h2>Alex</h2>
+							<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
+							<p>Deskribapena...Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+							<p class="ui-li-aside"><strong>8:24</strong>PM</p>
+							</a></li>
+							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+							<li><a href="#">
+							<h2>Anthony Weber</h2>
+							<p><strong>You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
+							<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+							<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+							</a></li>
+						</ul>
+					</div>
+				</form>
+			<!--</div>-->
+		</div>
+		<div class="ui-block-b">
+			<!--<div data-role="content" id="div1">-->
+				<form id="form">
+					<div data-role="collapsible" data-theme="b" data-content-theme="b">
+						<h2>Bidalitako Abisuak</h2>
+						<ul data-role="listview" data-filter="true">
+							<li data-role="list-divider" data-filtertext="Ostirala, Urriak 8, 2010">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
+							<li><a href="#">
+							<h2>Alex</h2>
+							<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
+							<p>Deskribapena...Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+							<p class="ui-li-aside"><strong>8:24</strong>PM</p>
+							</a></li>
+							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+							<li><a href="#">
+							<h2>Anthony Weber</h2>
+							<p><strong>You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
+							<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+							<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+							</a></li>
+						</ul>
+					</div>
+				</form>
+			<!--</div>-->
+		</div>
+	</fieldset>
 	
-	<div data-role="content" id="div1">
-	<form id="form">
-		<div data-role="collapsible" data-theme="b" data-content-theme="b">
-		<h2>Bidalitako Abisuak</h2>
-		<ul data-role="listview" data-filter="true">
-		<li data-role="list-divider" data-filtertext="Ostirala, Urriak 8, 2010">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
-		<li><a href="#">
-		<h2>Alex</h2>
-		<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-		<p>Deskribapena...Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-		<p class="ui-li-aside"><strong>8:24</strong>PM</p>
-		</a></li>
-		<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
-		<li><a href="#">
-		<h2>Anthony Weber</h2>
-		<p><strong>You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-		<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-		<p class="ui-li-aside"><strong>6:24</strong>PM</p>
-		</a></li>
-		</ul>
-</div>
-		</form>
-	</div>
  
 </div>
 
 <script>
-
+/*
 $(document).ready(function(){
 var user = window.localStorage.getItem('username');
 		erabfitx = "http://sgta.esy.es/niremezuak.php?jsoncallback=?"
@@ -96,7 +142,7 @@ var partner = window.localStorage.getItem('username');
 	return false;
 });
 
-
+*/
 </script>
 
 </body>
