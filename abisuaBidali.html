@@ -48,7 +48,7 @@
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
 	<div data-role="content" class="app">	
-		<form id="abisuForm" >
+		<form id="abisuForm" method="post" enctype="multipart/form-data">
 			<fieldset class="ui-grid-a my-breakpoint">
 				<div class="ui-block-a">
 					<select id="arazoM" name="arazoM" required>
@@ -64,33 +64,33 @@
 			<fieldset class="ui-grid-a my-breakpointb">
 			<div class="ui-block-a">
 			<fieldset data-role="controlgroup" data-type="horizontal" id="custom-fieldset">
-							<select id="eraikina" name="eraikina" class="myselector" required>
-									<option value="">Eraikina</option>
-									<option value="A">A</option>
-							</select>
-							<select id="pisua" name="pisua" class="myselector" required>
-									<option value="">Pisua</option>
-									<option value="1">1</option>
-							</select>
-							<select id="gela" name="gela" class="myselector" required>
-									<option value="">Gela</option>
-									<option value="1">1</option>
-							</select>
+				<select id="eraikina" name="eraikina" class="myselector" required>
+						<option value="">Eraikina</option>
+						<option value="A">A</option>
+				</select>
+				<select id="pisua" name="pisua" class="myselector" required>
+						<option value="">Pisua</option>
+						<option value="1">1</option>
+				</select>
+				<select id="gela" name="gela" class="myselector" required>
+						<option value="">Gela</option>
+						<option value="1">1</option>
+				</select>
 			</fieldset>
 			</div>
 			<div class="ui-block-b" >
-					<select id="lehentasuna" name="lehentasuna" required>
-							<option value="">Lehentasuna</option>
-							<option value="Baxua">Baxua</option>
-							<option value="Normala">Normala</option>
-							<option value="Premiazkoa">Premiazkoa</option>
-					</select>
-				</div>	
+				<select id="lehentasuna" name="lehentasuna" required>
+						<option value="">Lehentasuna</option>
+						<option value="Baxua">Baxua</option>
+						<option value="Normala">Normala</option>
+						<option value="Premiazkoa">Premiazkoa</option>
+				</select>
+			</div>	
 			</fieldset>
       		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena" required>
-			<textarea name="mezua" id="mezua"  placeholder="Deskribapena..." required></textarea>
-			<input type="file" capture="camera" accept="image/*" id="JustChooseAnID">
-			<input type="submit" value="Bidali" id="Login" data-theme="b">
+			<textarea name="deskribapena" id="deskribapena"  placeholder="Deskribapena..." required></textarea>
+			<input type="file" capture="camera" accept="image/*" name="fileToUpload" id="fileToUpload">
+			<input type="submit" value="Bidali" name="submit" id="submit" data-theme="b">
     	</form>			   
 	</div>
 	 
@@ -130,8 +130,43 @@ var user = window.localStorage.getItem('username');
 		})
 		return false;		
 });
+
 $("form").submit(function(){
-    alert("Submitted");
+	var user = window.localStorage.getItem('username');
+	var saila=$("#arazoM").val()
+	var arduraduna=$("#arduraduna").val()
+	var eraikina=$("#eraikina").val()
+	var pisua=$("#pisua").val()
+	var gela=$("#gela").val()
+	var lehentasuna=$("#lehentasuna").val()
+	var laburpena=$("#laburpena").val()
+	var deskribapena=$("#deskribapena").val()
+	var argazkia=$("#fileToUpload").val()
+	alert(argazkia.size);
+
+	abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
+		$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
+		.done(function(abisuerantzuna) {
+			console.log("ZUZEN TXERTATU DA")
+		})
+		.fail(function(abisuerantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+		/*return false;*/
+		$.ajax({
+url: "upload.php", // Url to which the request is send
+type: "POST",             // Type of request to be send, called as method
+data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+contentType: false,       // The content type used when sending data to the server.
+cache: false,             // To unable request pages to be cached
+processData:false,        // To send DOMDocument or non processed data file it is set to false
+success: function(data)   // A function to be called if request succeeds
+{alert("Submitted");
+}
+});
+		
+    
 });
 </script>
 </body>
