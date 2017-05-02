@@ -36,6 +36,10 @@
 #custom-fieldset .ui-controlgroup-controls .ui-select {
     width: 33.33%;
 }
+img {
+    height: auto; /* Make sure images with WordPress-added height and width attributes are scaled correctly */
+    max-width: 100%; /* Prevent images from overflowing their boundaries */
+}
 </style>
 </head>
 
@@ -89,7 +93,10 @@
 			</fieldset>
       		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena" required>
 			<textarea name="deskribapena" id="deskribapena"  placeholder="Deskribapena..." required></textarea>
-			<input type="file" capture="camera" accept="image/*" name="fileToUpload" id="fileToUpload">
+			<input type="file"  accept="image/*" name="fileToUpload" id="fileToUpload">
+			<img style="display:none" align="middle" id="blah" width="50%" src="#">
+			<!--<canvas  id="myCanvas" style="display:none" width="240" height="297" >
+				Your browser does not support the HTML5 canvas tag.</canvas>-->
 			<input type="submit" value="Bidali" name="submit" id="submit" data-theme="b">
     	</form>			   
 	</div>
@@ -131,6 +138,55 @@ var user = window.localStorage.getItem('username');
 		return false;		
 });
 
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+			 $('#blah').attr('style', "");
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#fileToUpload").change(function() {
+        var argazkia=$("#fileToUpload").val()
+		readURL(this);
+	
+	/*
+	var canvas = document.getElementById("myCanvas");
+	var img = document.getElementById("fileToUpload");
+	img.src = window.URL.createObjectURL(argazkia);
+	
+	var ctx = canvas.getContext("2d");
+	ctx.drawImage(img, 0, 0);
+	
+	var MAX_WIDTH = 800;
+	var MAX_HEIGHT = 600;
+	var width = img.width;
+	var height = img.height;
+	 
+	if (width > height) {
+	  if (width > MAX_WIDTH) {
+		height *= MAX_WIDTH / width;
+		width = MAX_WIDTH;
+	  }
+	} else {
+	  if (height > MAX_HEIGHT) {
+		width *= MAX_HEIGHT / height;
+		height = MAX_HEIGHT;
+	  }
+	}
+	canvas.width = width;
+	canvas.height = height;
+	var ctx = canvas.getContext("2d");
+	ctx.drawImage(img, 0, 0, width, height);
+	 var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    var img = document.getElementById("fileToUpload");
+    ctx.drawImage(img, 10, 10);*/
+    });
 $("form").submit(function(){
 	var user = window.localStorage.getItem('username');
 	var saila=$("#arazoM").val()
@@ -141,9 +197,10 @@ $("form").submit(function(){
 	var lehentasuna=$("#lehentasuna").val()
 	var laburpena=$("#laburpena").val()
 	var deskribapena=$("#deskribapena").val()
-	var argazkia=$("#fileToUpload").val()
-	alert(argazkia.size);
-
+	var argazkia = $("#fileToUpload").val().replace(/C:\\fakepath\\/i, '')
+	
+	
+	
 	abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
 		$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
 		.done(function(abisuerantzuna) {
@@ -155,16 +212,17 @@ $("form").submit(function(){
 		})
 		/*return false;*/
 		$.ajax({
-url: "upload.php", // Url to which the request is send
-type: "POST",             // Type of request to be send, called as method
-data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-contentType: false,       // The content type used when sending data to the server.
-cache: false,             // To unable request pages to be cached
-processData:false,        // To send DOMDocument or non processed data file it is set to false
-success: function(data)   // A function to be called if request succeeds
-{alert("Submitted");
-}
-});
+			url: "upload.php", // Url to which the request is send
+			type: "POST",             // Type of request to be send, called as method
+			data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+			contentType: false,       // The content type used when sending data to the server.
+			cache: false,             // To unable request pages to be cached
+			processData:false,        // To send DOMDocument or non processed data file it is set to false
+			success: function(data)   // A function to be called if request succeeds
+			{alert("Abisua zuzen bidali da")
+			window.location.replace("menua.html");
+			}
+		});
 		
     
 });

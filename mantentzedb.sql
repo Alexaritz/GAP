@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2017 a las 12:58:55
+-- Tiempo de generación: 02-05-2017 a las 12:56:31
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -98,34 +98,8 @@ CREATE TABLE `lanagindua` (
   `laburpena` varchar(500) NOT NULL,
   `deskribapena` varchar(1000) NOT NULL,
   `data` datetime NOT NULL,
-  `argazkia` longblob NOT NULL
+  `argazkia` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `lanagindua`
---
-
-INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `pisua`, `gela`, `lehentasuna`, `laburpena`, `deskribapena`, `data`, `argazkia`) VALUES
-(9, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'Proba pc', 'DAsdafasf', '2017-04-28 11:43:57', 0x433a66616b657061746854756c6970732e6a7067),
-(10, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fa', 'Fsd', '2017-04-28 12:05:04', 0x433a66616b657061746848796472616e676561732e6a7067),
-(11, '', '', '', '', 0, '', '', '', '', '2017-04-28 12:06:30', ''),
-(12, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fweF', 'Fef', '2017-04-28 12:09:14', 0x433a66616b657061746848796472616e676561732e6a7067),
-(13, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'V<SD', 'V<DV', '2017-04-28 12:09:51', 0x433a66616b657061746848796472616e676561732e6a7067),
-(14, '', '', '', '', 0, '', '', '', '', '2017-04-28 12:14:25', ''),
-(15, '', '', '', '', 0, '', '', '', '', '2017-04-28 12:14:53', ''),
-(16, '', '', '', '', 0, '', '', '', '', '2017-04-28 12:14:54', ''),
-(17, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'earg', 'afge', '2017-04-28 12:35:53', 0x433a66616b657061746848796472616e676561732e6a7067),
-(18, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'vd<s', 'v<sd', '2017-04-28 12:37:49', 0x433a66616b657061746848796472616e676561732e6a7067),
-(19, '', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'ASF', 'sdS', '2017-04-28 12:41:40', 0x433a66616b657061746848796472616e676561732e6a7067),
-(20, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'Argia', 'Proba', '2017-04-28 12:43:17', 0x433a66616b657061746831343933333736313839373830313531383939363538322e6a7067),
-(21, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'HSERT', 'HSDFSH', '2017-04-28 12:44:10', 0x433a66616b65706174684368727973616e7468656d756d2e6a7067),
-(22, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Udjx', 'Djfkx', '2017-04-28 12:44:39', 0x433a66616b657061746831343933333736323732363939313330383733323333342e6a7067),
-(23, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'hdfsh', 'hsdfh', '2017-04-28 12:50:35', 0x433a66616b65706174684465736572742e6a7067),
-(24, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Udjj', 'Bxkz', '2017-04-28 12:51:14', 0x433a66616b657061746831343933333736363633313335313933303637333630352e6a7067),
-(25, '', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'dasd', 'DASda', '2017-04-28 12:52:01', 0x433a66616b657061746848796472616e676561732e6a7067),
-(26, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Xk', 'Jfbxb', '2017-04-28 12:53:00', 0x433a66616b657061746831343933333736373732303835313439313736323738352e6a7067),
-(27, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Xk', 'Jfbxb', '2017-04-28 12:53:00', 0x433a66616b657061746831343933333736373732303835313439313736323738352e6a7067),
-(28, '', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'gfd', 'dshfj', '2017-04-28 12:55:58', 0x433a66616b657061746850656e6775696e732e6a7067);
 
 -- --------------------------------------------------------
 
@@ -238,7 +212,7 @@ ALTER TABLE `erabiltzailea`
 -- AUTO_INCREMENT de la tabla `lanagindua`
 --
 ALTER TABLE `lanagindua`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `saila`
 --
