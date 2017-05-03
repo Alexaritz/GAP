@@ -11,8 +11,6 @@ $laburpena = $_GET['laburpena'];
 $deskribapena = $_GET['deskribapena'];
 $argazkia = $_GET['argazkia'];
 
-/*$pass = $_GET['password'];*/
-
 session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 $usuario = "u199017461_sgta";//root u199017461_sgta
@@ -26,8 +24,14 @@ if ($mysqli->connect_error) {
 } 
 
 $erantzuna = array(); 
-
-		$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia')" );
+		if ($argazkia==""){
+			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '')" );
+		}else{
+			$erab = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
+			$num_rows=mysqli_num_rows($erab);
+			$argazkia=$num_rows . "argazkia.jpeg";
+			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia')" );
+		}
 		/*if ($mysqli->query($insert) === TRUE) {
 			echo "New record created successfully";
 			//$erantzuna["mezua"] = "Zuzen txertatu da.";
