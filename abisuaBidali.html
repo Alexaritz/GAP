@@ -163,16 +163,8 @@ $("form").submit(function(){
 	var deskribapena=$("#deskribapena").val()
 	var argazkia = $("#fileToUpload").val().replace(/C:\\fakepath\\/i, '')
 
-	abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
-		$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
-		.done(function(abisuerantzuna) {
-			console.log("ZUZEN TXERTATU DA")
-		})
-		.fail(function(abisuerantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-		})
-		/*return false;*/
+	
+	if (argazkia!=""){
 		$.ajax({
 			url: "PHP/upload.php", // Url to which the request is send
 			type: "POST",             // Type of request to be send, called as method
@@ -180,18 +172,43 @@ $("form").submit(function(){
 			contentType: false,       // The content type used when sending data to the server.
 			cache: false,             // To unable request pages to be cached
 			processData:false,        // To send DOMDocument or non processed data file it is set to false
-			/*dataType : "json",*/
-			success: function(data)   // A function to be called if request succeeds
-			{alert("Abisua zuzen bidali da")
-			window.location.replace("menua.html");
-			alert(data);
-			},
-			error: function(data){
-			alert("Argazkia igotzean errorea")
-			alert(data);
-			window.location.replace("menua.html");
-			}
+		})
+		.done(function(data){
+			if(data.ok=="zuzena"){
+				abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
+				$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
+				.done(function(abisuerantzuna) {
+					console.log("ZUZEN TXERTATU DA")
+					alert(data.erantzuna);
+					window.location.replace("menua.html");
+				})
+				.fail(function(abisuerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					alert("Request Failed: " + err);
+				})
+			}else{
+				alert(data.erantzuna);
+				window.location.replace("abisuaBidali.html");
+			}	
+		})
+		.fail(function(xhr, status, error){
+			alert(xhr.responseText);
+			window.location.replace("abisuaBidali.html");
 		});
+	}else{
+		abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
+		$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
+		.done(function(abisuerantzuna) {
+			console.log("ZUZEN TXERTATU DA")
+			window.location.replace("menua.html");
+		})
+		.fail(function(abisuerantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+			alert("Request Failed: " + err);
+		});
+	}
+
+
 });
 </script>
 </body>
