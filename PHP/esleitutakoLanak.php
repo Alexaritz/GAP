@@ -1,9 +1,8 @@
 <?php
 /* user + pass jaso*/
 $user = $_GET['usuario'];
-$pass = $_GET['password'];
 
-session_start();
+//session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 $usuario = "u199017461_sgta";//root u199017461_sgta
 $password = "n1fXhn9qyo";//n1fXhn9qyo
@@ -16,21 +15,13 @@ if ($mysqli->connect_error) {
 } 
 
 $erantzuna = array(); 
-
-		$erab = $mysqli->query( "SELECT * FROM erabiltzailea WHERE username=('$user') and password=('$pass')" );
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by data desc" );
 		$num_rows=mysqli_num_rows($erab);
-		if ($num_rows> 0){
-			$_SESSION['loggedin'] = true;
-			$_SESSION['username'] = $user;
-			$erantzuna["mezua"] = "Datu zuzenak.";
-			$erantzuna["onarpena"] = "ok";
-		}else{
-			$erantzuna["mezua"] = "Erabiltzaile eta pasahitz okerrak.";
-			$erantzuna["onarpena"] = "error";
+		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
+			$erantzuna[]=array_map('utf8_encode', $datos);
 		}
-
+		$resultadosJson=json_encode( $erantzuna );
 /*emaitza json formatura bihurtzen da*/
-$resultadosJson = json_encode($erantzuna);
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */
 echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 ?>

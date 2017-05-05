@@ -152,6 +152,8 @@ $("#fileToUpload").change(function() {
 		readURL(this);
     });
 $("form").submit(function(){
+	event.preventDefault();
+	$.mobile.loading('show');
 	var user = window.localStorage.getItem('username');
 	var saila=$("#arazoM").val()
 	var arduraduna=$("#arduraduna").val()
@@ -161,7 +163,7 @@ $("form").submit(function(){
 	var lehentasuna=$("#lehentasuna").val()
 	var laburpena=$("#laburpena").val()
 	var deskribapena=$("#deskribapena").val()
-	var argazkia = $("#fileToUpload").val().replace(/C:\\fakepath\\/i, '')
+	var argazkia = $("#fileToUpload").val()
 
 	
 	if (argazkia!=""){
@@ -181,6 +183,7 @@ $("form").submit(function(){
 					console.log("ZUZEN TXERTATU DA")
 					alert(data.erantzuna);
 					window.location.replace("menua.html");
+					$.mobile.loading('hide');
 				})
 				.fail(function(abisuerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;
@@ -200,6 +203,7 @@ $("form").submit(function(){
 		$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
 		.done(function(abisuerantzuna) {
 			console.log("ZUZEN TXERTATU DA")
+			$.mobile.loading('hide');
 			window.location.replace("menua.html");
 		})
 		.fail(function(abisuerantzuna,textStatus, error) {
@@ -207,8 +211,6 @@ $("form").submit(function(){
 			alert("Request Failed: " + err);
 		});
 	}
-
-
 });
 </script>
 </body>

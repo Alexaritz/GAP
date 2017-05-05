@@ -43,20 +43,12 @@ margin:0.5%;
 				<form id="form">
 					<div data-role="collapsible" data-theme="b" data-content-theme="b" >
 						<h2>Esleitutako Abisuak</h2>
-						<ul data-role="listview" data-filter="true" >
-							<li data-role="list-divider" data-filtertext="Ostirala, Urriak 8, 2010">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
+						<ul id="esleituak" data-role="listview" data-filter="true" >
+							<li data-role="list-divider">Ostirala, Urriak 8, 2010 <span class="ui-li-count">LALA</span></li>
 							<li><a href="#">
 							<h2>Alex</h2>
 							<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-							<p>Deskribapena...Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-							<p class="ui-li-aside"><strong>8:24</strong>PM</p>
-							</a></li>
-							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
-							<li><a href="#">
-							<h2>Anthony Weber</h2>
-							<p><strong>You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-							<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-							<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+							<p class="ui-li-aside"><strong>000111</strong></p>
 							</a></li>
 						</ul>
 					</div>
@@ -69,7 +61,7 @@ margin:0.5%;
 					<div data-role="collapsible" data-theme="b" data-content-theme="b">
 						<h2>Bidalitako Abisuak</h2>
 						<ul data-role="listview" data-filter="true">
-							<li data-role="list-divider" data-filtertext="Ostirala, Urriak 8, 2010">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
+							<li data-role="list-divider">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
 							<li><a href="#">
 							<h2>Alex</h2>
 							<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
@@ -94,32 +86,46 @@ margin:0.5%;
 </div>
 
 <script>
-/*
+
 $(document).ready(function(){
 var user = window.localStorage.getItem('username');
-		erabfitx = "http://sgta.esy.es/niremezuak.php?jsoncallback=?"
-		$.getJSON(erabfitx, { usuario:user})
-		.done(function(loginerantzuna) {
-			$(loginerantzuna).each(function (index, m) {
+$.mobile.loading('show');
+		lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
+		$.getJSON(lanFitx, { usuario:user})
+		.done(function(lanErantzuna) {
+			$(lanErantzuna).each(function (index, m) {
+				var li2= $("<li data-role='list-divider'/>");
 				var li= $("<li/>");
-				var link = $('<a/>').attr("href", '#').text("Hartzailea: "+m.partner+ "    //   Gaia: "+ m.gaia);
+				var link = $('<a/>').attr("href", '#')/*.text("Hartzailea: "+m.username+ "    //   Gaia: "+ m.laburpena)*/;
+				var header= $("<h2/>");
+				var text= $("<p/>");
+				var lehentasuna=header.append(m.lehentasuna+"-"+m.saila);
+				var labur=text.append(m.laburpena);
+				link.append(lehentasuna);
+				link.append(labur);
 				var linka=link.attr("id", m.id);
-				linka.attr("onClick", "zuu(this.id); return false;");
-				console.log(linka);
-				//var $option = $("<option/>").attr("value", o.username).text(o.username);				
-				li.append(link)
-				$('#mySelectID').append(li);
-				$('#mySelectID').listview('refresh')
+				console.log(linka);	
+				var p=$("<p class='ui-li-aside'></p>");
+				var pID=p.append(m.id);
+				linka.append(pID);
+				li.append(linka);
+				
+				li2.append(m.data);
+				$('#esleituak').append(li2);
+				$('#esleituak').append(li);
+				$('#esleituak').listview('refresh');
+				$.mobile.loading('hide');
 			});
 	})
 	return false;
 });
-
-function zuu(a){
-	window.localStorage.setItem('mezid',a);
-	window.location.replace("mezuXehetasunak.html");
-}
-
+$(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+       console.log("bottom!");
+       //Place ajax call here
+   }
+});
+/*
 $(document).ready(function(){
 var partner = window.localStorage.getItem('username');
 		erabfitx2 = "http://sgta.esy.es/jasotakomezuak.php?jsoncallback2=?"
@@ -141,8 +147,8 @@ var partner = window.localStorage.getItem('username');
 	})
 	return false;
 });
-
 */
+
 </script>
 
 </body>

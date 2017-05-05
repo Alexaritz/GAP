@@ -1,4 +1,5 @@
 <?php
+session_start();
 $target_dir = "../ARGAZKIAK/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
@@ -7,8 +8,8 @@ $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
     if($check !== false) {
-		header('Content-Type: application/json');
-		echo json_encode(['erantzuna' => "File is an image - " . $check["mime"] . ".", 'ok' => "errorea"]);
+		/*header('Content-Type: application/json');
+		echo json_encode(['erantzuna' => "File is an image - " . $check["mime"] . ".", 'ok' => "zuzena"]);*/
         $uploadOk = 1;
     } else {
 		header('Content-Type: application/json');
@@ -40,7 +41,7 @@ if ($uploadOk == 0) {
 } else {
 	// if everything is ok, try to upload file
 	//IZENA LORTU
-	session_start();
+	
 	$servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 	$usuario = "u199017461_sgta";//root u199017461_sgta
 	$password = "n1fXhn9qyo";//n1fXhn9qyo
