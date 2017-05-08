@@ -1,7 +1,8 @@
 <?php
 /* user + pass jaso*/
 $user = $_GET['usuario'];
-
+$kop = $_GET['kop'];
+$kop2 = $_GET['kop2'];
 //session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 $usuario = "u199017461_sgta";//root u199017461_sgta
@@ -15,7 +16,11 @@ if ($mysqli->connect_error) {
 } 
 
 $erantzuna = array(); 
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by data desc" );
+	if($kop2!=="") {
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by id desc, data desc LIMIT $kop, $kop2" );
+	}else{
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by id desc, data desc LIMIT $kop" );
+	}
 		$num_rows=mysqli_num_rows($erab);
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);

@@ -1,6 +1,5 @@
 <!DOCTYPE html> 
 <html>
-
 <head>
 <!-- Include meta tag to ensure proper rendering and touch zooming -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,71 +31,65 @@ margin:0.5%;
 <body> 
 
 <div data-role="page" id="nireAbisuak">
-
 	<div data-role="header">
 		<a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a>
 		<h1>Nire abisuak</h1>
 	</div>
 	<fieldset class="ui-grid-a my-breakpoint">
 		<div class="ui-block-a">
-			<!--<div data-role="content" id="div1">-->
-				<form id="form">
-					<div data-role="collapsible" data-theme="b" data-content-theme="b" >
-						<h2>Esleitutako Abisuak</h2>
-						<ul id="esleituak" data-role="listview" data-filter="true" >
-							<li data-role="list-divider">Ostirala, Urriak 8, 2010 <span class="ui-li-count">LALA</span></li>
-							<li><a href="#">
-							<h2>Alex</h2>
-							<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-							<p class="ui-li-aside"><strong>000111</strong></p>
-							</a></li>
-						</ul>
-					</div>
-				</form>
-			<!--</div>-->
+			<form id="form">
+				<div id="collap" data-role="collapsible" data-theme="b" data-content-theme="b" >
+					<h2>Esleitutako Abisuak</h2>
+					<ul id="esleituak" data-role="listview" data-filter="true" >
+					</ul>
+				</div>
+			</form>
 		</div>
 		<div class="ui-block-b">
-			<!--<div data-role="content" id="div1">-->
-				<form id="form">
-					<div data-role="collapsible" data-theme="b" data-content-theme="b">
-						<h2>Bidalitako Abisuak</h2>
-						<ul data-role="listview" data-filter="true">
-							<li data-role="list-divider">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
-							<li><a href="#">
-							<h2>Alex</h2>
-							<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-							<p>Deskribapena...Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-							<p class="ui-li-aside"><strong>8:24</strong>PM</p>
-							</a></li>
-							<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
-							<li><a href="#">
-							<h2>Anthony Weber</h2>
-							<p><strong>You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-							<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-							<p class="ui-li-aside"><strong>6:24</strong>PM</p>
-							</a></li>
-						</ul>
-					</div>
-				</form>
-			<!--</div>-->
+			<form id="form">
+				<div data-role="collapsible" data-theme="b" data-content-theme="b">
+					<h2>Bidalitako Abisuak</h2>
+					<ul data-role="listview" data-filter="true">
+						<li data-role="list-divider">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
+						<li><a href="#">
+						<h2>Alex</h2>
+						<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
+						<p>Deskribapena...Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+						<p class="ui-li-aside"><strong>8:24</strong>PM</p>
+						</a></li>
+						<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+						<li><a href="#">
+						<h2>Anthony Weber</h2>
+						<p><strong>You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
+						<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+						<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+						</a></li>
+					</ul>
+				</div>
+			</form>
 		</div>
 	</fieldset>
-	
- 
 </div>
 
 <script>
-
+var kop=5;
+var kopu="";
 $(document).ready(function(){
-var user = window.localStorage.getItem('username');
+user = window.localStorage.getItem('username');
 $.mobile.loading('show');
 		lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
-		$.getJSON(lanFitx, { usuario:user})
+		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kopu})
 		.done(function(lanErantzuna) {
 			$(lanErantzuna).each(function (index, m) {
-				var li2= $("<li data-role='list-divider'/>");
+				if(m.egoera=="berria"){
+					var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
+				}else if (m.egoera=="esleitua"){
+					var li2= $("<li data-role='list-divider' style='background-color:#4d7f80;'/>");
+				}else{
+					var li2= $("<li data-role='list-divider'/>");
+				}
 				var li= $("<li/>");
-				var link = $('<a/>').attr("href", '#')/*.text("Hartzailea: "+m.username+ "    //   Gaia: "+ m.laburpena)*/;
+				var link = $('<a/>').attr("href", '#')
 				var header= $("<h2/>");
 				var text= $("<p/>");
 				var lehentasuna=header.append(m.lehentasuna+"-"+m.saila);
@@ -109,46 +102,97 @@ $.mobile.loading('show');
 				var pID=p.append(m.id);
 				linka.append(pID);
 				li.append(linka);
-				
+				var egoera= $('<span class="ui-li-count"></span>');
+				egoera.append(m.egoera);
 				li2.append(m.data);
+				li2.append(egoera);
+				$('#esleituak').append(li2);
+				$('#esleituak').append(li);
+				$('#esleituak').listview('refresh');	
+			});
+			$.mobile.loading('hide');
+	})
+	return false;
+});
+
+/* create scrollstop handler function */
+function checkScroll() {
+    /* You always need this in order to target
+       elements within active page */
+    var activePage = $.mobile.pageContainer.pagecontainer("getActivePage"),
+ 
+        /* Viewport's height */
+        screenHeight = $.mobile.getScreenHeight(),
+ 
+        /* Content div - include padding too! */
+        contentHeight = $("#collap", activePage).outerHeight(),
+ 
+        /* Height of scrolled content (invisible) */
+        scrolled = $(window).scrollTop(),
+ 
+        /* Height of both Header & Footer and whether they are fixed
+           If any of them is fixed, we will remove (1px)
+           If not, outer height is what we need */
+        header = $(".ui-header", activePage).outerHeight() - 1,
+        //footer = $(".ui-footer", activePage).outerHeight() - 1,
+ 
+        /* Math 101 - Window's scrollTop should
+           match content minus viewport plus toolbars */
+        scrollEnd = contentHeight - screenHeight + header;
+ 
+    /* if (pageX) is active and page's bottom is reached
+       load more elements  */
+    if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd) {
+        /* run loadMore function */
+       gehitu(activePage);
+    }
+}
+function gehitu(){
+$(document).off("scrollstop");
+kop2=5;
+console.log(kop);
+$.mobile.loading('show');
+		lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
+		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2})
+		.done(function(lanErantzuna) {
+			$(lanErantzuna).each(function (index, m) {
+			if(m.egoera=="berria"){
+					var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
+				}else if (m.egoera=="esleitua"){
+					var li2= $("<li data-role='list-divider' style='background-color:#4d7f80;'/>");
+				}else{
+					var li2= $("<li data-role='list-divider'/>");
+				}
+				var li= $("<li/>");
+				var link = $('<a/>').attr("href", '#')
+				var header= $("<h2/>");
+				var text= $("<p/>");
+				var lehentasuna=header.append(m.lehentasuna+"-"+m.saila);
+				var labur=text.append(m.laburpena);
+				link.append(lehentasuna);
+				link.append(labur);
+				var linka=link.attr("id", m.id);
+				console.log(linka);	
+				var p=$("<p class='ui-li-aside'></p>");
+				var pID=p.append(m.id);
+				linka.append(pID);
+				li.append(linka);
+				var egoera= $('<span class="ui-li-count"></span>');
+				egoera.append(m.egoera);
+				li2.append(m.data);
+				li2.append(egoera);
 				$('#esleituak').append(li2);
 				$('#esleituak').append(li);
 				$('#esleituak').listview('refresh');
-				$.mobile.loading('hide');
 			});
+			$.mobile.loading('hide');
+			kop=kop+kop2;
+			$(document).on("scrollstop", checkScroll);
 	})
 	return false;
-});
-$(window).scroll(function() {
-   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-       console.log("bottom!");
-       //Place ajax call here
-   }
-});
-/*
-$(document).ready(function(){
-var partner = window.localStorage.getItem('username');
-		erabfitx2 = "http://sgta.esy.es/jasotakomezuak.php?jsoncallback2=?"
-		$.getJSON(erabfitx2, { socio:partner})
-		.done(function(mezuerantzuna) {
-			$(mezuerantzuna).each(function (index, m) {
-				var li2= $("<li/>");
-				var link2 = $('<a/>').attr("href", '#').text("Igorlea: "+m.username+ "       //    Gaia: "+ m.gaia);
-				var linka2=link2.attr("id", m.id);
-				linka2.attr("onClick", "zuu(this.id); return false;");
-				console.log(linka2);
-				//var $option = $("<option/>").attr("value", o.username).text(o.username);
-				li2.append(link2)
-				$('#mySelectID2').append(li2);
-				$('#mySelectID2').listview('refresh')
-			});
-			
-  
-	})
-	return false;
-});
-*/
-
+}
+/* attach if scrollstop for first time */
+$(document).on("scrollstop", checkScroll);
 </script>
 
 </body>
