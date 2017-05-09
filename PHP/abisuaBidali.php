@@ -22,23 +22,23 @@ $mysqli =new mysqli ("localhost","root","", $sdb);
 if ($mysqli->connect_error) {
     printf("Connection failed: " . $mysqli->connect_error);
 } 
-
+if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
 		if ($argazkia==""){
-			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '')" );
+			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '', 'berria')" );
 		}else{
 			$erab = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
 			$num_rows=mysqli_num_rows($erab);
 			$argazkia=$num_rows . "argazkia.jpeg";
-			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia')" );
+			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia', 'berria')" );
 		}
-		/*if ($mysqli->query($insert) === TRUE) {
-			echo "New record created successfully";
+		if ($mysqli->query($insert) === TRUE) {
+			echo "Abisua zuzen bidali da";
 			//$erantzuna["mezua"] = "Zuzen txertatu da.";
 		} else {
 			echo "Error: " . $insert . "<br>" . $mysqli->error;
 			//$erantzuna["mezua"] = "Errorea txertatzean.";
-		}*/
+		}
 		
 
 /*emaitza json formatura bihurtzen da*/

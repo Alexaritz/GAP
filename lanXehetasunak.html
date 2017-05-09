@@ -1,0 +1,88 @@
+<!DOCTYPE html> 
+<html>
+<head>
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+th {
+    border-bottom: 1px solid #d6d6d6;
+}
+
+tr:nth-child(even) {
+    background: #e9e9e9;
+}
+@media all and (max-width: 44em) {
+    .my-breakpoint .ui-block-a,
+    .my-breakpoint .ui-block-b{
+      width: 100%;
+      float:none;
+    }
+  }
+</style>
+</head>
+<body> 
+
+<div data-role="page" id="nireAbisuak">
+	<div class="ui-grid-b" data-role="header">
+		<div class="ui-block-a"><a onclick="location.href = 'nireAbisuak.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
+		<div class="ui-block-b"><center><p>Lan Xehetasunak</p></center></div>
+		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
+	</div>
+	<fieldset class="ui-grid-c my-breakpoint">
+		<div class="ui-block-a">
+			<div class="ui-bar ui-bar-a" >ID</div>
+			<div class="ui-body " >1</div>
+		</div>
+		<div class="ui-block-b">
+			<div class="ui-bar ui-bar-a" >Saila</div>
+			<div class="ui-body " >Berokuntza</div>
+		</div>	
+		<div class="ui-block-c">
+			<div class="ui-bar ui-bar-a" >Lehentasuna</div>
+			<div class="ui-body " >Normala</div>
+		</div>	
+		<div class="ui-block-d">
+			<div class="ui-bar ui-bar-a" >Bidaltzailea</div>
+			<div class="ui-body " >proba</div>
+		</div>	
+	</fieldset>
+</div>
+
+<script>
+$(document).ready(function(){
+user = window.localStorage.getItem('username');
+id = window.localStorage.getItem('lanID');
+		/*Lanaren xehetasunak*/
+		lanfitx = "PHP/lanXehetasunak.php?jsoncallback=?"
+		$.getJSON( lanfitx, { usuario:user, lanid:id})
+		.done(function(lanerantzuna) {
+			$(lanerantzuna).each(function (index, l) {
+				if(l.argazkia!=""){
+					$('#image').attr('src', "ARGAZKIAK/"+id+"argazkia.jpeg");
+				}
+				var $option = $("<option/>").attr("value", l.kodea).text(l.izena);
+				$('#arazoM').append($option);
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+
+
+});
+
+</script>
+
+</body>
+</html>

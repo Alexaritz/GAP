@@ -1,8 +1,7 @@
 <?php
 /* user + pass jaso*/
 $user = $_GET['usuario'];
-$kop = $_GET['kop'];
-$kop2 = $_GET['kop2'];
+$id = $_GET['lanid'];
 //session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 $usuario = "u199017461_sgta";//root u199017461_sgta
@@ -15,15 +14,13 @@ if ($mysqli->connect_error) {
     printf("Connection failed: " . $mysqli->connect_error);
 } 
 
-$erantzuna = array(); 
-	if($kop2!=="") {
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc, data desc LIMIT $kop, $kop2" );
-	}else{
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc, data desc LIMIT $kop" );
-	}
+$erantzuna = array();
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' and id='$id'" );
 		$num_rows=mysqli_num_rows($erab);
+		if ($num_rows> 0){
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);
+		}
 		}
 		$resultadosJson=json_encode( $erantzuna );
 /*emaitza json formatura bihurtzen da*/
