@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-05-2017 a las 12:51:24
+-- Tiempo de generación: 10-05-2017 a las 13:06:16
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -37,7 +37,8 @@ CREATE TABLE `arazomota` (
 
 INSERT INTO `arazomota` (`kodea`, `izena`) VALUES
 (1, 'Berokuntza'),
-(2, 'Argia');
+(2, 'Argia'),
+(3, 'Orokorra');
 
 -- --------------------------------------------------------
 
@@ -57,7 +58,7 @@ CREATE TABLE `arduraduna` (
 
 INSERT INTO `arduraduna` (`id`, `username`, `saila`) VALUES
 (1, 'proba', 'Berokuntza'),
-(2, '', 'Orokorra ');
+(2, 'a', 'Orokorra ');
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,7 @@ CREATE TABLE `erabiltzailea` (
 
 INSERT INTO `erabiltzailea` (`id`, `username`, `password`, `mota`) VALUES
 (1, 'proba', 'proba', ''),
-(2, '', '', '');
+(2, 'a', 'a', '');
 
 -- --------------------------------------------------------
 
@@ -124,8 +125,34 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `
 (15, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'IrlajxlxjV', 'LcpvnMslxb', '2017-05-05 12:31:28', '13argazkia.jpeg', 'esleitua'),
 (16, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Premiazkoa', '2', 'A', '2017-05-05 12:32:49', '14argazkia.jpeg', 'esleitua'),
 (17, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fewgaag', 'gfsdgsdfgsd', '2017-05-05 12:37:10', '15argazkia.jpeg', 'esleitua'),
-(18, 'Proba', 'Berokuntza', '', '', 0, '', 'Baxua', 'iphonetik', 'Argazkia erantxia', '2017-05-08 09:53:34', '16argazkia.jpeg', 'esleitua'),
-(19, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Berokuntza instalazioa ez dabil', 'V HD hdjjdbdbz', '2017-05-08 12:01:00', '17argazkia.jpeg', 'berria');
+(18, 'Proba', 'Berokuntza', 'a', '', 0, '', 'Baxua', 'iphonetik', 'Argazkia erantxia', '2017-05-08 09:53:34', '16argazkia.jpeg', 'esleitua'),
+(19, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Berokuntza instalazioa ez dabil', 'V HD hdjjdbdbz', '2017-05-08 12:01:00', '17argazkia.jpeg', 'berria'),
+(21, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Proba egoerakiN', 'Lalala', '2017-05-08 13:04:14', '18argazkia.jpeg', 'berria'),
+(22, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Mcncmzl', 'Lcjgmzzlm', '2017-05-09 09:20:07', '19argazkia.jpeg', 'berria'),
+(23, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', '.dmdbNs', 'Ncmznzv', '2017-05-10 09:24:35', '20argazkia.jpeg', 'berria'),
+(24, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Mfjzks', 'Nfnzlz', '2017-05-10 09:25:40', '21argazkia.jpeg', 'berria'),
+(25, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Baxua', 'aewkelroiuwaytsa', 'raetrysujgnvbczx<', '2017-05-10 09:26:30', '22argazkia.jpeg', 'berria'),
+(26, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Normala', 'Bxkchznxbz', 'CnxlKz', '2017-05-10 10:08:23', '23argazkia.jpeg', 'berria'),
+(27, 'proba', 'Orokorra', 'a', 'A', 1, '1', 'Baxua', 'Argazki gabeko proba', 'Argazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko proba', '2017-05-10 11:26:21', '', 'berria'),
+(28, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'fsda', 'fasd', '2017-05-10 11:27:52', '24argazkia.jpeg', 'berria'),
+(29, 'proba', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'fasdfsaf', 'asdfsdfs', '2017-05-10 11:28:03', '', 'berria'),
+(30, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'vsacvsavd', 'vsadsdvsvavsvd', '2017-05-10 11:30:17', '', 'berria'),
+(31, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'vds', 'vsda', '2017-05-10 11:31:10', '', 'berria'),
+(32, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'vxc', 'vxc', '2017-05-10 11:31:48', '', 'berria'),
+(33, 'proba', 'Berokuntza', 'a', 'A', 1, '1', 'Normala', 'vxc', 'vxc', '2017-05-10 11:32:46', '', 'berria'),
+(34, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Baxua', 'fsd', 'fsd', '2017-05-10 11:33:23', '', 'berria'),
+(35, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Baxua', 'fsdf', 'sfsdfs', '2017-05-10 11:34:09', '', 'berria'),
+(36, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'asgd', 'avsd', '2017-05-10 11:34:56', '25argazkia.jpeg', 'berria'),
+(37, 'proba', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'das', 'dsa', '2017-05-10 11:36:03', '', 'berria'),
+(38, 'proba', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'vcx', 'vxc', '2017-05-10 11:38:26', '', 'berria'),
+(39, 'Proba', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'Froga iphone', 'Jjfdjkfg', '2017-05-10 11:58:39', '26argazkia.jpeg', 'berria'),
+(40, 'Proba', 'Orokorra', '', '', 1, '1', 'Baxua', 'Froga iphon', 'Gdfjhghj', '2017-05-10 12:00:12', '', 'berria'),
+(41, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Baxua', 'dsadsa', 'dadasdas', '2017-05-10 12:09:21', '', 'berria'),
+(42, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'dsadas', 'dasddaddsdaadda', '2017-05-10 12:11:00', '', 'berria'),
+(43, 'proba', 'Orokorra', 'a', 'A', 1, '1', 'Baxua', 'vsdVSDV', 'vsdsdvsd', '2017-05-10 12:11:41', '', 'berria'),
+(44, 'proba', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'VSCVDASV', 'VSAVSADSDVVSDSA', '2017-05-10 12:12:28', '', 'berria'),
+(45, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'dasdasdasd', 'asdasdasdada', '2017-05-10 12:19:58', '', 'berria'),
+(46, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fdsafda', 'fsdfaafsasffdafsddafd', '2017-05-10 12:24:38', '', 'berria');
 
 -- --------------------------------------------------------
 
@@ -251,7 +278,7 @@ ALTER TABLE `ura`
 -- AUTO_INCREMENT de la tabla `arazomota`
 --
 ALTER TABLE `arazomota`
-  MODIFY `kodea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `kodea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `arduraduna`
 --
@@ -266,7 +293,7 @@ ALTER TABLE `erabiltzailea`
 -- AUTO_INCREMENT de la tabla `lanagindua`
 --
 ALTER TABLE `lanagindua`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT de la tabla `lanegoera`
 --
@@ -287,17 +314,16 @@ ALTER TABLE `ura`
 --
 
 --
--- Filtros para la tabla `arduraduna`
+-- Filtros para la tabla `erabiltzailea`
 --
-ALTER TABLE `arduraduna`
-  ADD CONSTRAINT `erabCons` FOREIGN KEY (`username`) REFERENCES `erabiltzailea` (`username`) ON DELETE CASCADE,
-  ADD CONSTRAINT `sailaCons` FOREIGN KEY (`saila`) REFERENCES `saila` (`izena`) ON DELETE CASCADE;
+ALTER TABLE `erabiltzailea`
+  ADD CONSTRAINT `arduraCons` FOREIGN KEY (`username`) REFERENCES `arduraduna` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `lanagindua`
+-- Filtros para la tabla `lanegoera`
 --
-ALTER TABLE `lanagindua`
-  ADD CONSTRAINT `egoeraCons` FOREIGN KEY (`egoera`) REFERENCES `lanegoera` (`izena`) ON DELETE CASCADE;
+ALTER TABLE `lanegoera`
+  ADD CONSTRAINT `lanCons` FOREIGN KEY (`izena`) REFERENCES `lanagindua` (`egoera`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

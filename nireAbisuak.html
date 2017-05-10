@@ -27,6 +27,7 @@ margin:0%;
       float:none;
     }
   }
+
 </style>
 
 
@@ -96,7 +97,7 @@ $.mobile.loading('show');
 				var link = $('<a/>').attr("href", '#')
 				var header= $("<h2/>");
 				var text= $("<p/>");
-				var lehentasuna=header.append(m.lehentasuna+"-"+m.saila);
+				var lehentasuna=header.append(m.lehentasuna+"-"+m.eraikina+m.pisua+"."+m.gela);
 				var labur=text.append(m.laburpena);
 				link.append(lehentasuna);
 				link.append(labur);
@@ -175,7 +176,7 @@ $.mobile.loading('show');
 				var link = $('<a/>').attr("href", '#')
 				var header= $("<h2/>");
 				var text= $("<p/>");
-				var lehentasuna=header.append(m.lehentasuna+"-"+m.saila);
+				var lehentasuna=header.append(m.lehentasuna+"-"+m.eraikina+m.pisua+"."+m.gela);
 				var labur=text.append(m.laburpena);
 				link.append(lehentasuna);
 				link.append(labur);

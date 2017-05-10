@@ -23,9 +23,17 @@ tr:nth-child(even) {
 }
 @media all and (max-width: 44em) {
     .my-breakpoint .ui-block-a,
-    .my-breakpoint .ui-block-b{
+    .my-breakpoint .ui-block-b,
+	.my-breakpoint .ui-block-c,
+	.my-breakpoint .ui-block-d{
+      width: 50%;
+    }
+  }
+  @media all and (max-width: 44em) {
+    .my-breakpointb .ui-block-a,
+    .my-breakpointb .ui-block-b{
+	  float:none;
       width: 100%;
-      float:none;
     }
   }
 </style>
@@ -38,28 +46,85 @@ tr:nth-child(even) {
 		<div class="ui-block-b"><center><p>Lan Xehetasunak</p></center></div>
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
-	<fieldset class="ui-grid-c my-breakpoint">
-		<div class="ui-block-a">
-			<div class="ui-bar ui-bar-a" >ID</div>
-			<div class="ui-body " >1</div>
+	<div data-role="tabs" id="tab1">
+		<div data-role="navbar" >
+				<ul>
+				  <li><a href="#fragment-1" class="ui-btn-active">Abisuaren xehetasunak</a></li>
+				  <li><a href="#fragment-2">Abisua Osatu</a></li>
+				</ul>
 		</div>
-		<div class="ui-block-b">
-			<div class="ui-bar ui-bar-a" >Saila</div>
-			<div class="ui-body " >Berokuntza</div>
-		</div>	
-		<div class="ui-block-c">
-			<div class="ui-bar ui-bar-a" >Lehentasuna</div>
-			<div class="ui-body " >Normala</div>
-		</div>	
-		<div class="ui-block-d">
-			<div class="ui-bar ui-bar-a" >Bidaltzailea</div>
-			<div class="ui-body " >proba</div>
-		</div>	
-	</fieldset>
+		<div id="fragment-1">
+			<fieldset class="ui-grid-c my-breakpoint">
+				<div class="ui-block-a">
+					<div class="ui-bar ui-bar-a">ID</div>
+					<div class="ui-body " id="id"></div>
+				</div>
+				<div class="ui-block-b">
+					<div class="ui-bar ui-bar-a">Saila</div>
+					<div class="ui-body" id="saila"></div>
+				</div>	
+				<div class="ui-block-c">
+					<div class="ui-bar ui-bar-a">Lehentasuna</div>
+					<div class="ui-body" id="lehentasuna"></div>
+				</div>	
+				<div class="ui-block-d">
+					<div class="ui-bar ui-bar-a">Bidaltzailea</div>
+					<div class="ui-body" id="bidaltzailea"></div>
+				</div>	
+			</fieldset>
+			<fieldset class="ui-grid-a my-breakpoint">
+				<div class="ui-block-a">
+					<div class="ui-bar ui-bar-a">Tokia</div>
+					<div class="ui-body" id="tokia"></div>
+				</div>
+				<div class="ui-block-b">
+					<div class="ui-bar ui-bar-a">Data</div>
+					<div class="ui-body" id="data"></div>
+				</div>
+			</fieldset>
+			<fieldset class="ui-grid-a my-breakpointb">
+				<div class="ui-block-a">
+					<div class="ui-bar ui-bar-a" >Laburpena</div>
+					<div class="ui-body" id="laburpena"></div>
+				</div>
+				<div class="ui-block-b">
+					<div class="ui-bar ui-bar-a" >Deskribapena</div>
+					<div class="ui-body" id="deskribapena"></div>
+				</div>
+			</fieldset>
+					<div class="ui-bar ui-bar-a">Argazkia</div>
+					<div class="ui-body"><img id="image" alt="Ez dauka argazkirik." width="100%"></img></div>
+		</div>
+		<div id="fragment-2">
+			<form id="abisuaOsatu">
+				<fieldset class="ui-grid-a my-breakpointb">
+					<div class="ui-block-a">
+						<select id="egoera" name="egoera" required>
+								<option value="">Egoera</option>
+								<option value="proba" selected="selected">Proba</option>
+								
+						</select>
+					</div>
+					<div class="ui-block-b">
+						<textarea  id="iruzkinak"  placeholder="Iruzkinak..." required></textarea>
+					</div>	      
+				</fieldset>
+				<fieldset class="ui-grid-a my-breakpointb">
+					<div class="ui-block-a">
+						<textarea  id="materiala"  placeholder="Materiala..." required></textarea>
+					</div>
+					<div class="ui-block-b">
+						<textarea  id="iruzkinak"  placeholder="Iruzkinak..." required></textarea>
+					</div>	      
+				</fieldset>
+			<input type="submit" value="Gorde" name="submit" id="submit" data-theme="b">
+			</form>
+		</div>
+	</div>
 </div>
-
 <script>
 $(document).ready(function(){
+$.mobile.loading('show');
 user = window.localStorage.getItem('username');
 id = window.localStorage.getItem('lanID');
 		/*Lanaren xehetasunak*/
@@ -67,19 +132,38 @@ id = window.localStorage.getItem('lanID');
 		$.getJSON( lanfitx, { usuario:user, lanid:id})
 		.done(function(lanerantzuna) {
 			$(lanerantzuna).each(function (index, l) {
+				$('#id').text(l.id);
+				$('#saila').text(l.saila);
+				$('#lehentasuna').text(l.lehentasuna);
+				$('#bidaltzailea').text(l.username);
+				$('#tokia').text(l.eraikina+l.pisua+"."+l.gela);
+				$('#data').text(l.data);
+				$('#laburpena').text(l.laburpena);
+				$('#deskribapena').text(l.deskribapena);
 				if(l.argazkia!=""){
-					$('#image').attr('src', "ARGAZKIAK/"+id+"argazkia.jpeg");
+					$('#image').attr('src', "ARGAZKIAK/"+l.argazkia);
 				}
-				var $option = $("<option/>").attr("value", l.kodea).text(l.izena);
-				$('#arazoM').append($option);
 			});
 		})
 		.fail(function(koderantzuna,textStatus, error) {
 			var err = textStatus + ', ' + error;
             console.log("Request Failed: " + err);
 		})
-
-
+		/*Lanaren egoera*/
+		egoerafitx = "PHP/egoeraLortu.php?jsoncallback=?"
+		$.getJSON( egoerafitx, { usuario:user})
+		.done(function(egoeraerantzuna) {
+			console.log("KODEA ONDO")
+			$(egoeraerantzuna).each(function (index, o) {
+				var $option = $("<option/>").attr("value", o.izena).text(o.izena);
+				$('#egoera').append($option);
+			});
+		})
+		.fail(function(egoeraerantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+$.mobile.loading('hide');
 });
 
 </script>

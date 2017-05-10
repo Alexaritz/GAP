@@ -143,7 +143,6 @@ function readURL(input) {
 			 $('#blah').attr('style', "");
             $('#blah').attr('src', e.target.result);
         }
-
         reader.readAsDataURL(input.files[0]);
     }
 }
@@ -164,52 +163,54 @@ $("form").submit(function(){
 	var laburpena=$("#laburpena").val()
 	var deskribapena=$("#deskribapena").val()
 	var argazkia = $("#fileToUpload").val()
-
-	
-	if (argazkia!=""){
-		$.ajax({
-			url: "PHP/upload.php", // Url to which the request is send
-			type: "POST",             // Type of request to be send, called as method
-			data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-			contentType: false,       // The content type used when sending data to the server.
-			cache: false,             // To unable request pages to be cached
-			processData:false,        // To send DOMDocument or non processed data file it is set to false
-		})
-		.done(function(data){
-			if(data.ok=="zuzena"){
-				abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
-				$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
-				.done(function(abisuerantzuna) {
-					console.log("ZUZEN TXERTATU DA")
+	if(user!="" && saila!="" && arduraduna!="" && eraikina!="" && pisua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!=""){
+		if (argazkia!=""){
+			$.ajax({
+				url: "PHP/upload.php", // Url to which the request is send
+				type: "POST",             // Type of request to be send, called as method
+				data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+				contentType: false,       // The content type used when sending data to the server.
+				cache: false,             // To unable request pages to be cached
+				processData:false,        // To send DOMDocument or non processed data file it is set to false
+			})
+			.done(function(data){
+				if(data.ok=="zuzena"){
+					abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
+					$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
+					.done(function(abisuerantzuna) {
+						console.log("ZUZEN TXERTATU DA")
+						alert(data.erantzuna);
+						window.location.replace("menua.html");
+						$.mobile.loading('hide');
+					})
+					.fail(function(abisuerantzuna,textStatus, error) {
+						var err = textStatus + ', ' + error;
+						alert("Request Failed: " + err);
+					})
+				}else{
 					alert(data.erantzuna);
-					window.location.replace("menua.html");
-					$.mobile.loading('hide');
-				})
-				.fail(function(abisuerantzuna,textStatus, error) {
-					var err = textStatus + ', ' + error;
-					alert("Request Failed: " + err);
-				})
-			}else{
-				alert(data.erantzuna);
+					window.location.replace("abisuaBidali.html");
+				}	
+			})
+			.fail(function(xhr, status, error){
+				alert(xhr.responseText);
 				window.location.replace("abisuaBidali.html");
-			}	
-		})
-		.fail(function(xhr, status, error){
-			alert(xhr.responseText);
-			window.location.replace("abisuaBidali.html");
-		});
+			});
+		}else{
+			abisuFitx2 = "PHP/abisuaBidali.php?jsoncallback=?"
+			$.getJSON( abisuFitx2, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
+			.done(function(abisuerantzuna2) {
+				alert(abisuerantzuna2.mezua)
+				$.mobile.loading('hide');
+				window.location.replace("menua.html");
+			})
+			.fail(function(abisuerantzuna2,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("Request Failed: " + err);
+			});
+		}
 	}else{
-		abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
-		$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
-		.done(function(abisuerantzuna) {
-			console.log("ZUZEN TXERTATU DA")
-			$.mobile.loading('hide');
-			window.location.replace("menua.html");
-		})
-		.fail(function(abisuerantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-			alert("Request Failed: " + err);
-		});
+		alert("Datu guztiak bete behar dira.");
 	}
 });
 </script>

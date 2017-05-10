@@ -22,8 +22,9 @@ $mysqli =new mysqli ("localhost","root","", $sdb);
 if ($mysqli->connect_error) {
     printf("Connection failed: " . $mysqli->connect_error);
 } 
-if(isset($_POST["submit"]) &&) {
+//if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
+	if ($user!="" && $saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
 		if ($argazkia==""){
 			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '', 'berria')" );
 		}else{
@@ -32,14 +33,17 @@ $erantzuna = array();
 			$argazkia=$num_rows . "argazkia.jpeg";
 			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia', 'berria')" );
 		}
-		if ($mysqli->query($insert) === TRUE) {
-			echo "Abisua zuzen bidali da";
-			//$erantzuna["mezua"] = "Zuzen txertatu da.";
+		$erantzuna["mezua"] = "Zuzen txertatu da.";
+		/*if ($mysqli->query($insert) == TRUE) {
+			//echo "Abisua zuzen bidali da";
+			$erantzuna["mezua"] = "Zuzen txertatu da.";
 		} else {
-			echo "Error: " . $insert . "<br>" . $mysqli->error;
-			//$erantzuna["mezua"] = "Errorea txertatzean.";
-		}
-		
+			//echo "Error: " . $insert . "<br>" . $mysqli->error;
+			$erantzuna["mezua"] = "Errorea txertatzean.";
+		}*/
+	}else{
+		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";
+	}
 
 /*emaitza json formatura bihurtzen da*/
 $resultadosJson = json_encode($erantzuna);
