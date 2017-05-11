@@ -98,10 +98,9 @@ tr:nth-child(even) {
 		<div id="fragment-2">
 			<form id="abisuaOsatu">
 				<fieldset class="ui-grid-a my-breakpointb">
-					<div class="ui-block-a">
+					<div id="egdiv" class="ui-block-a">
 						<select id="egoera" name="egoera" required>
 								<option value="">Egoera</option>
-								<option value="proba" selected="selected">Proba</option>
 								
 						</select>
 					</div>
@@ -114,7 +113,7 @@ tr:nth-child(even) {
 						<textarea  id="materiala"  placeholder="Materiala..." required></textarea>
 					</div>
 					<div class="ui-block-b">
-						<textarea  id="iruzkinak"  placeholder="Iruzkinak..." required></textarea>
+						<textarea  id="denbora"  placeholder="Denbora..." required></textarea>
 					</div>	      
 				</fieldset>
 			<input type="submit" value="Gorde" name="submit" id="submit" data-theme="b">
@@ -151,12 +150,20 @@ id = window.localStorage.getItem('lanID');
 		})
 		/*Lanaren egoera*/
 		egoerafitx = "PHP/egoeraLortu.php?jsoncallback=?"
-		$.getJSON( egoerafitx, { usuario:user})
+		$.getJSON( egoerafitx, { usuario:user, lanid:id})
 		.done(function(egoeraerantzuna) {
 			console.log("KODEA ONDO")
 			$(egoeraerantzuna).each(function (index, o) {
-				var $option = $("<option/>").attr("value", o.izena).text(o.izena);
-				$('#egoera').append($option);
+				if(o.izena==null || o.izena=='undefined'){//DATU BASEKIN NOLABAIT LOTU...?
+					var id="#"+o;
+					$(id).attr("selected","selected");
+					var selector=$('#egoera');
+					$("select").selectmenu("refresh");
+				}
+				else{
+					var $option = $("<option id='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
+					$('#egoera').append($option);
+				}
 			});
 		})
 		.fail(function(egoeraerantzuna,textStatus, error) {
