@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2017 a las 13:06:16
+-- Tiempo de generación: 12-05-2017 a las 13:08:12
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -152,7 +152,21 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `
 (43, 'proba', 'Orokorra', 'a', 'A', 1, '1', 'Baxua', 'vsdVSDV', 'vsdsdvsd', '2017-05-10 12:11:41', '', 'berria'),
 (44, 'proba', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'VSCVDASV', 'VSAVSADSDVVSDSA', '2017-05-10 12:12:28', '', 'berria'),
 (45, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'dasdasdasd', 'asdasdasdada', '2017-05-10 12:19:58', '', 'berria'),
-(46, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fdsafda', 'fsdfaafsasffdafsddafd', '2017-05-10 12:24:38', '', 'berria');
+(46, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fdsafda', 'fsdfaafsasffdafsddafd', '2017-05-10 12:24:38', '', 'berria'),
+(47, 'a', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'vbfxba', 'fbfbbfbffdb', '2017-05-11 11:33:25', '27argazkia.jpeg', 'berria'),
+(48, 'a', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Proba android', 'Lalala', '2017-05-12 09:16:53', '28argazkia.jpeg', 'berria'),
+(49, 'Proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Hdjdkkdjbd', 'Hdjdkzbdb', '2017-05-12 09:21:16', '29argazkia.jpeg', 'berria'),
+(50, 'Proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Proba ihone', 'Lalalalal', '2017-05-12 09:22:25', '', 'berria'),
+(51, 'Proba', 'Orokorra', 'a', 'A', 1, '1', 'Baxua', 'Gghfdrt', 'Opiyreex', '2017-05-12 09:23:51', '', 'berria'),
+(52, 'proba', 'Orokorra', 'a', 'A', 1, '1', 'Normala', 'Proba argazkia iyotzeko berria', 'Lalala', '2017-05-12 10:26:47', '30argazkia.jpeg', 'berria'),
+(53, 'a', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'Proba explorer', 'adsdadas', '2017-05-12 10:30:33', '31argazkia.jpeg', 'berria'),
+(54, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'Proba chrome', 'LALALA', '2017-05-12 10:31:40', '32argazkia.jpeg', 'berria'),
+(55, 'a', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'fsdafsaf', 'adfsasdfsdvdsaa', '2017-05-12 10:45:40', '33argazkia.jpeg', 'berria'),
+(56, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'cczxcz', 'czxczx', '2017-05-12 10:45:56', '', 'berria'),
+(57, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'czxczxc', 'czxcz', '2017-05-12 10:46:12', '34argazkia.jpeg', 'berria'),
+(58, 'a', 'Argia', 'proba', 'A', 1, '1', 'Normala', 'dsadasd', 'asdasdasd', '2017-05-12 10:46:33', '35argazkia.jpeg', 'berria'),
+(59, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Premiazkoa', 'Idlxnzn', 'Xlgnzmm,', '2017-05-12 10:47:01', '36argazkia.jpeg', 'berria'),
+(60, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Proba prevent', 'Xnznzc', '2017-05-12 11:27:22', '37argazkia.jpeg', 'berria');
 
 -- --------------------------------------------------------
 
@@ -293,7 +307,7 @@ ALTER TABLE `erabiltzailea`
 -- AUTO_INCREMENT de la tabla `lanagindua`
 --
 ALTER TABLE `lanagindua`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT de la tabla `lanegoera`
 --

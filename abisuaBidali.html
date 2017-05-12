@@ -40,6 +40,27 @@ img {
     height: auto; /* Make sure images with WordPress-added height and width attributes are scaled correctly */
     max-width: 100%; /* Prevent images from overflowing their boundaries */
 }
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  margin-right: 4px;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  transform: translate(-300px, 0) scale(4);
+  font-size: 23px;
+  direction: ltr;
+  cursor: pointer;
+}
+#uploader .ui-input-text, .ui-input-search{
+border-style:none;
+}
 </style>
 </head>
 
@@ -93,7 +114,10 @@ img {
 			</fieldset>
       		<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena" required>
 			<textarea name="deskribapena" id="deskribapena"  placeholder="Deskribapena..." required></textarea>
-			<input type="file"  accept="image/*" name="fileToUpload" id="fileToUpload">
+			<span id="uploader" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all fileinput-button">
+				<span>Argazkia igo (Hautazkoa)</span>
+				<input type="file" accept="image/*" name="fileToUpload" id="fileToUpload">
+			</span>
 			<img style="display:none" align="middle" id="blah" src="#">
 			<input type="submit" value="Bidali" name="submit" id="submit" data-theme="b">
     	</form>			   
@@ -151,7 +175,7 @@ $("#fileToUpload").change(function() {
 		readURL(this);
     });
 $("form").submit(function(){
-	event.preventDefault();
+	//event.preventDefault();
 	$.mobile.loading('show');
 	var user = window.localStorage.getItem('username');
 	var saila=$("#arazoM").val()
@@ -164,7 +188,7 @@ $("form").submit(function(){
 	var deskribapena=$("#deskribapena").val()
 	var argazkia = $("#fileToUpload").val()
 	if(user!="" && saila!="" && arduraduna!="" && eraikina!="" && pisua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!=""){
-		if (argazkia!=""){
+		if (argazkia!=""){//ARGAZKIAREKIN IGO
 			$.ajax({
 				url: "PHP/upload.php", // Url to which the request is send
 				type: "POST",             // Type of request to be send, called as method
@@ -193,10 +217,10 @@ $("form").submit(function(){
 				}	
 			})
 			.fail(function(xhr, status, error){
-				alert(xhr.responseText);
+				alert("Errorea eskaeran"+xhr.responseText);
 				window.location.replace("abisuaBidali.html");
 			});
-		}else{
+		}else{//ARGAZKIRIK GABEKO ABISUA
 			abisuFitx2 = "PHP/abisuaBidali.php?jsoncallback=?"
 			$.getJSON( abisuFitx2, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
 			.done(function(abisuerantzuna2) {
@@ -212,6 +236,7 @@ $("form").submit(function(){
 	}else{
 		alert("Datu guztiak bete behar dira.");
 	}
+	return false;
 });
 </script>
 </body>

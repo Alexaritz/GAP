@@ -27,7 +27,6 @@ margin:0%;
       float:none;
     }
   }
-
 </style>
 
 
@@ -35,7 +34,7 @@ margin:0%;
 <body> 
 
 <div data-role="page" id="nireAbisuak">
-	<div class="ui-grid-b" data-role="header" id="head">
+	<div class="ui-grid-b" data-role="header" data-position="fixed" id="head">
 		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
 		<div class="ui-block-b"><center><p>Abisua bidali</p></center></div>
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
@@ -77,19 +76,18 @@ margin:0%;
 </div>
 
 <script>
-var kop=5;
-var kopu="";
-$(document).ready(function(){
-user = window.localStorage.getItem('username');
-$.mobile.loading('show');
-		lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
-		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kopu})
+kop=5;
+kop2="";
+function nireAbisuak(){
+	//$.mobile.loading('show');
+	lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
+		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2})
 		.done(function(lanErantzuna) {
 			$(lanErantzuna).each(function (index, m) {
 				if(m.egoera=="berria"){
 					var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
 				}else if (m.egoera=="esleitua"){
-					var li2= $("<li data-role='list-divider' style='background-color:#4d7f80;'/>");
+					var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
 				}else{
 					var li2= $("<li data-role='list-divider'/>");
 				}
@@ -97,28 +95,27 @@ $.mobile.loading('show');
 				var link = $('<a/>').attr("href", '#')
 				var header= $("<h2/>");
 				var text= $("<p/>");
-				var lehentasuna=header.append(m.lehentasuna+"-"+m.eraikina+m.pisua+"."+m.gela);
-				var labur=text.append(m.laburpena);
-				link.append(lehentasuna);
-				link.append(labur);
-				var linka=link.attr("id", m.id);
-				linka.attr("onClick", "lanXehetasunak(this.id); return false;");
-				console.log(linka);	
+				var egoezikusi=$("<p style='display:none;'></p>");
 				var p=$("<p class='ui-li-aside'></p>");
-				var pID=p.append(m.id);
-				linka.append(pID);
-				li.append(linka);
 				var egoera= $('<span class="ui-li-count"></span>');
-				egoera.append(m.egoera);
-				li2.append(m.data);
-				li2.append(egoera);
-				$('#esleituak').append(li2);
-				$('#esleituak').append(li);
+				link.append(header.append(m.lehentasuna+"-"+m.eraikina+m.pisua+"."+m.gela));
+				link.append(text.append(m.laburpena));
+				link.attr("id", m.id);
+				link.attr("onClick", "lanXehetasunak(this.id); return false;");
+				link.append(egoezikusi.append("egoera:"+m.egoera));
+				link.append(p.append(m.id));
+				li2.append(egoera.append(m.egoera));
+				$('#esleituak').append(li2.append(m.data));
+				$('#esleituak').append(li.append(link));
 				$('#esleituak').listview('refresh');	
 			});
-			$.mobile.loading('hide');
-	})
-	return false;
+			//$.mobile.loading('hide');
+		});
+}
+
+$(document).ready(function(){
+	user = window.localStorage.getItem('username');
+	nireAbisuak();
 });
 function lanXehetasunak(id){
 	window.localStorage.setItem('lanID',id);
@@ -157,52 +154,15 @@ function checkScroll() {
     }
 }
 function gehitu(){
-$(document).off("scrollstop");
-kop2=5;
-console.log(kop);
-$.mobile.loading('show');
-		lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
-		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2})
-		.done(function(lanErantzuna) {
-			$(lanErantzuna).each(function (index, m) {
-			if(m.egoera=="berria"){
-					var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
-				}else if (m.egoera=="esleitua"){
-					var li2= $("<li data-role='list-divider' style='background-color:#4d7f80;'/>");
-				}else{
-					var li2= $("<li data-role='list-divider'/>");
-				}
-				var li= $("<li/>");
-				var link = $('<a/>').attr("href", '#')
-				var header= $("<h2/>");
-				var text= $("<p/>");
-				var lehentasuna=header.append(m.lehentasuna+"-"+m.eraikina+m.pisua+"."+m.gela);
-				var labur=text.append(m.laburpena);
-				link.append(lehentasuna);
-				link.append(labur);
-				var linka=link.attr("id", m.id);
-				linka.attr("onClick", "lanXehetasunak(this.id); return false;");
-				var p=$("<p class='ui-li-aside'></p>");
-				var pID=p.append(m.id);
-				linka.append(pID);
-				li.append(linka);
-				var egoera= $('<span class="ui-li-count"></span>');
-				egoera.append(m.egoera);
-				li2.append(m.data);
-				li2.append(egoera);
-				$('#esleituak').append(li2);
-				$('#esleituak').append(li);
-				$('#esleituak').listview('refresh');
-			});
-			$.mobile.loading('hide');
-			kop=kop+kop2;
-			$(document).on("scrollstop", checkScroll);
-	})
-	return false;
+	$(document).off("scrollstop");
+	kop2=5;
+	console.log(kop);
+	nireAbisuak();
+	kop=kop+kop2;
+	$(document).on("scrollstop", checkScroll);
 }
 /* attach if scrollstop for first time */
 $(document).on("scrollstop", checkScroll);
 </script>
-
 </body>
 </html>
