@@ -34,13 +34,6 @@ $erantzuna = array();
 			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia', 'berria')" );
 		}
 		$erantzuna["mezua"] = "Zuzen txertatu da.";
-		/*if ($mysqli->query($insert) == TRUE) {
-			//echo "Abisua zuzen bidali da";
-			$erantzuna["mezua"] = "Zuzen txertatu da.";
-		} else {
-			//echo "Error: " . $insert . "<br>" . $mysqli->error;
-			$erantzuna["mezua"] = "Errorea txertatzean.";
-		}*/
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";
 	}

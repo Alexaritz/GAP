@@ -105,17 +105,19 @@ tr:nth-child(even) {
 						</select>
 					</div>
 					<div class="ui-block-b">
-						<textarea  id="iruzkinak"  placeholder="Iruzkinak..." required></textarea>
+					<fieldset class="ui-grid-a my-breakpointb">
+					<div class="ui-block-a">
+						<label for="slider-h">Denbora (h):</label>
+						<input type="range" name="slider-h" id="slider-h" min="0" max="50" value="25" data-popup-enabled="true">
+						</div>
+						<div class="ui-block-b">
+						<label for="slider-min">Denbora (min):</label>
+						<input type="range" name="slider-min" id="slider-min" min="0" max="59" value="30" data-popup-enabled="true">
+						</div>
 					</div>	      
 				</fieldset>
 				<fieldset class="ui-grid-a my-breakpointb">
-					<div class="ui-block-a">
-						<textarea  id="materiala"  placeholder="Materiala..." required></textarea>
-					</div>
-					<div class="ui-block-b">
-					<label for="slider-1">Denbora:</label>
-						<input type="range" name="slider-1" id="slider-1" min="0" max="100" value="50" data-popup-enabled="true">
-					</div>	      
+					<textarea  id="azalpena"  placeholder="Azalpena..." required></textarea>
 				</fieldset>
 			<input type="submit" value="Gorde" name="submit" id="submit" data-theme="b">
 			</form>
@@ -171,9 +173,58 @@ id = window.localStorage.getItem('lanID');
 			var err = textStatus + ', ' + error;
             console.log("Request Failed: " + err);
 		})
+		//lanaren xehetasunak lortu
+		lanxehetasunFitx = "PHP/lanHasiak.php?jsoncallback=?"
+			$.getJSON( lanxehetasunFitx, { usuario:user, lanid:id})
+			.done(function(lanxeheterantzuna) {
+				$(lanxeheterantzuna).each(function (index, o) {
+					$( "#slider-h" ).val(o.denborah);
+					$( "#slider-h" ).slider("option","value",o.denborah);
+					$( "#slider-min" ).val(o.denboramin)
+					$("#azalpena").val(o.azalpena);
+				});
+			})
+			.fail(function(lanxeheterantzuna,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("Request Failed: " + err);
+			});
+		
+		
+		
+		
 $.mobile.loading('hide');
 });
 
+
+$("form").submit(function(){
+$.mobile.loading('show');
+var user = window.localStorage.getItem('username');
+var lanid = window.localStorage.getItem('lanID');
+var denborah=$("#slider-h").val()
+var denboramin=$("#slider-min").val()
+var azalpena=$("#azalpena").val()
+var egoera=$("#egoera").val()
+xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
+			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, denborah:denborah, denboramin:denboramin, azalpena:azalpena})
+			.done(function(xeheterantzuna) {
+				console.log(xeheterantzuna.mezua)
+			})
+			.fail(function(xeheterantzuna,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("Request Failed: " + err);
+			});
+		egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
+			$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
+			.done(function(egoerantzuna) {
+				$.mobile.loading('hide');
+				location.reload();
+			})
+			.fail(function(egoerantzuna,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				console.log("Request Failed: " + err);
+			});
+	return false;
+});
 </script>
 
 </body>

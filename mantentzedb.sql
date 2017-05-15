@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2017 a las 13:08:12
+-- Tiempo de generación: 15-05-2017 a las 12:53:48
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -166,7 +166,33 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `
 (57, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'czxczxc', 'czxcz', '2017-05-12 10:46:12', '34argazkia.jpeg', 'berria'),
 (58, 'a', 'Argia', 'proba', 'A', 1, '1', 'Normala', 'dsadasd', 'asdasdasd', '2017-05-12 10:46:33', '35argazkia.jpeg', 'berria'),
 (59, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Premiazkoa', 'Idlxnzn', 'Xlgnzmm,', '2017-05-12 10:47:01', '36argazkia.jpeg', 'berria'),
-(60, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Proba prevent', 'Xnznzc', '2017-05-12 11:27:22', '37argazkia.jpeg', 'berria');
+(60, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Proba prevent', 'Xnznzc', '2017-05-12 11:27:22', '37argazkia.jpeg', 'itxia'),
+(61, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Normala', 'PROBA ANDROID', 'PROBA', '2017-05-15 12:52:29', '38argazkia.jpeg', 'esleitua');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `lanazalpena`
+--
+
+CREATE TABLE `lanazalpena` (
+  `id` int(11) NOT NULL,
+  `lanid` int(11) NOT NULL,
+  `arduraduna` varchar(50) NOT NULL,
+  `denborah` int(11) NOT NULL,
+  `denboramin` int(11) NOT NULL,
+  `azalpena` varchar(1000) NOT NULL,
+  `itxiData` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `lanazalpena`
+--
+
+INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `denborah`, `denboramin`, `azalpena`, `itxiData`) VALUES
+(1, 60, 'proba', 3, 30, 'Probak egiten ari naiz. Galdara berria erosi da. Galdara aldatu da eta guztia ondo dabil.', '2017-05-15'),
+(3, 59, 'proba', 13, 13, '13', '2017-05-15'),
+(29, 61, 'proba', 0, 0, 'Hasi gabe.', '2017-05-15');
 
 -- --------------------------------------------------------
 
@@ -262,7 +288,14 @@ ALTER TABLE `erabiltzailea`
 --
 ALTER TABLE `lanagindua`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `egoeraCons` (`egoera`);
+  ADD KEY `egoCos` (`egoera`);
+
+--
+-- Indices de la tabla `lanazalpena`
+--
+ALTER TABLE `lanazalpena`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_azalpena` (`lanid`,`arduraduna`);
 
 --
 -- Indices de la tabla `lanegoera`
@@ -307,7 +340,12 @@ ALTER TABLE `erabiltzailea`
 -- AUTO_INCREMENT de la tabla `lanagindua`
 --
 ALTER TABLE `lanagindua`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+--
+-- AUTO_INCREMENT de la tabla `lanazalpena`
+--
+ALTER TABLE `lanazalpena`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT de la tabla `lanegoera`
 --
@@ -334,10 +372,10 @@ ALTER TABLE `erabiltzailea`
   ADD CONSTRAINT `arduraCons` FOREIGN KEY (`username`) REFERENCES `arduraduna` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `lanegoera`
+-- Filtros para la tabla `lanagindua`
 --
-ALTER TABLE `lanegoera`
-  ADD CONSTRAINT `lanCons` FOREIGN KEY (`izena`) REFERENCES `lanagindua` (`egoera`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `lanagindua`
+  ADD CONSTRAINT `egoCos` FOREIGN KEY (`egoera`) REFERENCES `lanegoera` (`izena`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
