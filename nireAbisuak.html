@@ -11,9 +11,11 @@
 <!-- Include the jQuery Mobile library -->
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <style>
+
 .ui-grid-a >.ui-block-a, .ui-grid-a>.ui-block-b{
 width:49%;
 }
+
 .ui-grid-a >.ui-block-a, .ui-grid-a >.ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e{
 margin:0.5%;
 }
@@ -40,34 +42,20 @@ margin:0%;
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
 	<fieldset class="ui-grid-a my-breakpoint">
-		<div class="ui-block-a">
+		<div id="esleituDiv" class="ui-block-a">
 			<form id="form">
-				<div id="collap" data-role="collapsible" data-theme="b" data-content-theme="b" >
+				<div id="collap" style="display:none" data-role="collapsible" data-theme="b" data-content-theme="b" >
 					<h2>Esleitutako Abisuak</h2>
 					<ul id="esleituak" data-role="listview" data-filter="true" >
 					</ul>
 				</div>
 			</form>
 		</div>
-		<div class="ui-block-b">
+		<div id="bidaliDiv" width="100%" class="ui-block-b">
 			<form id="form">
-				<div data-role="collapsible" data-theme="b" data-content-theme="b">
+				<div id="collap2" style="display:inline" data-role="collapsible" data-theme="b" data-content-theme="b">
 					<h2>Bidalitako Abisuak</h2>
-					<ul data-role="listview" data-filter="true">
-						<li data-role="list-divider">Ostirala, Urriak 8, 2010 <span class="ui-li-count">2</span></li>
-						<li><a href="#">
-						<h2>Alex</h2>
-						<p><strong>Laburpena...You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-						<p>Deskribapena...Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-						<p class="ui-li-aside"><strong>8:24</strong>PM</p>
-						</a></li>
-						<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
-						<li><a href="#">
-						<h2>Anthony Weber</h2>
-						<p><strong>You've been invited to a meeting at Filament Group in Anoeta, MA</strong></p>
-						<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-						<p class="ui-li-aside"><strong>6:24</strong>PM</p>
-						</a></li>
+					<ul id="bidaliak" data-role="listview" data-filter="true">
 					</ul>
 				</div>
 			</form>
@@ -76,6 +64,51 @@ margin:0%;
 </div>
 
 <script>
+kopB=5;
+kop2B="";
+function bidalitakoAbisuak(){
+	//$.mobile.loading('show');
+	lanFitx2 = "PHP/bidalitakoLanak.php?jsoncallback=?"
+		$.getJSON(lanFitx2, { usuario:user, kop:kopB, kop2:kop2B})
+		.done(function(lanErantzuna2) {
+			$(lanErantzuna2).each(function (index, m) {
+				if(m.egoera=="berria"){
+					var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
+				}else if (m.egoera=="esleitua"){
+					var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
+				}else{
+					var li2= $("<li data-role='list-divider'/>");
+				}
+				var li= $("<li/>");
+				var link = $('<a/>').attr("href", '#')
+				var header= $("<h2/>");
+				var text= $("<p/>");
+				var egoezikusi=$("<p style='display:none;'></p>");
+				var p=$("<p class='ui-li-aside'></p>");
+				var egoera= $('<span class="ui-li-count"></span>');
+				link.append(header.append(m.saila+"-"+m.eraikina+m.pisua+"."+m.gela));
+				link.append(text.append(m.laburpena));
+				link.attr("id", m.id);
+				link.attr("onClick", "lanXehetasunak(this.id); return false;");
+				link.append(egoezikusi.append("egoera:"+m.egoera));
+				link.append(p.append(m.id));
+				li2.append(egoera.append(m.egoera));
+				$('#bidaliak').append(li2.append(m.data+"\t"+m.arduraduna));
+				$('#bidaliak').append(li.append(link));
+				$('#bidaliak').listview('refresh');	
+			});
+			//$.mobile.loading('hide');
+		});
+}
+function gehitu2(){
+	$(document).off("scrollstop");
+	kop2B=5;
+	console.log(kopB);
+	bidalitakoAbisuak();
+	kopB=kopB+kop2B;
+	$(document).on("scrollstop", checkScroll);
+}
+
 kop=5;
 kop2="";
 function nireAbisuak(){
@@ -115,7 +148,20 @@ function nireAbisuak(){
 
 $(document).ready(function(){
 	user = window.localStorage.getItem('username');
+	arduradunaDafitx = "PHP/arduradunaDa.php?jsoncallback=?"
+		$.getJSON( arduradunaDafitx, { usuario:user})
+		.done(function(arduDaeran) {
+			if(arduDaeran.arduraduna == "bai"){
+				/// arduraduna bada, esleitutako abisuak erakutsi
+				$("#collap").attr("style","display:inline");
+				nireAbisuak();
+			}else{
+				$("#bidaliDiv").attr("style","float:none");
+				$("#bidaliDiv").attr("style","width:99%");
+			}
+		})
 	nireAbisuak();
+	bidalitakoAbisuak();
 });
 function lanXehetasunak(id){
 	window.localStorage.setItem('lanID',id);
@@ -132,7 +178,7 @@ function checkScroll() {
  
         /* Content div - include padding too! */
         contentHeight = $("#collap", activePage).outerHeight(),
- 
+		contentHeight2 = $("#collap2", activePage).outerHeight(),
         /* Height of scrolled content (invisible) */
         scrolled = $(window).scrollTop(),
  
@@ -145,12 +191,16 @@ function checkScroll() {
         /* Math 101 - Window's scrollTop should
            match content minus viewport plus toolbars */
         scrollEnd = contentHeight - screenHeight + header;
- 
+		scrollEnd2 = contentHeight2 - screenHeight + header;
     /* if (pageX) is active and page's bottom is reached
        load more elements  */
     if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd) {
         /* run loadMore function */
        gehitu(activePage);
+    }
+	  if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd2) {
+        /* run loadMore function */
+       gehitu2(activePage);
     }
 }
 function gehitu(){

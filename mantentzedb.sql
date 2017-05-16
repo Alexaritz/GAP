@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-05-2017 a las 12:53:48
+-- Tiempo de generación: 16-05-2017 a las 12:52:20
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -79,7 +79,8 @@ CREATE TABLE `erabiltzailea` (
 
 INSERT INTO `erabiltzailea` (`id`, `username`, `password`, `mota`) VALUES
 (1, 'proba', 'proba', ''),
-(2, 'a', 'a', '');
+(2, 'a', 'a', ''),
+(3, 'alex', 'alex', '');
 
 -- --------------------------------------------------------
 
@@ -165,9 +166,10 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `
 (56, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'cczxcz', 'czxczx', '2017-05-12 10:45:56', '', 'berria'),
 (57, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'czxczxc', 'czxcz', '2017-05-12 10:46:12', '34argazkia.jpeg', 'berria'),
 (58, 'a', 'Argia', 'proba', 'A', 1, '1', 'Normala', 'dsadasd', 'asdasdasd', '2017-05-12 10:46:33', '35argazkia.jpeg', 'berria'),
-(59, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Premiazkoa', 'Idlxnzn', 'Xlgnzmm,', '2017-05-12 10:47:01', '36argazkia.jpeg', 'berria'),
+(59, 'proba', 'Argia', 'proba', 'A', 1, '1', 'Premiazkoa', 'Idlxnzn', 'Xlgnzmm,', '2017-05-12 10:47:01', '36argazkia.jpeg', 'itxia'),
 (60, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Proba prevent', 'Xnznzc', '2017-05-12 11:27:22', '37argazkia.jpeg', 'itxia'),
-(61, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Normala', 'PROBA ANDROID', 'PROBA', '2017-05-15 12:52:29', '38argazkia.jpeg', 'esleitua');
+(61, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Normala', 'PROBA ANDROID', 'PROBA', '2017-05-15 12:52:29', '38argazkia.jpeg', 'itxia'),
+(62, 'alex', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Argiak ez du funtzionatzen.', 'LALALA', '2017-05-16 11:56:33', '39argazkia.jpeg', 'berria');
 
 -- --------------------------------------------------------
 
@@ -182,6 +184,7 @@ CREATE TABLE `lanazalpena` (
   `denborah` int(11) NOT NULL,
   `denboramin` int(11) NOT NULL,
   `azalpena` varchar(1000) NOT NULL,
+  `materiala` varchar(1000) NOT NULL,
   `itxiData` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -189,10 +192,10 @@ CREATE TABLE `lanazalpena` (
 -- Volcado de datos para la tabla `lanazalpena`
 --
 
-INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `denborah`, `denboramin`, `azalpena`, `itxiData`) VALUES
-(1, 60, 'proba', 3, 30, 'Probak egiten ari naiz. Galdara berria erosi da. Galdara aldatu da eta guztia ondo dabil.', '2017-05-15'),
-(3, 59, 'proba', 13, 13, '13', '2017-05-15'),
-(29, 61, 'proba', 0, 0, 'Hasi gabe.', '2017-05-15');
+INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `denborah`, `denboramin`, `azalpena`, `materiala`, `itxiData`) VALUES
+(1, 60, 'proba', 3, 30, 'Probak egiten ari naiz. Galdara berria erosi da. Galdara aldatu da eta guztia ondo dabil.', '', '2017-05-16'),
+(3, 59, 'proba', 1, 32, 'Probak egiten ari naiz. Kablean kontaktoa.', '', '2017-05-16'),
+(29, 61, 'proba', 2, 30, 'Bonbila berria erosi eta aldatu.', '', '2017-05-16');
 
 -- --------------------------------------------------------
 
@@ -273,8 +276,8 @@ ALTER TABLE `arazomota`
 --
 ALTER TABLE `arduraduna`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `erabCons` (`username`),
-  ADD KEY `sailaCons` (`saila`);
+  ADD KEY `sailaCons` (`saila`),
+  ADD KEY `erabCons` (`username`);
 
 --
 -- Indices de la tabla `erabiltzailea`
@@ -335,17 +338,17 @@ ALTER TABLE `arduraduna`
 -- AUTO_INCREMENT de la tabla `erabiltzailea`
 --
 ALTER TABLE `erabiltzailea`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `lanagindua`
 --
 ALTER TABLE `lanagindua`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 --
 -- AUTO_INCREMENT de la tabla `lanazalpena`
 --
 ALTER TABLE `lanazalpena`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT de la tabla `lanegoera`
 --
@@ -366,10 +369,10 @@ ALTER TABLE `ura`
 --
 
 --
--- Filtros para la tabla `erabiltzailea`
+-- Filtros para la tabla `arduraduna`
 --
-ALTER TABLE `erabiltzailea`
-  ADD CONSTRAINT `arduraCons` FOREIGN KEY (`username`) REFERENCES `arduraduna` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `arduraduna`
+  ADD CONSTRAINT `erabCons` FOREIGN KEY (`username`) REFERENCES `erabiltzailea` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `lanagindua`

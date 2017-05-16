@@ -19,7 +19,7 @@ if ($mysqli->connect_error) {
 } 
 //if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
-	if ($user!="" && $lanid!="" && $azalpena!=""){
+	if ($user!="" && $lanid!=""){
 			$erab = $mysqli->query( "INSERT INTO lanazalpena (lanid, arduraduna, denborah, denboramin, azalpena, itxiData) VALUES('$lanid', '$user', '$denborah','$denboramin','$azalpena',now()) ON DUPLICATE KEY UPDATE    
 			denborah='$denborah', denboramin='$denboramin', azalpena='$azalpena', itxiData=now()" );
 			$erantzuna["mezua"] = "Zuzen txertatu da.";

@@ -1,8 +1,8 @@
 <?php
-/* user + pass jaso*/
+/* user jaso*/
 $user = $_GET['usuario'];
-$id = $_GET['lanid'];
-//session_start();
+
+session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 $usuario = "u199017461_sgta";//root u199017461_sgta
 $password = "n1fXhn9qyo";//n1fXhn9qyo
@@ -14,17 +14,20 @@ if ($mysqli->connect_error) {
     printf("Connection failed: " . $mysqli->connect_error);
 } 
 
-$erantzuna = array();
-//arduraduna='$user' and
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where  id='$id'" );
+$erantzuna = array(); 
+
+		$erab = $mysqli->query( "SELECT * FROM arduraduna WHERE username=('$user')" );
 		$num_rows=mysqli_num_rows($erab);
 		if ($num_rows> 0){
-			while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
-				$erantzuna[]=array_map('utf8_encode', $datos);
-			}
+			$erantzuna["mezua"] = "Erabiltzailea arduraduna da.";
+			$erantzuna["arduraduna"] = "bai";
+		}else{
+			$erantzuna["mezua"] = "Erabiltzailea ez da arduraduna.";
+			$erantzuna["arduraduna"] = "ez";
 		}
-		$resultadosJson=json_encode( $erantzuna );
+
 /*emaitza json formatura bihurtzen da*/
+$resultadosJson = json_encode($erantzuna);
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */
 echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 ?>

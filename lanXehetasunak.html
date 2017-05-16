@@ -47,10 +47,10 @@ tr:nth-child(even) {
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
 	<div data-role="tabs" id="tab1">
-		<div data-role="navbar" >
+		<div id="navbar" data-role="navbar" >
 				<ul>
 				  <li><a href="#fragment-1" class="ui-btn-active">Abisuaren xehetasunak</a></li>
-				  <li><a href="#fragment-2">Abisua Osatu</a></li>
+				  <li><a href="#fragment-2" id="abisuaOsatutab">Abisua Osatu</a></li>
 				</ul>
 		</div>
 		<div id="fragment-1">
@@ -68,7 +68,7 @@ tr:nth-child(even) {
 					<div class="ui-body" id="lehentasuna"></div>
 				</div>	
 				<div class="ui-block-d">
-					<div class="ui-bar ui-bar-a">Bidaltzailea</div>
+					<div id="bidal" class="ui-bar ui-bar-a">Bidaltzailea</div>
 					<div class="ui-body" id="bidaltzailea"></div>
 				</div>	
 			</fieldset>
@@ -134,10 +134,12 @@ id = window.localStorage.getItem('lanID');
 		$.getJSON( lanfitx, { usuario:user, lanid:id})
 		.done(function(lanerantzuna) {
 			$(lanerantzuna).each(function (index, l) {
+				ard=l.arduraduna
 				$('#id').text(l.id);
 				$('#saila').text(l.saila);
 				$('#lehentasuna').text(l.lehentasuna);
-				$('#bidaltzailea').text(l.username);
+				if(ard!=user) $('#bidaltzailea').text(l.arduraduna);
+				else $('#bidaltzailea').text(l.username);
 				$('#tokia').text(l.eraikina+l.pisua+"."+l.gela);
 				$('#data').text(l.data);
 				$('#laburpena').text(l.laburpena);
@@ -146,57 +148,60 @@ id = window.localStorage.getItem('lanID');
 					$('#image').attr('src', "ARGAZKIAK/"+l.argazkia);
 				}
 			});
+			if(ard!=user){
+				$("#abisuaOsatutab").hide();
+				$("#bidal").text("Arduraduna");
+			}else{
+				//lanaren xehetasunak lortu
+				lanxehetasunFitx = "PHP/lanHasiak.php?jsoncallback=?"
+					$.getJSON( lanxehetasunFitx, { usuario:user, lanid:id})
+					.done(function(lanxeheterantzuna) {
+						$(lanxeheterantzuna).each(function (index, o) {
+							$( "#slider-h" ).val(o.denborah);
+							$( "#slider-h" ).slider("option","value",o.denborah);
+							$( "#slider-min" ).val(o.denboramin)
+							$("#azalpena").val(o.azalpena);
+						});
+					})
+					.fail(function(lanxeheterantzuna,textStatus, error) {
+						var err = textStatus + ', ' + error;
+						alert("Request Failed: " + err);
+					});
+					/*Lanaren egoera*/
+				egoerafitx = "PHP/egoeraLortu.php?jsoncallback=?"
+				$.getJSON( egoerafitx, { usuario:user, lanid:id})
+				.done(function(egoeraerantzuna) {
+					console.log("KODEA ONDO")
+					$(egoeraerantzuna).each(function (index, o) {
+						if(o.izena==null || o.izena=='undefined'){//DATU BASEKIN NOLABAIT LOTU...?
+							var id="#"+o;
+							$(id).attr("selected","selected");
+							var selector=$('#egoera');
+							$("select").selectmenu("refresh");
+						}
+						else{
+							var $option = $("<option id='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
+							$('#egoera').append($option);
+						}
+					});
+				})
+				.fail(function(egoeraerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Request Failed: " + err);
+				})
+		}
 		})
 		.fail(function(koderantzuna,textStatus, error) {
 			var err = textStatus + ', ' + error;
             console.log("Request Failed: " + err);
-		})
-		/*Lanaren egoera*/
-		egoerafitx = "PHP/egoeraLortu.php?jsoncallback=?"
-		$.getJSON( egoerafitx, { usuario:user, lanid:id})
-		.done(function(egoeraerantzuna) {
-			console.log("KODEA ONDO")
-			$(egoeraerantzuna).each(function (index, o) {
-				if(o.izena==null || o.izena=='undefined'){//DATU BASEKIN NOLABAIT LOTU...?
-					var id="#"+o;
-					$(id).attr("selected","selected");
-					var selector=$('#egoera');
-					$("select").selectmenu("refresh");
-				}
-				else{
-					var $option = $("<option id='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
-					$('#egoera').append($option);
-				}
-			});
-		})
-		.fail(function(egoeraerantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-		})
-		//lanaren xehetasunak lortu
-		lanxehetasunFitx = "PHP/lanHasiak.php?jsoncallback=?"
-			$.getJSON( lanxehetasunFitx, { usuario:user, lanid:id})
-			.done(function(lanxeheterantzuna) {
-				$(lanxeheterantzuna).each(function (index, o) {
-					$( "#slider-h" ).val(o.denborah);
-					$( "#slider-h" ).slider("option","value",o.denborah);
-					$( "#slider-min" ).val(o.denboramin)
-					$("#azalpena").val(o.azalpena);
-				});
-			})
-			.fail(function(lanxeheterantzuna,textStatus, error) {
-				var err = textStatus + ', ' + error;
-				alert("Request Failed: " + err);
-			});
-		
-		
-		
-		
+		})	
 $.mobile.loading('hide');
 });
 
 
 $("form").submit(function(){
+var egoera=$("#egoera").val()
+if (confirm("Ziur lana itxi nahi duzula?")==true && egoera=="itxia"){
 $.mobile.loading('show');
 var user = window.localStorage.getItem('username');
 var lanid = window.localStorage.getItem('lanID');
@@ -224,7 +229,11 @@ xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
 				console.log("Request Failed: " + err);
 			});
 	return false;
+}else{
+return false;
+}
 });
+
 </script>
 
 </body>
