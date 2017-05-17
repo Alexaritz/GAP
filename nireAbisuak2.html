@@ -68,17 +68,13 @@ kopB=5;
 kop2B="";
 function bidalitakoAbisuak(){
 	//$.mobile.loading('show');
-	lanFitx2 = "PHP/bidalitakoLanak.php?jsoncallback=?"
+	lanFitx2 = "PHP/bidalitakoLanak2.php?jsoncallback=?"
 		$.getJSON(lanFitx2, { usuario:user, kop:kopB, kop2:kop2B})
 		.done(function(lanErantzuna2) {
-		if(lanErantzuna2.log=="false"){
-			alert(lanErantzuna2.mezua);
-			window.localStorage.clear();
-			window.location.replace("PHP/logout.php");
-		}else{
 			$(lanErantzuna2).each(function (index, data) {
-				$.each(data, function (index, m) {
-					if(typeof m === 'object'){
+			console.log(data)
+			$.each(data, function (index, m) {
+				if(typeof m === 'object'){
 					if(m.egoera=="berria"){
 						var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
 					}else if (m.egoera=="esleitua"){
@@ -103,17 +99,16 @@ function bidalitakoAbisuak(){
 					$('#bidaliak').append(li2.append(m.data+"\t"+m.arduraduna));
 					$('#bidaliak').append(li.append(link));
 					$('#bidaliak').listview('refresh');	
-					}
-					})
-				});
-			}
+				}
+				})
+				
+			});
 			//$.mobile.loading('hide');
 		});
 }
 function gehitu2(){
 	$(document).off("scrollstop");
 	kop2B=5;
-	console.log(kopB);
 	bidalitakoAbisuak();
 	kopB=kopB+kop2B;
 	$(document).on("scrollstop", checkScroll);
@@ -170,6 +165,7 @@ $(document).ready(function(){
 				$("#bidaliDiv").attr("style","width:99%");
 			}
 		})
+	nireAbisuak();
 	bidalitakoAbisuak();
 });
 function lanXehetasunak(id){
@@ -215,7 +211,6 @@ function checkScroll() {
 function gehitu(){
 	$(document).off("scrollstop");
 	kop2=5;
-	console.log(kop);
 	nireAbisuak();
 	kop=kop+kop2;
 	$(document).on("scrollstop", checkScroll);

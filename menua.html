@@ -17,7 +17,7 @@
 
 <div data-role="page" id="menu">
 	<div data-role="header" class="ui-grid-b">
-		<div class="ui-block-a"><a onclick="location.href = 'amaitu.html';" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div>
+		<div class="ui-block-a"><a onclick="logout();" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div>
 		<div class="ui-block-b center" align="center"><center><p>Menua</p></center></div>
 		<div class="ui-block-c"></div>
 	</div>
@@ -31,7 +31,10 @@
 </div>
 
 <script>
-
+function logout(){
+	window.localStorage.clear();
+	window.location.replace("PHP/logout.php");
+}
 </script>
 
 </body>

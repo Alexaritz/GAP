@@ -20,7 +20,7 @@ $erantzuna = array();
 		$erab = $mysqli->query( "SELECT * FROM erabiltzailea WHERE username=('$user') and password=('$pass')" );
 		$num_rows=mysqli_num_rows($erab);
 		if ($num_rows> 0){
-			$_SESSION['loggedin'] = true;
+			$_SESSION['logged'] = true;
 			$_SESSION['username'] = $user;
 			$erantzuna["mezua"] = "Datu zuzenak.";
 			$erantzuna["onarpena"] = "ok";

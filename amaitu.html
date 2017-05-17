@@ -1,4 +1,6 @@
-<!DOCTYPE html> 
+<?php
+session_start();
+?><!DOCTYPE html> 
 <html>
 <head>
 <!-- Include meta tag to ensure proper rendering and touch zooming -->
@@ -9,14 +11,18 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- Include the jQuery Mobile library -->
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<?php
+session_unset();
+session_destroy(); 
+?>
 </head>
 <body> 
 
 <script>
 
 $(document).ready(function(){
-localStorage.removeItem('username');
-localStorage.removeItem('pass');
+window.localStorage.clear();
+
 window.location.replace("index.html");
 });
 
