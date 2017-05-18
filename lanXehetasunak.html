@@ -7,12 +7,23 @@
 
 <!-- Include jQuery Mobile stylesheets -->
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-
+<link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
 <!-- Include the jQuery library -->
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <!-- Include the jQuery Mobile library -->
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+    <script type="text/javascript" src="http://cdn.jtsage.com/external/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="http://dev.jtsage.com/jQM-DateBox/js/doc.js"></script>
+    <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.core.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.calbox.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.datebox.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.flipbox.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.slidebox.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.customflip.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jqm-datebox.lang.utf8.js"></script>
 <style>
 th {
     border-bottom: 1px solid #d6d6d6;
@@ -36,6 +47,8 @@ tr:nth-child(even) {
       width: 100%;
     }
   }
+
+
 </style>
 </head>
 <body> 
@@ -105,26 +118,60 @@ tr:nth-child(even) {
 						</select>
 					</div>
 					<div class="ui-block-b">
-					<fieldset class="ui-grid-a my-breakpointb">
-					<div class="ui-block-a">
-						<label for="slider-h">Denbora (h):</label>
-						<input type="range" name="slider-h" id="slider-h" min="0" max="50" value="25" data-popup-enabled="true">
-						</div>
-						<div class="ui-block-b">
-						<label for="slider-min">Denbora (min):</label>
-						<input type="range" name="slider-min" id="slider-min" min="0" max="59" value="30" data-popup-enabled="true">
-						</div>
-					</div>	      
+					</div>			
 				</fieldset>
 				<fieldset class="ui-grid-a my-breakpointb">
-					<textarea  id="azalpena"  placeholder="Azalpena..." required></textarea>
+					<textarea  id="azalpena"  placeholder="Azalpena..."></textarea>
+					<textarea  id="materiala"  placeholder="Erabilitako materiala..."></textarea>
 				</fieldset>
+				<fieldset id="langileak" class="ui-grid-a my-breakpointb">
+				<div class="ui-block-a">
+					<div class="ui-grid-a">
+						<div class="ui-block-a">
+							<select id="arduraduna" name="arduraduna">
+									<option value="">Arduraduna</option>
+							</select>
+						</div>	
+						<div class="ui-block-b">
+						<label for="eguna">Data:</label>
+						<input name="eguna" id="eguna" type="text" data-role="datebox" data-options='{"mode":"calbox"}' />
+						</div>	
+					</div>	
+				</div>	
+				<div class="ui-block-b">
+					<fieldset class="ui-grid-a my-breakpointb">
+							<div class="ui-block-a">
+								<label for="slider-h">Denbora (h):</label>
+								<input type="range" name="slider-h" id="slider-h" min="0" max="50" value="25" data-popup-enabled="true">
+							</div>	
+								<div class="ui-block-b">
+									<label for="slider-min">Denbora (min):</label>
+									<input type="range" name="slider-min" id="slider-min" min="0" max="59" value="30" data-popup-enabled="true">
+								</div>
+					</fieldset>	
+				</div>	
+				</fieldset>	
+				<div id="lanberriak"></div>
+				<button id="berria" type="button">Berria</button>
 			<input type="submit" value="Gorde" name="submit" id="submit" data-theme="b">
 			</form>
 		</div>
 	</div>
 </div>
 <script>
+var lanKop=0;
+$('#berria').click(function () {
+	var lang=$("<fieldset id='lan"+lanKop+"'/>")
+	var ard=$("<select id='ard"+lanKop+"'/>")
+	var opt=$("<option value=''>Arduraduna</option>")
+	id="#ard"+lanKop;
+	$("#langileak").append(lang.append(ard.append(opt)))
+	$(id).selectmenu();
+	lanKop=lanKop+1;
+	var a=lang.prop('outerHTML');
+	console.log(a)
+  // $("#langileak").clone().appendTo("#lanberriak");
+});
 $(document).ready(function(){
 $.mobile.loading('show');
 user = window.localStorage.getItem('username');
@@ -148,7 +195,7 @@ id = window.localStorage.getItem('lanID');
 					$('#image').attr('src', "ARGAZKIAK/"+l.argazkia);
 				}
 			});
-			if(ard!=user){
+			if(user==null || ard!=user){
 				$("#abisuaOsatutab").hide();
 				$("#bidal").text("Arduraduna");
 			}else{
@@ -161,6 +208,7 @@ id = window.localStorage.getItem('lanID');
 							$( "#slider-h" ).slider("option","value",o.denborah);
 							$( "#slider-min" ).val(o.denboramin)
 							$("#azalpena").val(o.azalpena);
+							$("#materiala").val(o.materiala);
 						});
 					})
 					.fail(function(lanxeheterantzuna,textStatus, error) {
@@ -198,39 +246,72 @@ id = window.localStorage.getItem('lanID');
 $.mobile.loading('hide');
 });
 
-
+$('#eguna').click(function () {
+   $('#eguna').datebox('open');
+});
 $("form").submit(function(){
+event.preventDefault();
 var egoera=$("#egoera").val()
-if (confirm("Ziur lana itxi nahi duzula?")==true && egoera=="itxia"){
-$.mobile.loading('show');
-var user = window.localStorage.getItem('username');
-var lanid = window.localStorage.getItem('lanID');
-var denborah=$("#slider-h").val()
-var denboramin=$("#slider-min").val()
-var azalpena=$("#azalpena").val()
-var egoera=$("#egoera").val()
-xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
-			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, denborah:denborah, denboramin:denboramin, azalpena:azalpena})
+if(egoera=="itxia"){
+	if (confirm("Ziur lana itxi nahi duzula?")==true){
+		$.mobile.loading('show');
+		var user = window.localStorage.getItem('username');
+		var lanid = window.localStorage.getItem('lanID');
+		var denborah=$("#slider-h").val()
+		var denboramin=$("#slider-min").val()
+		var azalpena=$("#azalpena").val()
+		var materiala=$("#materiala").val()
+		var egoera=$("#egoera").val()
+		xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
+			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, denborah:denborah, denboramin:denboramin, azalpena:azalpena, materiala:materiala})
 			.done(function(xeheterantzuna) {
-				console.log(xeheterantzuna.mezua)
+				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
+				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
+				.done(function(egoerantzuna) {
+					$.mobile.loading('hide');
+					location.reload();
+				})
+				.fail(function(egoerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Request Failed: " + err);
+				});
 			})
 			.fail(function(xeheterantzuna,textStatus, error) {
 				var err = textStatus + ', ' + error;
 				alert("Request Failed: " + err);
 			});
-		egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
-			$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
-			.done(function(egoerantzuna) {
-				$.mobile.loading('hide');
-				location.reload();
-			})
-			.fail(function(egoerantzuna,textStatus, error) {
-				var err = textStatus + ', ' + error;
-				console.log("Request Failed: " + err);
-			});
+	}else{
 	return false;
+	}
 }else{
-return false;
+	$.mobile.loading('show');
+		var user = window.localStorage.getItem('username');
+		var lanid = window.localStorage.getItem('lanID');
+		var denborah=$("#slider-h").val()
+		var denboramin=$("#slider-min").val()
+		var azalpena=$("#azalpena").val()
+		var materiala=$("#materiala").val()
+		var egoera=$("#egoera").val()
+		xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
+			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, denborah:denborah, denboramin:denboramin, azalpena:azalpena, materiala:materiala})
+			.done(function(xeheterantzuna) {
+			console.log(xeheterantzuna.mezua)
+				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
+				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
+				.done(function(egoerantzuna) {
+					console.log(egoerantzuna.mezua)
+					$.mobile.loading('hide');
+					location.reload();
+				})
+				.fail(function(egoerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Request Failed: " + err);
+				});
+			})
+			.fail(function(xeheterantzuna,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("Request Failed: " + err);
+			});
 }
 });
 

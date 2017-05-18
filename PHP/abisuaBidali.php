@@ -23,9 +23,10 @@ if ($mysqli->connect_error) {
     printf("Connection failed: " . $mysqli->connect_error);
 } 
 if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
-	$erantzuna["log"] = "true";
+	
 //if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
+$erantzuna["log"] = "true";
 	if ($saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
 		if ($argazkia==""){
 			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '', 'berria')" );

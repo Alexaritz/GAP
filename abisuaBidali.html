@@ -202,8 +202,7 @@ $("form").submit(function(){
 					abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
 					$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
 					.done(function(abisuerantzuna) {
-						if(abisuerantzuna.log==true){
-							console.log("ZUZEN TXERTATU DA")
+						if(abisuerantzuna.log=="true"){
 							alert(abisuerantzuna.mezua);
 							window.location.replace("menua.html");
 							$.mobile.loading('hide');
@@ -229,7 +228,7 @@ $("form").submit(function(){
 			abisuFitx2 = "PHP/abisuaBidali.php?jsoncallback=?"
 			$.getJSON( abisuFitx2, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
 			.done(function(abisuerantzuna2) {
-				if(abisuerantzuna2.log==true){
+				if(abisuerantzuna2.log=="true"){
 					console.log("ZUZEN TXERTATU DA")
 					alert(abisuerantzuna2.mezua);
 					window.location.replace("menua.html");
