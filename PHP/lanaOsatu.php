@@ -2,8 +2,6 @@
 /*datuak jaso*/
 $user = $_GET['usuario'];
 $lanid = $_GET['lanid'];
-$denborah = $_GET['denborah'];
-$denboramin = $_GET['denboramin'];
 $azalpena = $_GET['azalpena'];
 $materiala = $_GET['materiala'];
 
@@ -21,9 +19,9 @@ if ($mysqli->connect_error) {
 //if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
 	if ($user!="" && $lanid!=""){
-			$erab = $mysqli->query( "INSERT INTO lanazalpena (lanid, arduraduna, denborah, denboramin, azalpena, materiala, itxiData) 
-			VALUES('$lanid', '$user', '$denborah','$denboramin','$azalpena','$materiala',now()) ON DUPLICATE KEY UPDATE    
-			denborah='$denborah', denboramin='$denboramin', azalpena='$azalpena', materiala='$materiala', itxiData=now()" );
+			$erab = $mysqli->query( "INSERT INTO lanazalpena (lanid, arduraduna, azalpena, materiala, itxiData) 
+			VALUES('$lanid', '$user','$azalpena','$materiala',now()) ON DUPLICATE KEY UPDATE    
+			azalpena='$azalpena', materiala='$materiala', itxiData=now()" );
 			$erantzuna["mezua"] = "Zuzen txertatu da.";
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";

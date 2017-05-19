@@ -47,7 +47,13 @@ tr:nth-child(even) {
       width: 100%;
     }
   }
-
+  @media all and (max-width: 44em) {
+    .my-breakpointc > .ui-block-a ,
+    .my-breakpointc > .ui-block-b{
+	  float:none;
+      width: 100%;
+    }
+  }
 
 </style>
 </head>
@@ -121,10 +127,11 @@ tr:nth-child(even) {
 					</div>			
 				</fieldset>
 				<fieldset class="ui-grid-a my-breakpointb">
+					<input style="display:none" name="lanid" id="lanid" type="text" />
 					<textarea  id="azalpena"  placeholder="Azalpena..."></textarea>
 					<textarea  id="materiala"  placeholder="Erabilitako materiala..."></textarea>
 				</fieldset>
-				<fieldset id="langileak" class="ui-grid-a my-breakpointb">
+				<!--<fieldset id="langileak" class="ui-grid-a my-breakpointb">
 				<div class="ui-block-a">
 					<div class="ui-grid-a">
 						<div class="ui-block-a">
@@ -150,9 +157,9 @@ tr:nth-child(even) {
 								</div>
 					</fieldset>	
 				</div>	
-				</fieldset>	
+				</fieldset>	-->
 				<div id="lanberriak"></div>
-				<button id="berria" type="button">Berria</button>
+				<button id="berria" type="button">Langile berria</button>
 			<input type="submit" value="Gorde" name="submit" id="submit" data-theme="b">
 			</form>
 		</div>
@@ -160,22 +167,84 @@ tr:nth-child(even) {
 </div>
 <script>
 var lanKop=0;
+//Langile berriaren formularioa sortu
 $('#berria').click(function () {
-	var lang=$("<fieldset id='lan"+lanKop+"'/>")
-	var ard=$("<select id='ard"+lanKop+"'/>")
-	var opt=$("<option value=''>Arduraduna</option>")
+	var lang=$("<fieldset  id='lan"+lanKop+"'/>")
+	var ard=$("<select name='langile[]' id='ard"+lanKop+"'/>")
+	var opt=$("<option value=''>Langilea</option>")
+	var grida=$("<div class='ui-grid-a my-breakpointc ui-body ui-body-a ui-corner-all'></div>")
+	var gridb=$("<div class='ui-grid-a'></div>")
+	var gridc=$("<div class='ui-grid-a'></div>")
+	var block1=$("<div class='ui-block-a'></div>")
+	var block2=$("<div class='ui-block-b'></div>")
+	var block1b=$("<div class='ui-block-a'></div>")
+	var block2b=$("<div class='ui-block-b'></div>")
+	var block1c=$("<div class='ui-block-a'></div>")
+	var block2c=$("<div class='ui-block-b'></div>")
+	$("#lanberriak").append(grida)
+	grida.append(block1)
+	grida.append(block2)
+	block1.append(gridb)
+	block2.append(gridc)
+	gridb.append(block1b)
+	gridb.append(block2b)
+	gridc.append(block1c)
+	gridc.append(block2c)
+	
+	ard.append(opt)
+	var datain=$("<input id='data"+lanKop+"' name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false}'/>")
+	var labelh=$("<label for='denborah"+lanKop+"'>Denbora (h):</label>")
+	var denborah=$("<input type='range' name='denborah[]' id='denborah"+lanKop+"' min='0' max='50' value='25' data-popup-enabled='true'>")
+	var labelmin=$("<label for='denboramin"+lanKop+"'>Denbora (min):</label>")
+	var denboramin=$("<input type='range' name='denboramin[]' id='denboramin"+lanKop+"' min='0' max='50' value='25' data-popup-enabled='true'>")
+
 	id="#ard"+lanKop;
-	$("#langileak").append(lang.append(ard.append(opt)))
 	$(id).selectmenu();
+	id="#date"+lanKop;
+	$(id).datebox();
+	id="#denborah"+lanKop;
+	$(id).slider().slider('refresh');
+	id="#denboramin"+lanKop;
+	$(id).slider().slider('refresh');
+	block1b.append(lang.append(ard))
+	block2b.append(datain)
+	block1c.append(labelh)
+	block1c.append(denborah)
+	block2c.append(labelmin)
+	block2c.append(denboramin)
+	
+	lanPopulatu(lanKop);
+	$('#lanberriak').trigger('create');
 	lanKop=lanKop+1;
-	var a=lang.prop('outerHTML');
+	var a=denborah.prop('outerHTML');
 	console.log(a)
-  // $("#langileak").clone().appendTo("#lanberriak");
 });
+function calClick(zenb) {
+	var id="#data"+zenb;
+   $(id).datebox('open');
+}
+function lanPopulatu(zenb) {
+	var id="#ard"+zenb;
+   /*ARDURADUNA BETE*/
+		ardfitx = "PHP/arduradunaLortu.php?jsoncallback=?"
+		$.getJSON( ardfitx, { usuario:user})
+		.done(function(arderantzuna) {
+			console.log("ONDO2")
+			$(arderantzuna).each(function (index, o) {
+				var $option = $("<option/>").attr("value", o.username).text(o.username);
+				$(id).append($option);
+			});
+		})
+		.fail(function(arderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+}
 $(document).ready(function(){
 $.mobile.loading('show');
 user = window.localStorage.getItem('username');
 id = window.localStorage.getItem('lanID');
+$('#lanid').text(id);
 		/*Lanaren xehetasunak*/
 		lanfitx = "PHP/lanXehetasunak.php?jsoncallback=?"
 		$.getJSON( lanfitx, { usuario:user, lanid:id})
@@ -263,7 +332,7 @@ if(egoera=="itxia"){
 		var materiala=$("#materiala").val()
 		var egoera=$("#egoera").val()
 		xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
-			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, denborah:denborah, denboramin:denboramin, azalpena:azalpena, materiala:materiala})
+			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
 			.done(function(xeheterantzuna) {
 				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
@@ -273,13 +342,23 @@ if(egoera=="itxia"){
 				})
 				.fail(function(egoerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;
-					console.log("Request Failed: " + err);
+					console.log("1Request Failed: " + err);
 				});
 			})
 			.fail(function(xeheterantzuna,textStatus, error) {
 				var err = textStatus + ', ' + error;
-				alert("Request Failed: " + err);
+				alert("2Request Failed: " + err);
 			});
+			
+			if(lanKop>0){
+				$.post( "PHP/langileOrduakGorde.php", $( "#abisuaOsatu" ).serialize(),'json' )
+				.done(function(data){
+					alert(data.mezua)
+				})
+				.fail(function(data){
+				})
+			}
+			
 	}else{
 	return false;
 	}
@@ -293,25 +372,31 @@ if(egoera=="itxia"){
 		var materiala=$("#materiala").val()
 		var egoera=$("#egoera").val()
 		xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
-			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, denborah:denborah, denboramin:denboramin, azalpena:azalpena, materiala:materiala})
+			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
 			.done(function(xeheterantzuna) {
-			console.log(xeheterantzuna.mezua)
 				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
-					console.log(egoerantzuna.mezua)
 					$.mobile.loading('hide');
-					location.reload();
+					//location.reload();
 				})
 				.fail(function(egoerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;
-					console.log("Request Failed: " + err);
+					console.log("1Request Failed: " + err);
 				});
 			})
 			.fail(function(xeheterantzuna,textStatus, error) {
 				var err = textStatus + ', ' + error;
-				alert("Request Failed: " + err);
+				alert("2Request Failed: " + err);
 			});
+			if(lanKop>0){
+				$.post( "PHP/langileOrduakGorde2.php", $( "#abisuaOsatu" ).serialize(), 'json')
+				.done(function(data){
+					alert(data.mezua)
+				})
+				.fail(function(data){
+				})
+			}
 }
 });
 
