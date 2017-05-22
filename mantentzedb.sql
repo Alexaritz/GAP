@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2017 a las 13:51:30
+-- Tiempo de generación: 22-05-2017 a las 13:27:36
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -204,10 +204,11 @@ INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `azalpena`, `materiala`,
 (3, 59, 'proba', 'Probak egiten ari naiz. Kablean kontaktoa.', '', '2017-05-16'),
 (29, 61, 'proba', 'Bonbila berria erosi eta aldatu.', '', '2017-05-16'),
 (30, 70, 'proba', 'ONA', '', '2017-05-18'),
-(56, 71, 'a', 'LALALA', 'LALALA2', '2017-05-19'),
+(56, 71, 'a', 'LALALA', 'LALALA2LA', '2017-05-22'),
 (66, 69, 'a', '', '', '2017-05-18'),
 (67, 66, 'a', '', '', '2017-05-18'),
-(68, 64, 'a', '', '', '2017-05-18');
+(68, 64, 'a', '', '', '2017-05-18'),
+(108, 63, 'a', 'LANA EGINDA', 'BONBILA 1.', '2017-05-22');
 
 -- --------------------------------------------------------
 
@@ -243,6 +244,14 @@ CREATE TABLE `langileorduak` (
   `denboramin` int(11) NOT NULL,
   `lanEguna` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `langileorduak`
+--
+
+INSERT INTO `langileorduak` (`id`, `lanID`, `langilea`, `denborah`, `denboramin`, `lanEguna`) VALUES
+(1, 63, 'a', 4, 0, '2017-05-21'),
+(4, 63, 'a', 4, 0, '2017-05-15');
 
 -- --------------------------------------------------------
 
@@ -338,7 +347,8 @@ ALTER TABLE `lanegoera`
 -- Indices de la tabla `langileorduak`
 --
 ALTER TABLE `langileorduak`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`lanID`,`langilea`,`lanEguna`) USING BTREE;
 
 --
 -- Indices de la tabla `saila`
@@ -381,7 +391,7 @@ ALTER TABLE `lanagindua`
 -- AUTO_INCREMENT de la tabla `lanazalpena`
 --
 ALTER TABLE `lanazalpena`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 --
 -- AUTO_INCREMENT de la tabla `lanegoera`
 --
@@ -391,7 +401,7 @@ ALTER TABLE `lanegoera`
 -- AUTO_INCREMENT de la tabla `langileorduak`
 --
 ALTER TABLE `langileorduak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `saila`
 --
