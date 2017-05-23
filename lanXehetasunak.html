@@ -54,7 +54,10 @@ tr:nth-child(even) {
       width: 100%;
     }
   }
-
+  
+ ui-btn ui-input-btn ui-corner-all ui-shadow ui-btn-inline ui-mini ui-icon-delete ui-btn-icon-left{
+  float:left;
+  }
 </style>
 </head>
 <body> 
@@ -154,6 +157,8 @@ $('#berria').click(function () {
 	var block2b=$("<div class='ui-block-b'></div>")
 	var block1c=$("<div class='ui-block-a'></div>")
 	var block2c=$("<div class='ui-block-b'></div>")
+	
+	
 	$("#lanberriak").append(grida)
 	grida.append(block1)
 	grida.append(block2)
@@ -290,9 +295,7 @@ $('#lanid').val(id);
 							var lang=$("<fieldset  id='lan"+lanKop+"'/>")
 							var ard=$("<select name='langile[]' id='ard"+lanKop+"'/>")
 							var opt=$("<option value=''>Langilea</option>")
-							
-							var grida=$("<div class='ui-grid-a my-breakpointc ui-body ui-body-a ui-corner-all'></div>")
-							var lanorduID=$("<div name=lanOrdu[] id='lanOrdu"+o.id+"' >"+o.id+"</div>")
+							var grida=$("<div class='ui-grid-a my-breakpointc '></div>")
 							var gridb=$("<div class='ui-grid-a'></div>")
 							var gridc=$("<div class='ui-grid-a'></div>")
 							var block1=$("<div class='ui-block-a'></div>")
@@ -301,8 +304,15 @@ $('#lanid').val(id);
 							var block2b=$("<div class='ui-block-b'></div>")
 							var block1c=$("<div class='ui-block-a'></div>")
 							var block2c=$("<div class='ui-block-b'></div>")
-							$("#lanberriak").append(grida)
-							grida.append(lanorduID)
+							var ezab=$('<input id="ezab'+o.id+'" onclick="ezabatuLangileOrduak('+o.id+');return false;" type="button" style="float:left;" data-mini="true" data-inline="true" data-icon="delete" value="Ezabatu"/>');
+							var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+o.id+"' >lanID:"+o.id+"</div>")
+							var dividezab=$("<div id='div"+o.id+"' ui-body ui-body-a ui-corner-all></div>")
+				
+							dividezab.append(ezab)
+							dividezab.append(lanorduID)
+							dividezab.append(grida)
+							$("#lanberriak").append(dividezab)
+							
 							grida.append(block1)
 							grida.append(block2)
 							block1.append(gridb)
@@ -352,9 +362,35 @@ $('#lanid').val(id);
 $.mobile.loading('hide');
 });
 
+
+
+
+
+function ezabatuLangileOrduak(id){
+console.log(id)
+	ezabaFitx = "PHP/ezabatuLangileOrdua.php?jsoncallback=?"
+		$.getJSON( ezabaFitx, { usuario:user ,id:id})
+		.done(function(ezabaerantzuna) {
+			console.log(ezabaerantzuna.mezua)
+			if(ezabaerantzuna.zuzen == "ok"){
+			divid="#div"+id;
+				$(divid).remove();
+				location.reload();
+			}
+		})
+		.fail(function(egoerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Delete Request Failed: " + err);
+				});
+}
+
+
 $('#eguna').click(function () {
    $('#eguna').datebox('open');
 });
+
+
+
 $("form").submit(function(){
 event.preventDefault();
 var egoera=$("#egoera").val()
@@ -411,7 +447,16 @@ if(egoera=="itxia"){
 		xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
 			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
 			.done(function(xeheterantzuna) {
-				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
+				console.log("Zuzen" +xeheterantzuna.mezua);
+			})
+			.always(function(xeheterantzuna) {
+				console.log("Always: " + data.mezua);
+			})
+			.fail(function(xeheterantzuna,textStatus, error) {
+				var err = JSON.stringify(xeheterantzuna.responseText)+textStatus+ ', ' + error;
+				console.log("2Request Failed: " + err);
+			});
+			egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
 					$.mobile.loading('hide');
@@ -421,15 +466,10 @@ if(egoera=="itxia"){
 					var err = textStatus + ', ' + error;
 					console.log("1Request Failed: " + err);
 				});
-			})
-			.fail(function(xeheterantzuna,textStatus, error) {
-				var err = textStatus + ', ' + error;
-				alert("2Request Failed: " + err);
-			});
 			if(lanKop>0){
 				$.post( "PHP/langileOrduakGorde.php", $( "#abisuaOsatu" ).serialize(), "json")
 				.done(function(data){
-					console.log(data)
+					console.log("langileORduakGorde"+data)
 				})
 				.fail(function(data){
 				})
