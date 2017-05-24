@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-05-2017 a las 13:27:36
+-- Tiempo de generación: 24-05-2017 a las 12:58:09
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -178,7 +178,8 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `
 (68, 'a', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fsd', 'sd', '2017-05-18 09:54:11', '', 'berria'),
 (69, 'a', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'fsdsgd', 'fdhdfxshd', '2017-05-18 09:54:53', '', 'esleitua'),
 (70, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'asgdh', 'gasd', '2017-05-18 09:56:28', '', 'esleitua'),
-(71, 'proba', 'Argia', 'a', 'A', 1, '1', 'Normala', 'dvsa', 'sdag', '2017-05-18 09:57:16', '', 'berria');
+(71, 'proba', 'Argia', 'a', 'A', 1, '1', 'Normala', 'dvsa', 'sdag', '2017-05-18 09:57:16', '', 'esleitua'),
+(72, 'a', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'PROBA ASPALDIKO PARTEZ', 'PROBA', '2017-05-24 10:27:26', '41argazkia.jpeg', 'itxia');
 
 -- --------------------------------------------------------
 
@@ -204,11 +205,12 @@ INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `azalpena`, `materiala`,
 (3, 59, 'proba', 'Probak egiten ari naiz. Kablean kontaktoa.', '', '2017-05-16'),
 (29, 61, 'proba', 'Bonbila berria erosi eta aldatu.', '', '2017-05-16'),
 (30, 70, 'proba', 'ONA', '', '2017-05-18'),
-(56, 71, 'a', 'LALALA', 'LALALA2LA', '2017-05-22'),
+(56, 71, 'a', 'LA', 'LA', '2017-05-24'),
 (66, 69, 'a', '', '', '2017-05-18'),
 (67, 66, 'a', '', '', '2017-05-18'),
 (68, 64, 'a', '', '', '2017-05-18'),
-(108, 63, 'a', 'LANA EGINDA', 'BONBILA 1.', '2017-05-22');
+(108, 63, 'a', 'LANA EGINDA', 'BONBILA 1.', '2017-05-22'),
+(143, 72, 'a', 'LALA2', 'LALA2', '2017-05-24');
 
 -- --------------------------------------------------------
 
@@ -250,8 +252,12 @@ CREATE TABLE `langileorduak` (
 --
 
 INSERT INTO `langileorduak` (`id`, `lanID`, `langilea`, `denborah`, `denboramin`, `lanEguna`) VALUES
-(1, 63, 'a', 4, 0, '2017-05-21'),
-(4, 63, 'a', 4, 0, '2017-05-15');
+(8, 72, 'a', 1, 50, '2017-05-01'),
+(11, 72, 'a', 50, 0, '2017-05-24'),
+(12, 72, 'a', 5, 8, '2017-05-25'),
+(13, 72, 'a', 1, 50, '2017-05-01'),
+(15, 71, 'proba', 1, 30, '2017-05-24'),
+(16, 71, 'proba', 0, 1, '2017-05-23');
 
 -- --------------------------------------------------------
 
@@ -348,7 +354,7 @@ ALTER TABLE `lanegoera`
 --
 ALTER TABLE `langileorduak`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`lanID`,`langilea`,`lanEguna`) USING BTREE;
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indices de la tabla `saila`
@@ -386,12 +392,12 @@ ALTER TABLE `erabiltzailea`
 -- AUTO_INCREMENT de la tabla `lanagindua`
 --
 ALTER TABLE `lanagindua`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT de la tabla `lanazalpena`
 --
 ALTER TABLE `lanazalpena`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
 --
 -- AUTO_INCREMENT de la tabla `lanegoera`
 --
@@ -401,7 +407,7 @@ ALTER TABLE `lanegoera`
 -- AUTO_INCREMENT de la tabla `langileorduak`
 --
 ALTER TABLE `langileorduak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `saila`
 --

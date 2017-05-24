@@ -10,6 +10,13 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- Include the jQuery Mobile library -->
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
 <style>
 
 .ui-grid-a >.ui-block-a, .ui-grid-a>.ui-block-b{
@@ -71,11 +78,11 @@ function bidalitakoAbisuak(){
 	lanFitx2 = "PHP/bidalitakoLanak.php?jsoncallback=?"
 		$.getJSON(lanFitx2, { usuario:user, kop:kopB, kop2:kop2B})
 		.done(function(lanErantzuna2) {
-		if(lanErantzuna2.log=="false"){
+		/*if(lanErantzuna2.log=="false"){
 			alert(lanErantzuna2.mezua);
 			window.localStorage.clear();
 			window.location.replace("PHP/logout.php");
-		}else{
+		}else{*/
 			$(lanErantzuna2).each(function (index, data) {
 				$.each(data, function (index, m) {
 					if(typeof m === 'object'){
@@ -106,7 +113,7 @@ function bidalitakoAbisuak(){
 					}
 					})
 				});
-			}
+			//}
 			//$.mobile.loading('hide');
 		});
 }

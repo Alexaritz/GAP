@@ -1,6 +1,7 @@
 <?php
 /* user + pass jaso*/
 //$user = $_POST['usuario'];
+$id = $_POST['id'];
 $lanid = $_POST['lanid'];
 $lanorduID = $_POST['lanOrduID'];
 $langile = $_POST['langile'];
@@ -26,13 +27,16 @@ $erantzuna = array();
 //echo count($langile);
 
 for($i=0;$i<count($langile);$i++){
-	//if($langile[$i]!=""/* && $age[$i]!="" && $job[$i]!=""*/){
+	if($id[$i]!=""){
+	/*	$insert = $mysqli->query( "INSERT INTO langileorduak (id, lanID, langilea, denborah, denboramin, lanEguna) 
+		values ('$id[$i]','$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')
+		ON DUPLICATE KEY UPDATE  langilea='$langile[$i]', denborah='$denborah[$i]', denboramin='$denboramin[$i]', lanEguna='$data[$i]'" );*/
+		$update = $mysqli->query( "UPDATE langileorduak SET langilea='$langile[$i]', denborah='$denborah[$i]', denboramin='$denboramin[$i]', lanEguna='$data[$i]' 
+		WHERE id='$id[$i]'");
+    }else{
 		$insert = $mysqli->query( "INSERT INTO langileorduak (lanID, langilea, denborah, denboramin, lanEguna) 
-		values ('$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')
-		ON DUPLICATE KEY UPDATE  langilea='$langile[$i]', denborah='$denborah[$i]', denboramin='$denboramin[$i]', lanEguna='$data[$i]'" );
-    //}else{
-		//$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";
-    //}
+		values ('$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')");
+    }
 }
 $erantzuna[] = "Zuzen txertatu da."; 
 $resultadosJson=json_encode( $erantzuna );

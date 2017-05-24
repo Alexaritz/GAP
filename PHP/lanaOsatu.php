@@ -28,7 +28,7 @@ $erantzuna = array();
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";
 	}
-$erantzuna["mysql"] = mysqli_error($mysqli);
+//$erantzuna["mysql"] = mysqli_error($mysqli);
 //$erantzuna[] = "fsadgd";
 /*emaitza json formatura bihurtzen da*/
 $resultadosJson = json_encode($erantzuna);

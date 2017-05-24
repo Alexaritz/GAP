@@ -24,6 +24,13 @@
     <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.slidebox.min.js"></script>
     <script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.customflip.min.js"></script>
     <script type="text/javascript" src="http://cdn.jtsage.com/datebox/i18n/jqm-datebox.lang.utf8.js"></script>
+	<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
 <style>
 th {
     border-bottom: 1px solid #d6d6d6;
@@ -148,7 +155,7 @@ $('#berria').click(function () {
 	var lang=$("<fieldset  id='lan"+lanKop+"'/>")
 	var ard=$("<select name='langile[]' id='ard"+lanKop+"'/>")
 	var opt=$("<option value=''>Langilea</option>")
-	var grida=$("<div class='ui-grid-a my-breakpointc ui-body ui-body-a ui-corner-all'></div>")
+	var grida=$("<div class='ui-grid-a my-breakpointc'></div>")
 	var gridb=$("<div class='ui-grid-a'></div>")
 	var gridc=$("<div class='ui-grid-a'></div>")
 	var block1=$("<div class='ui-block-a'></div>")
@@ -158,8 +165,16 @@ $('#berria').click(function () {
 	var block1c=$("<div class='ui-block-a'></div>")
 	var block2c=$("<div class='ui-block-b'></div>")
 	
+	var ezab=$('<input id="ezab'+lanKop+'" onclick="ezabatuLangileOrduak('+lanKop+','+false+');return false;" type="button" style="float:left;" data-mini="true" data-inline="true" data-icon="delete" value="Ezabatu"/>');
+	var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+lanKop+"' >lanID:"+lanKop+"</div>")
+	var dividezab=$("<div id='div2"+lanKop+"' ></div>")
+	var inid=$("<input type='hidden' value='' name='id[]'/>")
+	dividezab.append(ezab)
+	dividezab.append(inid)
+	dividezab.append(lanorduID)
+	dividezab.append(grida)
+	$("#lanberriak").append(dividezab)
 	
-	$("#lanberriak").append(grida)
 	grida.append(block1)
 	grida.append(block2)
 	block1.append(gridb)
@@ -174,7 +189,7 @@ $('#berria').click(function () {
 	var labelh=$("<label for='denborah"+lanKop+"'>Denbora (h):</label>")
 	var denborah=$("<input type='range' name='denborah[]' id='denborah"+lanKop+"' min='0' max='50' value='25' data-popup-enabled='true'>")
 	var labelmin=$("<label for='denboramin"+lanKop+"'>Denbora (min):</label>")
-	var denboramin=$("<input type='range' name='denboramin[]' id='denboramin"+lanKop+"' min='0' max='50' value='25' data-popup-enabled='true'>")
+	var denboramin=$("<input type='range' name='denboramin[]' id='denboramin"+lanKop+"' min='0' max='59' value='30' data-popup-enabled='true'>")
 	
 	id="#ard"+lanKop;
 	$(id).selectmenu();
@@ -217,7 +232,7 @@ function lanPopulatu(zenb, user) {
 		})
 		.fail(function(arderantzuna,textStatus, error) {
 			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
+            console.log("arduradunaLortu Request Failed: " + err);
 		})
 }
 $(document).ready(function(){
@@ -295,7 +310,7 @@ $('#lanid').val(id);
 							var lang=$("<fieldset  id='lan"+lanKop+"'/>")
 							var ard=$("<select name='langile[]' id='ard"+lanKop+"'/>")
 							var opt=$("<option value=''>Langilea</option>")
-							var grida=$("<div class='ui-grid-a my-breakpointc '></div>")
+							var grida=$("<div class='ui-grid-a my-breakpointc'></div>")
 							var gridb=$("<div class='ui-grid-a'></div>")
 							var gridc=$("<div class='ui-grid-a'></div>")
 							var block1=$("<div class='ui-block-a'></div>")
@@ -304,11 +319,12 @@ $('#lanid').val(id);
 							var block2b=$("<div class='ui-block-b'></div>")
 							var block1c=$("<div class='ui-block-a'></div>")
 							var block2c=$("<div class='ui-block-b'></div>")
-							var ezab=$('<input id="ezab'+o.id+'" onclick="ezabatuLangileOrduak('+o.id+');return false;" type="button" style="float:left;" data-mini="true" data-inline="true" data-icon="delete" value="Ezabatu"/>');
+							var ezab=$('<input id="ezab'+o.id+'" onclick="ezabatuLangileOrduak('+o.id+','+true+');return false;" type="button" style="float:left;" data-mini="true" data-inline="true" data-icon="delete" value="Ezabatu"/>');
 							var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+o.id+"' >lanID:"+o.id+"</div>")
-							var dividezab=$("<div id='div"+o.id+"' ui-body ui-body-a ui-corner-all></div>")
-				
+							var dividezab=$("<div id='div"+o.id+"' class='ui-body ui-body-a ui-corner-all'></div>")
+							var inid=$("<input type='hidden' id='id"+o.id+"' value='"+o.id+"' name='id[]'/>")
 							dividezab.append(ezab)
+							dividezab.append(inid)
 							dividezab.append(lanorduID)
 							dividezab.append(grida)
 							$("#lanberriak").append(dividezab)
@@ -326,7 +342,7 @@ $('#lanid').val(id);
 							var labelh=$("<label for='denborah"+lanKop+"'>Denbora (h):</label>")
 							var denborah=$("<input type='range' name='denborah[]' id='denborah"+lanKop+"' min='0' max='50' value='"+o.denborah+"' data-popup-enabled='true'>")
 							var labelmin=$("<label for='denboramin"+lanKop+"'>Denbora (min):</label>")
-							var denboramin=$("<input type='range' name='denboramin[]' id='denboramin"+lanKop+"' min='0' max='50' value='"+o.denboramin+"' data-popup-enabled='true'>")
+							var denboramin=$("<input type='range' name='denboramin[]' id='denboramin"+lanKop+"' min='0' max='59' value='"+o.denboramin+"' data-popup-enabled='true'>")
 
 							id="#ard"+lanKop;
 							$(id).selectmenu();
@@ -350,14 +366,14 @@ $('#lanid').val(id);
 				})
 				.fail(function(lanOrduEran,textStatus, error) {
 					var err = textStatus + ', ' + error;
-					console.log("Request Failed: " + err);
+					console.log("langileOrduakLortu Request Failed: " + err);
 				})
 				
 		}
 		})
 		.fail(function(koderantzuna,textStatus, error) {
 			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
+            console.log("lanXehetasunak Request Failed: " + err);
 		})	
 $.mobile.loading('hide');
 });
@@ -366,8 +382,14 @@ $.mobile.loading('hide');
 
 
 
-function ezabatuLangileOrduak(id){
+function ezabatuLangileOrduak(id, db){
 console.log(id)
+	if(db==false){
+		divid="#div2"+id;
+		$(divid).remove();
+		lanKop=lanKop-1;
+		//location.reload();
+	}else{
 	ezabaFitx = "PHP/ezabatuLangileOrdua.php?jsoncallback=?"
 		$.getJSON( ezabaFitx, { usuario:user ,id:id})
 		.done(function(ezabaerantzuna) {
@@ -379,9 +401,10 @@ console.log(id)
 			}
 		})
 		.fail(function(egoerantzuna,textStatus, error) {
-					var err = textStatus + ', ' + error;
-					console.log("Delete Request Failed: " + err);
-				});
+			var err = textStatus + ', ' + error;
+			console.log("Delete Request Failed: " + err);
+		});
+	}
 }
 
 
@@ -399,39 +422,34 @@ if(egoera=="itxia"){
 		$.mobile.loading('show');
 		var user = window.localStorage.getItem('username');
 		var lanid = window.localStorage.getItem('lanID');
-		var denborah=$("#slider-h").val()
-		var denboramin=$("#slider-min").val()
 		var azalpena=$("#azalpena").val()
 		var materiala=$("#materiala").val()
 		var egoera=$("#egoera").val()
-		xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
-			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
-			.done(function(xeheterantzuna) {
+		xehetasunFitx1 = "PHP/lanaOsatu.php?jsoncallback=?"
+			$.getJSON( xehetasunFitx1, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
+			.done(function(xeheterantzuna1) {
 				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
-					$.mobile.loading('hide');
-					//location.reload();
+						if(lanKop>0){
+							$.post( "PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
+							.done(function(data){
+								location.reload();
+								$.mobile.loading('hide');
+							})
+							.fail(function(data){
+							})
+						}
+						location.reload();
 				})
 				.fail(function(egoerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;
 					console.log("1Request Failed: " + err);
-				});
+				})
 			})
-			.fail(function(xeheterantzuna,textStatus, error) {
-				var err = textStatus + ', ' + error;
-				alert("2Request Failed: " + err);
-			});
-			
-			if(lanKop>0){
-				$.post( "PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
-				.done(function(data){
-				//	alert($("#abisuaOsatu").serialize())
-				})
-				.fail(function(data){
-				})
-			}
-			
+			.fail(function(d, textStatus, error) {
+				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
+			})
 	}else{
 	return false;
 	}
@@ -439,43 +457,35 @@ if(egoera=="itxia"){
 	$.mobile.loading('show');
 		var user = window.localStorage.getItem('username');
 		var lanid = window.localStorage.getItem('lanID');
-		var denborah=$("#slider-h").val()
-		var denboramin=$("#slider-min").val()
 		var azalpena=$("#azalpena").val()
 		var materiala=$("#materiala").val()
 		var egoera=$("#egoera").val()
-		xehetasunFitx = "PHP/lanaOsatu.php?jsoncallback=?"
-			$.getJSON( xehetasunFitx, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
-			.done(function(xeheterantzuna) {
-				console.log("Zuzen" +xeheterantzuna.mezua);
-			})
-			.always(function(xeheterantzuna) {
-				console.log("Always: " + data.mezua);
-			})
-			.fail(function(xeheterantzuna,textStatus, error) {
-				var err = JSON.stringify(xeheterantzuna.responseText)+textStatus+ ', ' + error;
-				console.log("2Request Failed: " + err);
-			});
-			egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
+		xehetasunFitx2 = "PHP/lanaOsatu.php?jsoncallback=?"
+			$.getJSON( xehetasunFitx2, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
+			.done(function(xeheterantzuna2) {
+				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
-					$.mobile.loading('hide');
-					//location.reload();
+						if(lanKop>0){
+							$.post( "PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
+							.done(function(data){
+								location.reload();
+								$.mobile.loading('hide');
+							})
+							.fail(function(data){
+							})
+						}
+						location.reload();
 				})
 				.fail(function(egoerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;
 					console.log("1Request Failed: " + err);
-				});
-			if(lanKop>0){
-				$.post( "PHP/langileOrduakGorde.php", $( "#abisuaOsatu" ).serialize(), "json")
-				.done(function(data){
-					console.log("langileORduakGorde"+data)
 				})
-				.fail(function(data){
-				})
-			}
+			})
+			.fail(function(d, textStatus, error) {
+				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
+			})
 }
-location.reload();
 });
 
 </script>
