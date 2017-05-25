@@ -30,6 +30,10 @@ if(user==null || user==undefined){
 	alert("Saioa amaitu da. Saiatu berriro.")
 	window.location.replace("index.html");
 }
+
+$( "#navbar" ).tabs({
+  active: 0
+});
 </script>
 <style>
 th {
@@ -78,8 +82,8 @@ tr:nth-child(even) {
 	<div data-role="tabs" id="tab1">
 		<div id="navbar" data-role="navbar" >
 				<ul>
-				  <li><a href="#fragment-1" class="ui-btn-active">Abisuaren xehetasunak</a></li>
-				  <li><a href="#fragment-2" id="abisuaOsatutab">Abisua Osatu</a></li>
+				  <li><a href="#fragment-1" onclick="tabidgorde(this.id);return false;" id="tab1" class="ui-btn-active">Abisuaren xehetasunak</a></li>
+				  <li><a href="#fragment-2" onclick="tabidgorde(this.id);return false;" id="tab2">Abisua Osatu</a></li>
 				</ul>
 		</div>
 		<div id="fragment-1">
@@ -166,7 +170,7 @@ $('#berria').click(function () {
 	var block2c=$("<div class='ui-block-b'></div>")
 	
 	var ezab=$('<input id="ezab'+lanKop+'" onclick="ezabatuLangileOrduak('+lanKop+','+false+');return false;" type="button" style="float:left;" data-mini="true" data-inline="true" data-icon="delete" value="Ezabatu"/>');
-	var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+lanKop+"' >lanID:"+lanKop+"</div>")
+	var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+lanKop+"' >lan zenb:"+lanKop+"</div>")
 	var dividezab=$("<div id='div2"+lanKop+"' ></div>")
 	var inid=$("<input type='hidden' value='' name='id[]'/>")
 	dividezab.append(ezab)
@@ -214,6 +218,9 @@ function calClick(zenb) {
 	var id="#data"+zenb;
    $(id).datebox('open');
 }
+function tabidgorde(id){
+	window.localStorage.setItem('tabID',id);
+}
 function lanPopulatu(zenb, user) {
 	var id="#ard"+zenb;
    /*ARDURADUNA BETE*/
@@ -235,10 +242,13 @@ function lanPopulatu(zenb, user) {
             console.log("arduradunaLortu Request Failed: " + err);
 		})
 }
-$(document).ready(function(){
+//$(document).on('pagebeforeshow',function(){console.log('pagebeforeshow');});
+//$(document).ready(function(){
+$(document).on("pagecreate",function(){
 $.mobile.loading('show');
 user = window.localStorage.getItem('username');
 id = window.localStorage.getItem('lanID');
+tabid = window.localStorage.getItem('tabID');
 $('#lanid').val(id);
 		/*Lanaren xehetasunak*/
 		lanfitx = "PHP/lanXehetasunak.php?jsoncallback=?"
@@ -260,10 +270,11 @@ $('#lanid').val(id);
 				}
 			});
 			if(user==null || ard!=user){
-				$("#abisuaOsatutab").hide();
+				$("#tab2").hide();
 				$("#bidal").text("Arduraduna");
 			}else{
 				//lanaren xehetasunak lortu
+				$('#'+tabid).trigger('click');
 				lanxehetasunFitx = "PHP/lanHasiak.php?jsoncallback=?"
 					$.getJSON( lanxehetasunFitx, { usuario:user, lanid:id})
 					.done(function(lanxeheterantzuna) {
@@ -305,7 +316,6 @@ $('#lanid').val(id);
 				lanOrduak = "PHP/langileOrduakLortu.php?jsoncallback=?"
 				$.getJSON( lanOrduak, { usuario:user, lanid:id})
 				.done(function(lanOrduEran) {
-					console.log("KODEA ONDO")
 					$(lanOrduEran).each(function (index, o) {
 							var lang=$("<fieldset  id='lan"+lanKop+"'/>")
 							var ard=$("<select name='langile[]' id='ard"+lanKop+"'/>")
@@ -378,47 +388,38 @@ $('#lanid').val(id);
 $.mobile.loading('hide');
 });
 
-
-
-
-
 function ezabatuLangileOrduak(id, db){
-console.log(id)
+	//Datu basean gorde gabekoa ezabatu (oraindik interfazea soilik)
 	if(db==false){
 		divid="#div2"+id;
 		$(divid).remove();
 		lanKop=lanKop-1;
-		//location.reload();
 	}else{
-	ezabaFitx = "PHP/ezabatuLangileOrdua.php?jsoncallback=?"
-		$.getJSON( ezabaFitx, { usuario:user ,id:id})
-		.done(function(ezabaerantzuna) {
-			console.log(ezabaerantzuna.mezua)
-			if(ezabaerantzuna.zuzen == "ok"){
-			divid="#div"+id;
-				$(divid).remove();
-				location.reload();
-			}
-		})
-		.fail(function(egoerantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-			console.log("Delete Request Failed: " + err);
-		});
+	//Datu basean gordetako lanordua ezabatu
+		if (confirm("Ziur lanordua ezabatu nahi duzula?")==true){
+			ezabaFitx = "PHP/ezabatuLangileOrdua.php?jsoncallback=?"
+				$.getJSON( ezabaFitx, { usuario:user ,id:id})
+				.done(function(ezabaerantzuna) {
+					console.log(ezabaerantzuna.mezua)
+					if(ezabaerantzuna.zuzen == "ok"){
+					divid="#div"+id;
+						$(divid).remove();
+						//location.reload();
+					}
+				})
+				.fail(function(egoerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Delete Request Failed: " + err);
+				});
+		}else return false;
 	}
 }
-
-
-$('#eguna').click(function () {
-   $('#eguna').datebox('open');
-});
-
-
 
 $("form").submit(function(){
 event.preventDefault();
 var egoera=$("#egoera").val()
-if(egoera=="itxia"){
-	if (confirm("Ziur lana itxi nahi duzula?")==true){
+//if(egoera=="itxia"){
+	//if (confirm("Ziur lana itxi nahi duzula?")==true){
 		$.mobile.loading('show');
 		var user = window.localStorage.getItem('username');
 		var lanid = window.localStorage.getItem('lanID');
@@ -450,10 +451,10 @@ if(egoera=="itxia"){
 			.fail(function(d, textStatus, error) {
 				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
 			})
-	}else{
+	/*}else{
 	return false;
-	}
-}else{
+	}*/
+/*}else{
 	$.mobile.loading('show');
 		var user = window.localStorage.getItem('username');
 		var lanid = window.localStorage.getItem('lanID');
@@ -485,7 +486,7 @@ if(egoera=="itxia"){
 			.fail(function(d, textStatus, error) {
 				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
 			})
-}
+}*/
 });
 
 </script>

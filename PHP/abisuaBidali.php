@@ -13,8 +13,8 @@ $argazkia = $_GET['argazkia'];
 
 session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
-$usuario = "u199017461_sgta";//root u199017461_sgta
-$password = "n1fXhn9qyo";//n1fXhn9qyo
+$usuario = "u779484475_alex";//root u199017461_sgta
+$password = "BKAxYIlLQ8TS";//BKAxYIlLQ8TS
 $sdb = "mantentzeDB";//u199017461_sgta
 
 //$mysqli =new mysqli ($servidor,$usuario,$password, $sdb);
