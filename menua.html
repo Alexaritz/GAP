@@ -12,7 +12,11 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- Include the jQuery Mobile library -->
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
+<style>
+body{
+  display: none;
+}
+</style>
 <script>
 user = window.localStorage.getItem('username');
 if(user==null || user==undefined){
@@ -40,7 +44,7 @@ if(user==null || user==undefined){
 
 <script>
 $(document).ready(function(){
-	localStorage.get
+	$("body").fadeIn(500);
 });
 
 function logout(){

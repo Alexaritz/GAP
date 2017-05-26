@@ -68,6 +68,9 @@ img {
 #uploader .ui-input-text, .ui-input-search{
 border-style:none;
 }
+#abisuaBidali{
+	display: none;
+}
 </style>
 </head>
 
@@ -164,6 +167,7 @@ var user = window.localStorage.getItem('username');
 			var err = textStatus + ', ' + error;
             console.log("Request Failed: " + err);
 		})
+		$("#abisuaBidali").fadeIn(500);
 		return false;		
 });
 
