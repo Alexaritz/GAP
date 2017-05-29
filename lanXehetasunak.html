@@ -82,7 +82,7 @@ tr:nth-child(even) {
 		<div class="ui-block-b"><center><p>Lan Xehetasunak</p></center></div>
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
-	<div data-role="tabs" id="tab1"  class="bodyhide">
+	<div data-role="tabs" id="tab1" >
 		<div id="navbar" data-role="navbar" >
 				<ul>
 				  <li><a href="#fragment-1" onclick="tabidgorde(this.id);return false;" id="tab1" class="ui-btn-active">Abisuaren xehetasunak</a></li>
@@ -375,8 +375,6 @@ $('#lanid').val(id);
 							block2c.append(labelmin)
 							block2c.append(denboramin)
 							$('#lanberriak').trigger('create');
-							$.mobile.loading('hide');
-							
 							lanKop=lanKop+1;
 					});
 				})
@@ -385,17 +383,21 @@ $('#lanid').val(id);
 					console.log("langileOrduakLortu Request Failed: " + err);
 				})
 		
-		$("#lanXehetasunak").fadeIn(500);		
-							
+			//$("#lanXehetasunak").fadeIn(500)
+			$.mobile.loading('hide');				
 		}
 		})
 		.fail(function(koderantzuna,textStatus, error) {
 			var err = textStatus + ', ' + error;
             console.log("lanXehetasunak Request Failed: " + err);
 		})	
-
+		//$("#lanXehetasunak").fadeIn(500);	
+	
 });
-
+$(document).ajaxStop(function () {
+    $("#lanXehetasunak").fadeIn(500)
+	$.mobile.loading('hide');
+});
 function ezabatuLangileOrduak(id, db){
 	//Datu basean gorde gabekoa ezabatu (oraindik interfazea soilik)
 	if(db==false){
@@ -443,8 +445,8 @@ var egoera=$("#egoera").val()
 						if(lanKop>0){
 							$.post( "PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
 							.done(function(data){
-								location.reload();
 								$.mobile.loading('hide');
+								location.reload(true);
 							})
 							.fail(function(data){
 							})

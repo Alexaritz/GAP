@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-05-2017 a las 12:58:09
+-- Tiempo de generación: 29-05-2017 a las 12:43:15
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -80,7 +80,8 @@ CREATE TABLE `erabiltzailea` (
 INSERT INTO `erabiltzailea` (`id`, `username`, `password`, `mota`) VALUES
 (1, 'proba', 'proba', ''),
 (2, 'a', 'a', ''),
-(3, 'alex', 'alex', '');
+(3, 'alex', 'alex', ''),
+(4, 'admin', 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -145,7 +146,7 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `
 (35, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Baxua', 'fsdf', 'sfsdfs', '2017-05-10 11:34:09', '', 'berria'),
 (36, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'asgd', 'avsd', '2017-05-10 11:34:56', '25argazkia.jpeg', 'berria'),
 (37, 'proba', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'das', 'dsa', '2017-05-10 11:36:03', '', 'berria'),
-(38, 'proba', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'vcx', 'vxc', '2017-05-10 11:38:26', '', 'berria'),
+(38, 'proba', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'vcx', 'vxc', '2017-05-10 11:38:26', '', 'esleitua'),
 (39, 'Proba', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'Froga iphone', 'Jjfdjkfg', '2017-05-10 11:58:39', '26argazkia.jpeg', 'berria'),
 (40, 'Proba', 'Orokorra', '', '', 1, '1', 'Baxua', 'Froga iphon', 'Gdfjhghj', '2017-05-10 12:00:12', '', 'berria'),
 (41, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Baxua', 'dsadsa', 'dadasdas', '2017-05-10 12:09:21', '', 'berria'),
@@ -170,16 +171,18 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `eraikina`, `
 (60, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Premiazkoa', 'Proba prevent', 'Xnznzc', '2017-05-12 11:27:22', '37argazkia.jpeg', 'itxia'),
 (61, 'proba', 'Orokorra', 'proba', 'A', 1, '1', 'Normala', 'PROBA ANDROID', 'PROBA', '2017-05-15 12:52:29', '38argazkia.jpeg', 'itxia'),
 (62, 'alex', 'Berokuntza', 'proba', 'A', 1, '1', 'Normala', 'Argiak ez du funtzionatzen.', 'LALALA', '2017-05-16 11:56:33', '39argazkia.jpeg', 'berria'),
-(63, 'a', 'Orokorra', 'a', 'A', 1, '1', 'Normala', 'Proba', 'Probaba', '2017-05-18 09:41:12', '40argazkia.jpeg', 'berria'),
+(63, 'a', 'Orokorra', 'a', 'A', 1, '1', 'Normala', 'Proba', 'Probaba', '2017-05-18 09:41:12', '40argazkia.jpeg', 'itxia'),
 (64, 'a', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'Probasaiog', 'abe', '2017-05-18 09:43:03', '', 'esleitua'),
-(65, 'a', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'rehrt', 'hrtghr', '2017-05-18 09:51:26', '', 'berria'),
+(65, 'a', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'rehrt', 'hrtghr', '2017-05-18 09:51:26', '', 'esleitua'),
 (66, 'a', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'dsaGsd', 'gsDGAS', '2017-05-18 09:51:47', '', 'itxia'),
 (67, 'a', 'Argia', 'proba', 'A', 1, '1', 'Baxua', 'dsaGSD', 'GSADGSD', '2017-05-18 09:53:03', '', 'berria'),
 (68, 'a', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'fsd', 'sd', '2017-05-18 09:54:11', '', 'berria'),
 (69, 'a', 'Berokuntza', 'a', 'A', 1, '1', 'Baxua', 'fsdsgd', 'fdhdfxshd', '2017-05-18 09:54:53', '', 'esleitua'),
 (70, 'proba', 'Berokuntza', 'proba', 'A', 1, '1', 'Baxua', 'asgdh', 'gasd', '2017-05-18 09:56:28', '', 'esleitua'),
 (71, 'proba', 'Argia', 'a', 'A', 1, '1', 'Normala', 'dvsa', 'sdag', '2017-05-18 09:57:16', '', 'esleitua'),
-(72, 'a', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'PROBA ASPALDIKO PARTEZ', 'PROBA', '2017-05-24 10:27:26', '41argazkia.jpeg', 'itxia');
+(72, 'a', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'PROBA ASPALDIKO PARTEZ', 'PROBA', '2017-05-24 10:27:26', '41argazkia.jpeg', 'itxia'),
+(73, 'a', 'Argia', 'a', 'A', 1, '1', 'Baxua', 'PROBA PC', 'LALALA', '2017-05-25 09:20:27', '', 'itxia'),
+(74, 'a', 'Orokorra', 'a', 'A', 1, '1', 'Baxua', 'da', 'Ga', '2017-05-26 10:28:53', '', 'itxia');
 
 -- --------------------------------------------------------
 
@@ -209,8 +212,12 @@ INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `azalpena`, `materiala`,
 (66, 69, 'a', '', '', '2017-05-18'),
 (67, 66, 'a', '', '', '2017-05-18'),
 (68, 64, 'a', '', '', '2017-05-18'),
-(108, 63, 'a', 'LANA EGINDA', 'BONBILA 1.', '2017-05-22'),
-(143, 72, 'a', 'LALA2', 'LALA2', '2017-05-24');
+(108, 63, 'a', 'LANA EGINDA', 'BONBILA 1.', '2017-05-29'),
+(143, 72, 'a', 'LALA2', 'LALA2', '2017-05-24'),
+(144, 73, 'a', 'Prbababa', 'Androidetik', '2017-05-26'),
+(145, 74, 'a', 'LALALA', 'LALALALLALAA', '2017-05-29'),
+(152, 65, 'a', '', '', '2017-05-29'),
+(154, 38, 'a', 'PROBA', 'adgs', '2017-05-29');
 
 -- --------------------------------------------------------
 
@@ -257,7 +264,13 @@ INSERT INTO `langileorduak` (`id`, `lanID`, `langilea`, `denborah`, `denboramin`
 (12, 72, 'a', 5, 8, '2017-05-25'),
 (13, 72, 'a', 1, 50, '2017-05-01'),
 (15, 71, 'proba', 1, 30, '2017-05-24'),
-(16, 71, 'proba', 0, 1, '2017-05-23');
+(16, 71, 'proba', 0, 1, '2017-05-23'),
+(18, 73, 'a', 2, 0, '2017-05-31'),
+(19, 74, 'proba', 0, 30, '2017-05-22'),
+(26, 74, 'a', 4, 30, '2017-05-29'),
+(27, 74, 'a', 25, 30, '2017-05-22'),
+(28, 63, 'a', 1, 30, '2017-05-29'),
+(29, 38, 'proba', 3, 30, '2017-05-01');
 
 -- --------------------------------------------------------
 
@@ -387,17 +400,17 @@ ALTER TABLE `arduraduna`
 -- AUTO_INCREMENT de la tabla `erabiltzailea`
 --
 ALTER TABLE `erabiltzailea`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `lanagindua`
 --
 ALTER TABLE `lanagindua`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT de la tabla `lanazalpena`
 --
 ALTER TABLE `lanazalpena`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 --
 -- AUTO_INCREMENT de la tabla `lanegoera`
 --
@@ -407,7 +420,7 @@ ALTER TABLE `lanegoera`
 -- AUTO_INCREMENT de la tabla `langileorduak`
 --
 ALTER TABLE `langileorduak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT de la tabla `saila`
 --

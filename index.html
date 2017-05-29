@@ -52,6 +52,11 @@ $('#loginForm').submit(function() {
 				/// ondo balidatzen bada, menura joan
 				window.localStorage.setItem('username',user);
 				window.localStorage.setItem('password',pass);
+				if(loginerantzuna.admin == "true"){	
+					window.localStorage.setItem('admin',"true");
+				}else{
+					window.localStorage.setItem('admin',"false");
+				}
 				window.location.replace("menua.html");
 			}
 		})

@@ -36,8 +36,8 @@ margin:0%;
       float:none;
     }
   }
- #nireAbisuak{
-  display: none;
+ #collaps{
+  display:none
 }
 </style>
 
@@ -48,13 +48,13 @@ margin:0%;
 <div data-role="page" id="nireAbisuak">
 	<div class="ui-grid-b" data-role="header" data-position="fixed" id="head">
 		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
-		<div class="ui-block-b"><center><p>Abisua bidali</p></center></div>
+		<div class="ui-block-b"><center><p>Nire Abisuak</p></center></div>
 		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
-	<fieldset class="ui-grid-a my-breakpoint">
+	<fieldset id="collaps" class="ui-grid-a my-breakpoint">
 		<div id="esleituDiv" class="ui-block-a">
 			<form id="form">
-				<div id="collap" style="display:none" data-collapsed="false" data-role="collapsible" data-theme="b" data-content-theme="b" >
+				<div id="collap" style="display:none" data-role="collapsible" data-theme="b" data-content-theme="b" >
 					<h2>Esleitutako Abisuak</h2>
 					<ul id="esleituak" data-role="listview" data-filter="true" >
 					</ul>
@@ -62,8 +62,8 @@ margin:0%;
 			</form>
 		</div>
 		<div id="bidaliDiv" width="100%" class="ui-block-b">
-			<form id="form">
-				<div id="collap2" style="display:inline" data-collapsed="false" data-role="collapsible" data-theme="b" data-content-theme="b">
+			<form id="form2">
+				<div id="collap2" style="display:inline" data-role="collapsible" data-theme="b" data-content-theme="b">
 					<h2>Bidalitako Abisuak</h2>
 					<ul id="bidaliak" data-role="listview" data-filter="true">
 					</ul>
@@ -74,12 +74,11 @@ margin:0%;
 </div>
 
 <script>
-kopB=5;
-kop2B="";
+
 function bidalitakoAbisuak(){
 	$.mobile.loading('show');
 	lanFitx2 = "PHP/bidalitakoLanak.php?jsoncallback=?"
-		$.getJSON(lanFitx2, { usuario:user, kop:kopB, kop2:kop2B})
+		$.getJSON(lanFitx2, { usuario:user, kop:kopB, kop2:kop2B, admin:admin})
 		.done(function(lanErantzuna2) {
 		/*if(lanErantzuna2.log=="false"){
 			alert(lanErantzuna2.mezua);
@@ -133,12 +132,10 @@ function gehitu2(){
 	$(document).on("scrollstop", checkScroll);
 }
 
-kop=5;
-kop2="";
 function nireAbisuak(){
 	$.mobile.loading('show');
 	lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
-		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2})
+		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2,admin:admin})
 		.done(function(lanErantzuna) {
 			$(lanErantzuna).each(function (index, m) {
 				if(m.egoera=="berria"){
@@ -166,17 +163,30 @@ function nireAbisuak(){
 				$('#esleituak').append(li.append(link));
 				$('#esleituak').listview('refresh');				
 			});
-		});
+		})
+		.always(function(lanErantzuna2) {
 		$.mobile.loading('hide');
+		});
+		
 }
+$(document).ajaxStop(function () {
+    $("#collaps").fadeIn(500)
+	$.mobile.loading('hide');
+});
 //$(document).on('pagebeforeshow', '#nireAbisuak', function(){  
 $(document).ready(function(){
+kopB=5;
+kop2B="";
+kop=5;
+kop2="";
 $.mobile.loading('show');
 	user = window.localStorage.getItem('username');
+	//if (window.localStorage.getItem('admin')!=undefined)
+	admin = window.localStorage.getItem('admin');
 	arduradunaDafitx = "PHP/arduradunaDa.php?jsoncallback=?"
 		$.getJSON( arduradunaDafitx, { usuario:user})
 		.done(function(arduDaeran) {
-			if(arduDaeran.arduraduna == "bai"){
+			if(arduDaeran.arduraduna == "bai" || admin=="true"){
 				/// arduraduna bada, esleitutako abisuak erakutsi
 				$("#collap").attr("style","display:inline");
 				nireAbisuak();
@@ -185,8 +195,11 @@ $.mobile.loading('show');
 				$("#bidaliDiv").attr("style","width:99%");
 			}
 			bidalitakoAbisuak();
-			$("#nireAbisuak").fadeIn(500);
-			$.mobile.loading('hide');
+			//$("#collaps").fadeIn(500)
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("arduradunaDa Request Failed: " + err);
 		})
 	
 });
@@ -204,8 +217,8 @@ function checkScroll() {
         screenHeight = $.mobile.getScreenHeight(),
  
         /* Content div - include padding too! */
-        contentHeight = $("#collap", activePage).outerHeight(),
-		contentHeight2 = $("#collap2", activePage).outerHeight(),
+        contentHeight = $("#collaps", activePage).outerHeight(),
+		//contentHeight2 = $("#bidaliDiv", activePage).outerHeight(),
         /* Height of scrolled content (invisible) */
         scrolled = $(window).scrollTop(),
  
@@ -218,17 +231,17 @@ function checkScroll() {
         /* Math 101 - Window's scrollTop should
            match content minus viewport plus toolbars */
         scrollEnd = contentHeight - screenHeight + header;
-		scrollEnd2 = contentHeight2 - screenHeight + header;
+		//scrollEnd2 = contentHeight2 - screenHeight + header;
     /* if (pageX) is active and page's bottom is reached
        load more elements  */
     if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd) {
         /* run loadMore function */
        gehitu(activePage);
+	   gehitu2(activePage);
     }
-	  if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd2) {
-        /* run loadMore function */
+	/* if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd2) {
        gehitu2(activePage);
-    }
+    }*/
 }
 function gehitu(){
 	$(document).off("scrollstop");
