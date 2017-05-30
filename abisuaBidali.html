@@ -101,15 +101,12 @@ border-style:none;
 			<fieldset data-role="controlgroup" data-type="horizontal" id="custom-fieldset">
 				<select id="eraikina" name="eraikina" class="myselector" required>
 						<option value="">Eraikina</option>
-						<option value="A">A</option>
 				</select>
-				<select id="pisua" name="pisua" class="myselector" required>
-						<option value="">Pisua</option>
-						<option value="1">1</option>
+				<select id="solairua" name="solairua" class="myselector" required>
+						<option value="">solairua</option>
 				</select>
 				<select id="gela" name="gela" class="myselector" required>
 						<option value="">Gela</option>
-						<option value="1">1</option>
 				</select>
 			</fieldset>
 			</div>
@@ -123,7 +120,7 @@ border-style:none;
 			</div>	
 			</fieldset>
 			<fieldset class="ui-grid-a my-breakpointb">
-				<div class="ui-block-a">
+				<div id="bidaldiv" class="ui-block-a">
 					<input type="text" id="bidaltzailea" name="bidaltzailea" placeholder="Bidaltzailea" required>
 				</div>
 				<div class="ui-block-b">
@@ -142,10 +139,11 @@ border-style:none;
 	 
 </div>
 <script>
+var server="http://gapalex.esy.es/"
 $(document).ready(function(){
 var user = window.localStorage.getItem('username');
 		/*ARAZO MOTA BETE*/
-		kodefitx = "PHP/arazoMota.php?jsoncallback=?"
+		kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
 		$.getJSON( kodefitx, { usuario:user})
 		.done(function(koderantzuna) {
 			console.log("ONDO")
@@ -160,8 +158,61 @@ var user = window.localStorage.getItem('username');
 		})
 		/*return false*/;
 		
+		
+		arduradunaDafitx = server+"PHP/arduradunaDa.php?jsoncallback=?"
+		$.getJSON( arduradunaDafitx, { usuario:user})
+		.done(function(arduDaeran) {
+			if(arduDaeran.arduraduna == "bai")
+				$("#bidaltzailea").val(user)
+		})
+			
+		/*eraikina lortu*/
+		kodefitx = server+"PHP/eraikinaLortu.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			console.log("ONDO")
+			$(koderantzuna).each(function (index, o) {
+				var $option = $("<option/>").attr("value", o.izena).text(o.izena);
+				$('#eraikina').append($option);
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})	
+		
+		/*solairua lortu*/
+		kodefitx = server+"PHP/solairuaLortu.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			console.log("ONDO")
+			$(koderantzuna).each(function (index, o) {
+				var $option = $("<option/>").attr("value", o.zenbakia).text(o.zenbakia);
+				$('#solairua').append($option);
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})	
+		
+		/*gela lortu*/
+		kodefitx = server+"PHP/gelaLortu.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			console.log("ONDO")
+			$(koderantzuna).each(function (index, o) {
+				var $option = $("<option/>").attr("value", o.izena).text(o.izena);
+				$('#gela').append($option);
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})	
+		
 		/*ARDURADUNA BETE*/
-		ardfitx = "PHP/arduradunaLortu.php?jsoncallback=?"
+		ardfitx = server+"PHP/arduradunaLortu.php?jsoncallback=?"
 		$.getJSON( ardfitx, { usuario:user})
 		.done(function(arderantzuna) {
 			console.log("ONDO2")
@@ -174,10 +225,12 @@ var user = window.localStorage.getItem('username');
 			var err = textStatus + ', ' + error;
             console.log("Request Failed: " + err);
 		})
-		$("#abisuaBidali").fadeIn(500);
 		return false;		
 });
-
+$(document).ajaxStop(function () {
+    $("#abisuaBidali").fadeIn(500)
+	$.mobile.loading('hide');
+});
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -198,14 +251,15 @@ $("form").submit(function(){
 	var user = window.localStorage.getItem('username');
 	var saila=$("#arazoM").val()
 	var arduraduna=$("#arduraduna").val()
+	var bidaltzailea=$("#bidaltzailea").val()
 	var eraikina=$("#eraikina").val()
-	var pisua=$("#pisua").val()
+	var solairua=$("#solairua").val()
 	var gela=$("#gela").val()
 	var lehentasuna=$("#lehentasuna").val()
 	var laburpena=$("#laburpena").val()
 	var deskribapena=$("#deskribapena").val()
 	var argazkia = $("#fileToUpload").val()
-	if(saila!="" && arduraduna!="" && eraikina!="" && pisua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!=""){
+	if(saila!="" && arduraduna!="" && eraikina!="" && solairua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!="" && bidaltzailea!=""){
 		if (argazkia!=""){//ARGAZKIAREKIN IGO
 			$.ajax({
 				url: "PHP/upload.php", // Url to which the request is send
@@ -217,8 +271,8 @@ $("form").submit(function(){
 			})
 			.done(function(data){
 				if(data.ok=="zuzena"){
-					abisuFitx = "PHP/abisuaBidali.php?jsoncallback=?"
-					$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
+					abisuFitx = server+"PHP/abisuaBidali.php?jsoncallback=?"
+					$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, bidaltzailea:bidaltzailea, eraikina:eraikina, solairua:solairua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
 					.done(function(abisuerantzuna) {
 						if(abisuerantzuna.log=="true"){
 							alert(abisuerantzuna.mezua);
@@ -243,8 +297,8 @@ $("form").submit(function(){
 				window.location.replace("abisuaBidali.html");
 			});
 		}else{//ARGAZKIRIK GABEKO ABISUA
-			abisuFitx2 = "PHP/abisuaBidali.php?jsoncallback=?"
-			$.getJSON( abisuFitx2, { usuario:user, saila:saila, arduraduna:arduraduna, eraikina:eraikina, pisua:pisua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
+			abisuFitx2 = server+"PHP/abisuaBidali.php?jsoncallback=?"
+			$.getJSON( abisuFitx2, { usuario:user, saila:saila, arduraduna:arduraduna, bidaltzailea:bidaltzailea, eraikina:eraikina, solairua:solairua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena,argazkia:argazkia})
 			.done(function(abisuerantzuna2) {
 				if(abisuerantzuna2.log=="true"){
 					console.log("ZUZEN TXERTATU DA")

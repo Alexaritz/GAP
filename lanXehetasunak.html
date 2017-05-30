@@ -156,6 +156,7 @@ tr:nth-child(even) {
 	</div>
 </div>
 <script>
+var server="http://gapalex.esy.es/"
 var lanKop=0;
 //Langile berriaren formularioa sortu
 $('#berria').click(function () {
@@ -227,7 +228,7 @@ function tabidgorde(id){
 function lanPopulatu(zenb, user) {
 	var id="#ard"+zenb;
    /*ARDURADUNA BETE*/
-		ardfitx = "PHP/arduradunaLortu.php?jsoncallback=?"
+		ardfitx = server+"PHP/arduradunaLortu.php?jsoncallback=?"
 		$.getJSON( ardfitx, { usuario:user})
 		.done(function(arderantzuna) {
 			console.log("ONDO2")
@@ -252,9 +253,10 @@ $.mobile.loading('show');
 user = window.localStorage.getItem('username');
 id = window.localStorage.getItem('lanID');
 tabid = window.localStorage.getItem('tabID');
+admin = window.localStorage.getItem('admin');
 $('#lanid').val(id);
 		/*Lanaren xehetasunak*/
-		lanfitx = "PHP/lanXehetasunak.php?jsoncallback=?"
+		lanfitx = server+"PHP/lanXehetasunak.php?jsoncallback=?"
 		$.getJSON( lanfitx, { usuario:user, lanid:id})
 		.done(function(lanerantzuna) {
 			$(lanerantzuna).each(function (index, l) {
@@ -272,6 +274,12 @@ $('#lanid').val(id);
 					$('#image').attr('src', "ARGAZKIAK/"+l.argazkia);
 				}
 			});
+			if(admin=="true"){
+				var editatu=$('<input onclick="abisuaEditatu();return false;" type="button" value="Abisua Editatu"/>')
+				$("#fragment-1").append(editatu)
+				editatu.button()
+				editatu.button("refresh")
+			}
 			if(user==null || ard!=user){
 				$("#tab2").hide();
 				$("#bidal").text("Arduraduna");
@@ -280,7 +288,7 @@ $('#lanid').val(id);
 			}else{
 				//lanaren xehetasunak lortu
 				$('#'+tabid).trigger('click');
-				lanxehetasunFitx = "PHP/lanHasiak.php?jsoncallback=?"
+				lanxehetasunFitx = server+"PHP/lanHasiak.php?jsoncallback=?"
 					$.getJSON( lanxehetasunFitx, { usuario:user, lanid:id})
 					.done(function(lanxeheterantzuna) {
 						$(lanxeheterantzuna).each(function (index, o) {
@@ -293,7 +301,7 @@ $('#lanid').val(id);
 						alert("Request Failed: " + err);
 					});
 					/*Lanaren egoera*/
-				egoerafitx = "PHP/egoeraLortu.php?jsoncallback=?"
+				egoerafitx = server+"PHP/egoeraLortu.php?jsoncallback=?"
 				$.getJSON( egoerafitx, { usuario:user, lanid:id})
 				.done(function(egoeraerantzuna) {
 					console.log("KODEA ONDO")
@@ -318,7 +326,7 @@ $('#lanid').val(id);
 				
 				/*Langile/Orduak lortu*/
 				
-				lanOrduak = "PHP/langileOrduakLortu.php?jsoncallback=?"
+				lanOrduak = server+"PHP/langileOrduakLortu.php?jsoncallback=?"
 				$.getJSON( lanOrduak, { usuario:user, lanid:id})
 				.done(function(lanOrduEran) {
 					$(lanOrduEran).each(function (index, o) {
@@ -398,6 +406,9 @@ $(document).ajaxStop(function () {
     $("#lanXehetasunak").fadeIn(500)
 	$.mobile.loading('hide');
 });
+function abisuaEditatu(){
+	window.location.replace("abisuaEditatu.html");
+}
 function ezabatuLangileOrduak(id, db){
 	//Datu basean gorde gabekoa ezabatu (oraindik interfazea soilik)
 	if(db==false){
@@ -407,7 +418,7 @@ function ezabatuLangileOrduak(id, db){
 	}else{
 	//Datu basean gordetako lanordua ezabatu
 		if (confirm("Ziur lanordua ezabatu nahi duzula?")==true){
-			ezabaFitx = "PHP/ezabatuLangileOrdua.php?jsoncallback=?"
+			ezabaFitx = server+"PHP/ezabatuLangileOrdua.php?jsoncallback=?"
 				$.getJSON( ezabaFitx, { usuario:user ,id:id})
 				.done(function(ezabaerantzuna) {
 					console.log(ezabaerantzuna.mezua)
@@ -436,14 +447,14 @@ var egoera=$("#egoera").val()
 		var azalpena=$("#azalpena").val()
 		var materiala=$("#materiala").val()
 		var egoera=$("#egoera").val()
-		xehetasunFitx1 = "PHP/lanaOsatu.php?jsoncallback=?"
+		xehetasunFitx1 = server+"PHP/lanaOsatu.php?jsoncallback=?"
 			$.getJSON( xehetasunFitx1, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
 			.done(function(xeheterantzuna1) {
-				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
+				egoeraFitx = server+"PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
 						if(lanKop>0){
-							$.post( "PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
+							$.post( server+"PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
 							.done(function(data){
 								$.mobile.loading('hide');
 								location.reload(true);

@@ -74,10 +74,10 @@ margin:0%;
 </div>
 
 <script>
-
+var server="http://gapalex.esy.es/"
 function bidalitakoAbisuak(){
 	$.mobile.loading('show');
-	lanFitx2 = "PHP/bidalitakoLanak.php?jsoncallback=?"
+	lanFitx2 = server+"PHP/bidalitakoLanak.php?jsoncallback=?"
 		$.getJSON(lanFitx2, { usuario:user, kop:kopB, kop2:kop2B, admin:admin})
 		.done(function(lanErantzuna2) {
 		/*if(lanErantzuna2.log=="false"){
@@ -134,7 +134,7 @@ function gehitu2(){
 
 function nireAbisuak(){
 	$.mobile.loading('show');
-	lanFitx = "PHP/esleitutakoLanak.php?jsoncallback=?"
+	lanFitx = server+"PHP/esleitutakoLanak.php?jsoncallback=?"
 		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2,admin:admin})
 		.done(function(lanErantzuna) {
 			$(lanErantzuna).each(function (index, m) {
@@ -183,7 +183,7 @@ $.mobile.loading('show');
 	user = window.localStorage.getItem('username');
 	//if (window.localStorage.getItem('admin')!=undefined)
 	admin = window.localStorage.getItem('admin');
-	arduradunaDafitx = "PHP/arduradunaDa.php?jsoncallback=?"
+	arduradunaDafitx = server+"PHP/arduradunaDa.php?jsoncallback=?"
 		$.getJSON( arduradunaDafitx, { usuario:user})
 		.done(function(arduDaeran) {
 			if(arduDaeran.arduraduna == "bai" || admin=="true"){

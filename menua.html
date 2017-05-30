@@ -43,13 +43,14 @@ if(user==null || user==undefined){
 </div>
 
 <script>
+var server="http://gapalex.esy.es/"
 $(document).ready(function(){
 	$("body").fadeIn(500);
 });
 
 function logout(){
 	window.localStorage.clear();
-	window.location.replace("PHP/logout.php");
+	window.location.replace(server+"PHP/logout.php");
 }
 </script>
 

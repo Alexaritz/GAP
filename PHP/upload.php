@@ -1,5 +1,5 @@
 <?php
-session_start();
+include 'dbcon.php';
 $target_dir = "../ARGAZKIAK/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
@@ -41,19 +41,6 @@ if ($uploadOk == 0) {
 } else {
 	// if everything is ok, try to upload file
 	//IZENA LORTU
-	
-	$servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
-	$usuario = "u199017461_sgta";//root u199017461_sgta
-	$password = "n1fXhn9qyo";//n1fXhn9qyo
-	$sdb = "mantentzeDB";//u199017461_sgta
-
-	//$mysqli =new mysqli ($servidor,$usuario,$password, $sdb);
-	$mysqli =new mysqli ("localhost","root","", $sdb);
-	if ($mysqli->connect_error) {
-		printf("Connection failed: " . $mysqli->connect_error);
-		header('Content-Type: application/json');
-		echo json_encode(['erantzuna' => "Konexioan errorea."]); 
-	} 
 
 		$erab = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
 		$num_rows=mysqli_num_rows($erab);

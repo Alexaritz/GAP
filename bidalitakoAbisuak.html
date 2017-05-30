@@ -55,10 +55,10 @@ if(user==null || user==undefined){
 </div>
 
 <script>
-
+var server="http://gapalex.esy.es/"
 $(document).ready(function(){
 var user = window.localStorage.getItem('username');
-		erabfitx = "http://sgta.esy.es/niremezuak.php?jsoncallback=?"
+		erabfitx = server+"PHP/niremezuak.php?jsoncallback=?"
 		$.getJSON(erabfitx, { usuario:user})
 		.done(function(loginerantzuna) {
 			$(loginerantzuna).each(function (index, m) {
@@ -83,7 +83,7 @@ function zuu(a){
 
 $(document).ready(function(){
 var partner = window.localStorage.getItem('username');
-		erabfitx2 = "http://sgta.esy.es/jasotakomezuak.php?jsoncallback2=?"
+		erabfitx2 = server+"PHP/jasotakomezuak.php?jsoncallback2=?"
 		$.getJSON(erabfitx2, { socio:partner})
 		.done(function(mezuerantzuna) {
 			$(mezuerantzuna).each(function (index, m) {

@@ -2,16 +2,16 @@
 include 'dbcon.php';
 /* user + pass jaso*/
 $user = $_GET['usuario'];
+$id = $_GET['id'];
 $saila = $_GET['saila'];
 $arduraduna = $_GET['arduraduna'];
 $bidaltzailea = $_GET['bidaltzailea'];
 $eraikina = $_GET['eraikina'];
-$pisua = $_GET['solairua'];
+$pisua = $_GET['pisua'];
 $gela = $_GET['gela'];
 $lehentasuna = $_GET['lehentasuna'];
 $laburpena = $_GET['laburpena'];
 $deskribapena = $_GET['deskribapena'];
-$argazkia = $_GET['argazkia'];
 
 if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 	
@@ -19,15 +19,8 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 $erantzuna = array(); 
 $erantzuna["log"] = "true";
 	if ($saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
-		if ($argazkia==""){
-			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$bidaltzailea', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '', 'berria')" );
-		}else{
-			$erab = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
-			$num_rows=mysqli_num_rows($erab);
-			$argazkia=$num_rows . "argazkia.jpeg";
-			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$bidaltzailea', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia', 'berria')" );
-		}
-		$erantzuna["mezua"] = "Zuzen txertatu da.";
+		$insert = $mysqli->query( "UPDATE lanagindua SET saila='$saila', arduraduna='$arduraduna', bidaltzailea='$bidaltzailea', eraikina='$eraikina', pisua='$pisua', gela='$gela', lehentasuna='$lehentasuna', laburpena='$laburpena', deskribapena='$deskribapena', egoera='berria' WHERE id='$id'" );
+		$erantzuna["mezua"] = "Zuzen eguneratu da.";
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";
 	}
