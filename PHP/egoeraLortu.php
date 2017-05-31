@@ -12,9 +12,6 @@ $erantzuna = array();
 			$erantzuna[$int]=array_map('utf8_encode', $datos);
 			$int=$int+1;
 		}
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where id='$id'" );
-		$row = mysqli_fetch_array($erab, MYSQLI_ASSOC);
-		$erantzuna[$int]=$row["egoera"];
 		$resultadosJson=json_encode( $erantzuna );
 /*emaitza json formatura bihurtzen da*/
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */

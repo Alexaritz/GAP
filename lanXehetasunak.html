@@ -132,7 +132,7 @@ tr:nth-child(even) {
 					<div class="ui-body"><img id="image" alt="Ez dauka argazkirik." width="100%"></img></div>
 		</div>
 		<div id="fragment-2">
-			<form id="abisuaOsatu">
+			<form id="abisuaOsatu"  action="#">
 				<fieldset class="ui-grid-a my-breakpointb">
 					<div id="egdiv" class="ui-block-a">
 						<select id="egoera" name="egoera" required>
@@ -161,8 +161,8 @@ var lanKop=0;
 //Langile berriaren formularioa sortu
 $('#berria').click(function () {
 	var lang=$("<fieldset  id='lan"+lanKop+"'/>")
-	var ard=$("<select name='langile[]' id='ard"+lanKop+"'/>")
-	var opt=$("<option value=''>Langilea</option>")
+	var ard=$("<select name='langile[]' required id='ard"+lanKop+"'/>")
+	var opt=$("<option value='' >Langilea</option>")
 	var grida=$("<div class='ui-grid-a my-breakpointc'></div>")
 	var gridb=$("<div class='ui-grid-a'></div>")
 	var gridc=$("<div class='ui-grid-a'></div>")
@@ -193,7 +193,7 @@ $('#berria').click(function () {
 	gridc.append(block2c)
 	
 	ard.append(opt)
-	var datain=$("<input id='data"+lanKop+"' name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}'/>")
+	var datain=$("<input id='data"+lanKop+"' name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}' required/>")
 	var labelh=$("<label for='denborah"+lanKop+"'>Denbora (h):</label>")
 	var denborah=$("<input type='range' name='denborah[]' id='denborah"+lanKop+"' min='0' max='50' value='25' data-popup-enabled='true'>")
 	var labelmin=$("<label for='denboramin"+lanKop+"'>Denbora (min):</label>")
@@ -263,9 +263,14 @@ $('#lanid').val(id);
 				ard=l.arduraduna
 				$('#id').text(l.id);
 				$('#saila').text(l.saila);
+				lanegoera=l.egoera;
 				$('#lehentasuna').text(l.lehentasuna);
 				if(ard!=user) $('#bidaltzailea').text(l.arduraduna);
-				else $('#bidaltzailea').text(l.username);
+				else 
+					if(l.username!=l.bidaltzailea)
+						$('#bidaltzailea').text(l.username+"-"+l.bidaltzailea);
+					else
+						$('#bidaltzailea').text(l.username);
 				$('#tokia').text(l.eraikina+l.pisua+"."+l.gela);
 				$('#data').text(l.data);
 				$('#laburpena').text(l.laburpena);
@@ -306,17 +311,15 @@ $('#lanid').val(id);
 				.done(function(egoeraerantzuna) {
 					console.log("KODEA ONDO")
 					$(egoeraerantzuna).each(function (index, o) {
-						if(o.izena==null || o.izena=='undefined'){//DATU BASEKIN NOLABAIT LOTU...?
-							var id="#"+o;
-							$(id).attr("selected","selected");
-							var selector=$('#egoera');
-							$("select").selectmenu("refresh");
-						}
-						else{
+						if(o.izena==lanegoera)
+							var $option = $("<option selected='selected'cid='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
+						else
 							var $option = $("<option id='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
+							
 							$('#egoera').append($option);
-						}
+						
 					});
+					$('#egoera').selectmenu("refresh");
 				})
 				.fail(function(egoeraerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;
@@ -361,7 +364,7 @@ $('#lanid').val(id);
 							gridc.append(block1c)
 							gridc.append(block2c)
 							ard.append(opt)
-							var datain=$("<input id='data"+lanKop+"' name='data[]' value='"+o.lanEguna+"' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}'/>")
+							var datain=$("<input id='data"+lanKop+"' name='data[]' value='"+o.lanEguna+"' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\",\"useModal\": false, \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}'/>")
 							var labelh=$("<label for='denborah"+lanKop+"'>Denbora (h):</label>")
 							var denborah=$("<input type='range' name='denborah[]' id='denborah"+lanKop+"' min='0' max='50' value='"+o.denborah+"' data-popup-enabled='true'>")
 							var labelmin=$("<label for='denboramin"+lanKop+"'>Denbora (min):</label>")
@@ -437,7 +440,7 @@ function ezabatuLangileOrduak(id, db){
 }
 
 $("form").submit(function(){
-event.preventDefault();
+//event.preventDefault();
 var egoera=$("#egoera").val()
 //if(egoera=="itxia"){
 	//if (confirm("Ziur lana itxi nahi duzula?")==true){
@@ -460,9 +463,10 @@ var egoera=$("#egoera").val()
 								location.reload(true);
 							})
 							.fail(function(data){
+							alert("langileOrduakGorde errorea")
 							})
 						}
-						location.reload();
+						location.reload(true);
 				})
 				.fail(function(egoerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;

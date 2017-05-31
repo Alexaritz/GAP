@@ -7,10 +7,10 @@ $kop2 = $_GET['kop2'];
 
 if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 $erantzuna = array(); 
-	if($kop2!=="") {
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by id desc, data desc LIMIT $kop, $kop2" );
+	if($kop2!=="") {//, data desc
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by id desc LIMIT $kop, $kop2" );
 	}else{
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by id desc, data desc LIMIT $kop" );
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where username='$user' order by id desc LIMIT $kop" );
 	}
 	$int=0;
 		$num_rows=mysqli_num_rows($erab);

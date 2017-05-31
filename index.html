@@ -39,7 +39,7 @@
 	 
 </div>
 <script>
-var server="http://gapalex.esy.es/"
+var server="http://gapalex.esy.es/"//
 $('#loginForm').submit(function() { 
 	// erabiltzailearen datuak bildu
 	var user = $("#username").val()
@@ -48,7 +48,7 @@ $('#loginForm').submit(function() {
 		loginfitx = server+"PHP/login.php?jsoncallback=?"
 		$.getJSON( loginfitx, { usuario:user ,password:pass})
 		.done(function(loginerantzuna) {
-			alert(loginerantzuna.mezua)
+			//alert(loginerantzuna.mezua)
 			if(loginerantzuna.onarpena == "ok"){
 				/// ondo balidatzen bada, menura joan
 				window.localStorage.setItem('username',user);

@@ -74,7 +74,7 @@ margin:0%;
 </div>
 
 <script>
-var server="http://gapalex.esy.es/"
+var server="http://gapalex.esy.es/"//
 function bidalitakoAbisuak(){
 	$.mobile.loading('show');
 	lanFitx2 = server+"PHP/bidalitakoLanak.php?jsoncallback=?"
@@ -88,39 +88,38 @@ function bidalitakoAbisuak(){
 			$(lanErantzuna2).each(function (index, data) {
 				$.each(data, function (index, m) {
 					if(typeof m === 'object'){
-					if(m.egoera=="berria"){
-						var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
-					}else if (m.egoera=="esleitua"){
-						var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
-					}else{
-						var li2= $("<li data-role='list-divider'  style='background-color:Green;'/>");
-					}
-					var li= $("<li/>");
-					var link = $('<a/>').attr("href", '#')
-					var header= $("<h2/>");
-					var text= $("<p/>");
-					var egoezikusi=$("<p style='display:none;'></p>");
-					var p=$("<p class='ui-li-aside'></p>");
-					var egoera= $('<span class="ui-li-count"></span>');
-					link.append(header.append(m.saila+"-"+m.eraikina+m.pisua+"."+m.gela));
-					link.append(text.append(m.laburpena));
-					link.attr("id", m.id);
-					link.attr("onClick", "lanXehetasunak(this.id); return false;");
-					link.append(egoezikusi.append("egoera:"+m.egoera));
-					link.append(p.append(m.id));
-					li2.append(egoera.append(m.egoera));
-					$('#bidaliak').append(li2.append(m.data+"\t"+m.arduraduna));
-					$('#bidaliak').append(li.append(link));
-					$('#bidaliak').listview('refresh');	
-					
+						if(m.egoera=="berria"){
+							var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
+						}else if (m.egoera=="esleitua"){
+							var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
+						}else{
+							var li2= $("<li data-role='list-divider'  style='background-color:Green;'/>");
+						}
+						var li= $("<li/>");
+						var link = $('<a/>').attr("href", '#')
+						var header= $("<h2/>");
+						var text= $("<p/>");
+						var egoezikusi=$("<p style='display:none;'></p>");
+						var p=$("<p class='ui-li-aside'></p>");
+						var egoera= $('<span class="ui-li-count"></span>');
+						link.append(header.append(m.saila+"-"+m.eraikina+m.pisua+"."+m.gela));
+						link.append(text.append(m.laburpena));
+						link.attr("id", m.id);
+						link.attr("onClick", "lanXehetasunak(this.id); return false;");
+						link.append(egoezikusi.append("egoera:"+m.egoera));
+						link.append(p.append(m.id));
+						li2.append(egoera.append(m.egoera));
+						$('#bidaliak').append(li2.append(m.data+"\t"+m.arduraduna));
+						$('#bidaliak').append(li.append(link));
+						$('#bidaliak').listview('refresh');	
 					}
 					})
 				});
 			//}
-			
+		$.mobile.loading('hide');	
 		})
 		.always(function(lanErantzuna2) {
-		$.mobile.loading('hide');
+		
 		})
 }
 function gehitu2(){
@@ -163,25 +162,26 @@ function nireAbisuak(){
 				$('#esleituak').append(li.append(link));
 				$('#esleituak').listview('refresh');				
 			});
+			$.mobile.loading('hide');
 		})
 		.always(function(lanErantzuna2) {
-		$.mobile.loading('hide');
+		
 		});
 		
 }
 $(document).ajaxStop(function () {
     $("#collaps").fadeIn(500)
+	$(document).on("scrollstop", checkScroll);
 	$.mobile.loading('hide');
 });
-//$(document).on('pagebeforeshow', '#nireAbisuak', function(){  
-$(document).ready(function(){
+$(document).on('pagebeforeshow', '#nireAbisuak', function(){  
+//$(document).ready(function(){
 kopB=5;
 kop2B="";
 kop=5;
 kop2="";
 $.mobile.loading('show');
 	user = window.localStorage.getItem('username');
-	//if (window.localStorage.getItem('admin')!=undefined)
 	admin = window.localStorage.getItem('admin');
 	arduradunaDafitx = server+"PHP/arduradunaDa.php?jsoncallback=?"
 		$.getJSON( arduradunaDafitx, { usuario:user})
@@ -252,7 +252,7 @@ function gehitu(){
 	$(document).on("scrollstop", checkScroll);
 }
 /* attach if scrollstop for first time */
-$(document).on("scrollstop", checkScroll);
+//
 </script>
 </body>
 </html>

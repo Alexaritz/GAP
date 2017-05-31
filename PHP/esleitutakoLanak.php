@@ -7,16 +7,16 @@ $kop2 = $_GET['kop2'];
 $admin = $_GET['admin'];
 $erantzuna = array(); 
 	if($kop2!=="") {
-		if($admin=="true"){
-			$erab = $mysqli->query( "SELECT * FROM lanagindua order by id desc, data desc LIMIT $kop, $kop2" );
+		if($admin=="true"){//, data desc
+			$erab = $mysqli->query( "SELECT * FROM lanagindua order by id desc LIMIT $kop, $kop2" );
 		}else{
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc, data desc LIMIT $kop, $kop2" );
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc LIMIT $kop, $kop2" );
 		}
 	}else{
 		if($admin=="true"){
-			$erab = $mysqli->query( "SELECT * FROM lanagindua order by id desc, data desc LIMIT $kop" );
+			$erab = $mysqli->query( "SELECT * FROM lanagindua order by id desc LIMIT $kop" );
 		}else{
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc, data desc LIMIT $kop" );
+		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc LIMIT $kop" );
 		}
 	}
 		$num_rows=mysqli_num_rows($erab);
