@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html>
+
+
+<head>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MENUA</title>
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- Include the jQuery Mobile library -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+body{
+  display: none;
+}
+</style>
+<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
+</head>
+<body> 
+
+<div data-role="page" id="menu">
+	<div data-role="header" class="ui-grid-b">
+		<div class="ui-block-a"><a onclick="logout();" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div>
+		<div class="ui-block-b center" align="center"><center><p>Menua</p></center></div>
+		<div class="ui-block-c"></div>
+	</div>
+	
+	<div data-role="content">	
+		<input type="button" value="Abisua Bidali" id="abisuaBidali" onclick="location.href = 'abisuaBidali.html';" data-theme="b"/>
+		<input type="button" value="Nire Abisuak" id="nireAbisuak" onclick="location.href = 'nireAbisuak.html';"data-theme="b" />
+		<!--<input type="button" value="Osatu Agindua" id="osatuAgindua" onclick="location.href = 'lanAgindua.html';"data-theme="b" />-->
+	</div>
+	 
+</div>
+
+<script>
+var server="http://gapalex.esy.es/"
+$(document).ready(function(){
+	$("body").fadeIn(500);
+});
+
+function logout(){
+	window.localStorage.clear();
+	window.location.replace(server+"PHP/logout.php");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html>
+<head>
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</head>
+
+<body> 
+<div id="chart">
+		lala
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+                var dataLength = 0;
+                var data = [];
+                $.getJSON("PHP/ura.php", function (result) {
+				
+                    dataLength = result.length;
+                    for (var i = 0; i < dataLength; i++) {
+					console.log(result[i].data)
+                        data.push({
+							//alert(result[i].data)
+                            x: result[i].data,
+                            y: parseInt(result[i].kantitatea)
+                        });
+                    }
+                    ;
+                    chart.render();
+                });
+                var chart = new CanvasJS.Chart("chart", {
+                    title: {
+                        text: "Urtean zeharreko ur gastua"
+                    },
+                    axisX: {
+                        title: "Data",
+                    },
+                    axisY: {
+                        title: "Ur kantitatea",
+                    },
+                    data: [{type: "line", dataPoints: data}],
+                });
+});
+</script>
+</body>
+</html>

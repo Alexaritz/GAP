@@ -4,6 +4,7 @@ include 'dbcon.php';
 //$user = $_POST['usuario'];
 $id = $_POST['id'];
 $lanid = $_POST['lanid'];
+$lanorduID = $_POST['lanOrduID'];
 $langile = $_POST['langile'];
 $data = $_POST['data'];
 $denborah = $_POST['denborah'];
@@ -21,15 +22,14 @@ for($i=0;$i<count($langile);$i++){
 	/*	$insert = $mysqli->query( "INSERT INTO langileorduak (id, lanID, langilea, denborah, denboramin, lanEguna) 
 		values ('$id[$i]','$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')
 		ON DUPLICATE KEY UPDATE  langilea='$langile[$i]', denborah='$denborah[$i]', denboramin='$denboramin[$i]', lanEguna='$data[$i]'" );*/
-		$update = $mysqli->query( "UPDATE langileorduak SET 
-		langilea=IF('$langile[$i]'!=langilea, ), denborah='$denborah[$i]', denboramin='$denboramin[$i]', lanEguna='$data[$i]' 
+		$update = $mysqli->query( "UPDATE langileorduak SET langilea='$langile[$i]', denborah='$denborah[$i]', denboramin='$denboramin[$i]', lanEguna='$data[$i]' 
 		WHERE id='$id[$i]'");
     }else{
 		$insert = $mysqli->query( "INSERT INTO langileorduak (lanID, langilea, denborah, denboramin, lanEguna) 
 		values ('$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')");
     }
 }
-//$erantzuna[] = "Zuzen txertatu da."; 
+$erantzuna[] = "Zuzen txertatu da."; 
 $resultadosJson=json_encode( $erantzuna );
 //echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 /*}else{

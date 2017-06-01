@@ -1,0 +1,258 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIRE MEZUAK</title>
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- Include the jQuery Mobile library -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
+<style>
+
+.ui-grid-a >.ui-block-a, .ui-grid-a>.ui-block-b{
+width:49%;
+}
+
+.ui-grid-a >.ui-block-a, .ui-grid-a >.ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e{
+margin:0.5%;
+}
+#head .ui-block-a, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e{
+margin:0%;
+}
+@media all and (max-width: 44em) {
+    .my-breakpoint .ui-block-a,
+    .my-breakpoint .ui-block-b{
+      width: 100%;
+      float:none;
+    }
+  }
+ #collaps{
+  display:none
+}
+</style>
+
+
+</head>
+<body> 
+
+<div data-role="page" id="nireAbisuak">
+	<div class="ui-grid-b" data-role="header" data-position="fixed" id="head">
+		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
+		<div class="ui-block-b"><center><p>Nire Abisuak</p></center></div>
+		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
+	</div>
+	<fieldset id="collaps" class="ui-grid-a my-breakpoint">
+		<div id="esleituDiv" class="ui-block-a">
+			<form id="form">
+				<div id="collap" style="display:none" data-role="collapsible" data-theme="b" data-content-theme="b" >
+					<h2>Esleitutako Abisuak</h2>
+					<ul id="esleituak" data-role="listview" data-filter="true" >
+					</ul>
+				</div>
+			</form>
+		</div>
+		<div id="bidaliDiv" width="100%" class="ui-block-b">
+			<form id="form2">
+				<div id="collap2" style="display:inline" data-role="collapsible" data-theme="b" data-content-theme="b">
+					<h2>Bidalitako Abisuak</h2>
+					<ul id="bidaliak" data-role="listview" data-filter="true">
+					</ul>
+				</div>
+			</form>
+		</div>
+	</fieldset>
+</div>
+
+<script>
+var server="http://gapalex.esy.es/"//
+function bidalitakoAbisuak(){
+	$.mobile.loading('show');
+	lanFitx2 = server+"PHP/bidalitakoLanak.php?jsoncallback=?"
+		$.getJSON(lanFitx2, { usuario:user, kop:kopB, kop2:kop2B, admin:admin})
+		.done(function(lanErantzuna2) {
+		/*if(lanErantzuna2.log=="false"){
+			alert(lanErantzuna2.mezua);
+			window.localStorage.clear();
+			window.location.replace("PHP/logout.php");
+		}else{*/
+			$(lanErantzuna2).each(function (index, data) {
+				$.each(data, function (index, m) {
+					if(typeof m === 'object'){
+						if(m.egoera=="berria"){
+							var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
+						}else if (m.egoera=="esleitua"){
+							var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
+						}else{
+							var li2= $("<li data-role='list-divider'  style='background-color:Green;'/>");
+						}
+						var li= $("<li/>");
+						var link = $('<a/>').attr("href", '#')
+						var header= $("<h2/>");
+						var text= $("<p/>");
+						var egoezikusi=$("<p style='display:none;'></p>");
+						var p=$("<p class='ui-li-aside'></p>");
+						var egoera= $('<span class="ui-li-count"></span>');
+						link.append(header.append(m.saila+"-"+m.eraikina+m.pisua+"."+m.gela));
+						link.append(text.append(m.laburpena));
+						link.attr("id", m.id);
+						link.attr("onClick", "lanXehetasunak(this.id); return false;");
+						link.append(egoezikusi.append("egoera:"+m.egoera));
+						link.append(p.append(m.id));
+						li2.append(egoera.append(m.egoera));
+						$('#bidaliak').append(li2.append(m.data+"\t"+m.arduraduna));
+						$('#bidaliak').append(li.append(link));
+						$('#bidaliak').listview('refresh');	
+					}
+					})
+				});
+			//}
+		$.mobile.loading('hide');	
+		})
+		.always(function(lanErantzuna2) {
+		
+		})
+}
+function gehitu2(){
+	$(document).off("scrollstop");
+	kop2B=5;
+	console.log(kopB);
+	bidalitakoAbisuak();
+	kopB=kopB+kop2B;
+	$(document).on("scrollstop", checkScroll);
+}
+
+function nireAbisuak(){
+	$.mobile.loading('show');
+	lanFitx = server+"PHP/esleitutakoLanak.php?jsoncallback=?"
+		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2,admin:admin})
+		.done(function(lanErantzuna) {
+			$(lanErantzuna).each(function (index, m) {
+				if(m.egoera=="berria"){
+					var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
+				}else if (m.egoera=="esleitua"){
+					var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
+				}else{
+					var li2= $("<li data-role='list-divider' style='background-color:Green;'/>");
+				}
+				var li= $("<li/>");
+				var link = $('<a/>').attr("href", '#')
+				var header= $("<h2/>");
+				var text= $("<p/>");
+				var egoezikusi=$("<p style='display:none;'></p>");
+				var p=$("<p class='ui-li-aside'></p>");
+				var egoera= $('<span class="ui-li-count"></span>');
+				link.append(header.append(m.saila+"-"+m.eraikina+m.pisua+"."+m.gela));
+				link.append(text.append(m.laburpena));
+				link.attr("id", m.id);
+				link.attr("onClick", "lanXehetasunak(this.id); return false;");
+				link.append(egoezikusi.append("egoera:"+m.egoera));
+				link.append(p.append(m.id));
+				li2.append(egoera.append(m.egoera));
+				$('#esleituak').append(li2.append(m.data));
+				$('#esleituak').append(li.append(link));
+				$('#esleituak').listview('refresh');				
+			});
+			$.mobile.loading('hide');
+		})
+		.always(function(lanErantzuna2) {
+		
+		});
+		
+}
+$(document).ajaxStop(function () {
+    $("#collaps").fadeIn(500)
+	$(document).on("scrollstop", checkScroll);
+	$.mobile.loading('hide');
+});
+$(document).on('pagebeforeshow', '#nireAbisuak', function(){  
+//$(document).ready(function(){
+kopB=5;
+kop2B="";
+kop=5;
+kop2="";
+$.mobile.loading('show');
+	user = window.localStorage.getItem('username');
+	admin = window.localStorage.getItem('admin');
+	arduradunaDafitx = server+"PHP/arduradunaDa.php?jsoncallback=?"
+		$.getJSON( arduradunaDafitx, { usuario:user})
+		.done(function(arduDaeran) {
+			if(arduDaeran.arduraduna == "bai" || admin=="true"){
+				/// arduraduna bada, esleitutako abisuak erakutsi
+				$("#collap").attr("style","display:inline");
+				nireAbisuak();
+			}else{
+				$("#bidaliDiv").attr("style","float:none");
+				$("#bidaliDiv").attr("style","width:99%");
+			}
+			bidalitakoAbisuak();
+			//$("#collaps").fadeIn(500)
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("arduradunaDa Request Failed: " + err);
+		})
+	
+});
+function lanXehetasunak(id){
+	window.localStorage.setItem('lanID',id);
+	window.location.replace("lanXehetasunak.html");
+}
+/* create scrollstop handler function */
+function checkScroll() {
+    /* You always need this in order to target
+       elements within active page */
+    var activePage = $.mobile.pageContainer.pagecontainer("getActivePage"),
+ 
+        /* Viewport's height */
+        screenHeight = $.mobile.getScreenHeight(),
+ 
+        /* Content div - include padding too! */
+        contentHeight = $("#collaps", activePage).outerHeight(),
+		//contentHeight2 = $("#bidaliDiv", activePage).outerHeight(),
+        /* Height of scrolled content (invisible) */
+        scrolled = $(window).scrollTop(),
+ 
+        /* Height of both Header & Footer and whether they are fixed
+           If any of them is fixed, we will remove (1px)
+           If not, outer height is what we need */
+        header = $(".ui-header", activePage).outerHeight() - 1,
+        //footer = $(".ui-footer", activePage).outerHeight() - 1,
+ 
+        /* Math 101 - Window's scrollTop should
+           match content minus viewport plus toolbars */
+        scrollEnd = contentHeight - screenHeight + header;
+		//scrollEnd2 = contentHeight2 - screenHeight + header;
+    /* if (pageX) is active and page's bottom is reached
+       load more elements  */
+    if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd) {
+        /* run loadMore function */
+       gehitu(activePage);
+	   gehitu2(activePage);
+    }
+	/* if (activePage[0].id == "nireAbisuak" && scrolled >= scrollEnd2) {
+       gehitu2(activePage);
+    }*/
+}
+function gehitu(){
+	$(document).off("scrollstop");
+	kop2=5;
+	console.log(kop);
+	nireAbisuak();
+	kop=kop+kop2;
+	$(document).on("scrollstop", checkScroll);
+}
+/* attach if scrollstop for first time */
+//
+</script>
+</body>
+</html>

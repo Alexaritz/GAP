@@ -394,7 +394,8 @@ $('#lanid').val(id);
 					console.log("langileOrduakLortu Request Failed: " + err);
 				})
 		
-			//$("#lanXehetasunak").fadeIn(500)			
+			//$("#lanXehetasunak").fadeIn(500)
+			$.mobile.loading('hide');				
 		}
 		})
 		.fail(function(koderantzuna,textStatus, error) {
@@ -459,13 +460,13 @@ var egoera=$("#egoera").val()
 							$.post( server+"PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
 							.done(function(data){
 								$.mobile.loading('hide');
-								location.reload();
+								location.reload(true);
 							})
 							.fail(function(data){
-							console.log("langileOrduakGorde errorea")
+							alert("langileOrduakGorde errorea")
 							})
 						}
-						location.reload();
+						location.reload(true);
 				})
 				.fail(function(egoerantzuna,textStatus, error) {
 					var err = textStatus + ', ' + error;

@@ -1,0 +1,301 @@
+<!DOCTYPE html> 
+<html>
+<head>
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
+<style>
+
+@media all and (max-width: 22em) {
+    .my-breakpoint .ui-block-a,
+    .my-breakpoint .ui-block-b{
+      width: 100%;
+      float:none;
+    }
+  }
+  @media all and (max-width: 30em) {
+    .my-breakpointb .ui-block-a,
+    .my-breakpointb .ui-block-b{
+      width: 100%;
+      float:none;
+    }
+  }
+#custom-fieldset .ui-controlgroup-controls {
+    width: 99.5%;
+}
+
+#custom-fieldset .ui-controlgroup-controls .ui-select {
+    width: 33.33%;
+}
+img {
+    height: auto; /* Make sure images with WordPress-added height and width attributes are scaled correctly */
+    max-width: 100%; /* Prevent images from overflowing their boundaries */
+}
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  margin-right: 4px;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  transform: translate(-300px, 0) scale(4);
+  font-size: 23px;
+  direction: ltr;
+  cursor: pointer;
+}
+#uploader .ui-input-text, .ui-input-search{
+border-style:none;
+}
+#abisuaEditatu{
+	display: none;
+}
+</style>
+</head>
+
+<body> 
+<div data-role="page" id="abisuaEditatu">
+
+	<div class="ui-grid-b" data-role="header">
+		<div class="ui-block-a"><a onclick="location.href = 'lanXehetasunak.html';" style="position: absolute;left: 0;" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
+		<div class="ui-block-b"><center><p>Abisua editatu</p></center></div>
+		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
+	</div>
+	<div data-role="content" class="app">	
+		<form id="abisuForm" method="post" enctype="multipart/form-data">
+			<fieldset class="ui-grid-a my-breakpoint">
+				<div class="ui-block-a">
+					<select id="arazoM" name="arazoM" required>
+							<option value="">Arazo mota</option>
+					</select>
+				</div>
+				<div class="ui-block-b">
+					<select id="arduraduna" name="arduraduna" required>
+							<option value="">Arduraduna</option>
+					</select>
+				</div>	      
+			</fieldset>
+			<fieldset class="ui-grid-a my-breakpointb">
+			<div class="ui-block-a">
+			<fieldset data-role="controlgroup" data-type="horizontal" id="custom-fieldset">
+				<select id="eraikina" name="eraikina" class="myselector" required>
+						<option value="">Eraikina</option>
+				</select>
+				<select id="solairua" name="solairua" class="myselector" required>
+						<option value="">Solairua</option>
+				</select>
+				<select id="gela" name="gela" class="myselector" required>
+						<option value="">Gela</option>
+				</select>
+			</fieldset>
+			</div>
+			<div class="ui-block-b" >
+				<select id="lehentasuna" name="lehentasuna" required>
+						<option value="">Lehentasuna</option>
+						<option value="Baxua">Baxua</option>
+						<option value="Normala">Normala</option>
+						<option value="Premiazkoa">Premiazkoa</option>
+				</select>
+			</div>	
+			</fieldset>
+			<fieldset class="ui-grid-a my-breakpointb">
+				<div class="ui-block-a">
+					<input type="text" id="bidaltzailea" name="bidaltzailea" placeholder="Bidaltzailea" required>
+				</div>
+				<div class="ui-block-b">
+					<input type="text" id="laburpena" name="laburpena" placeholder="Laburpena" required>
+				</div>
+			</fieldset>
+			<textarea name="deskribapena" id="deskribapena"  placeholder="Deskribapena..." required></textarea>
+
+			<input type="submit" value="Eguneratu" name="submit" id="submit" data-theme="b">
+    	</form>			   
+	</div>
+	 
+</div>
+<script>
+var server="http://gapalex.esy.es/"
+$(document).ready(function(){
+var user = window.localStorage.getItem('username');
+id = window.localStorage.getItem('lanID');
+	var arazoMota;	
+		/*Lanaren xehetasunak*/
+		lanfitx = server+"PHP/lanXehetasunak.php?jsoncallback=?"
+		$.getJSON( lanfitx, { usuario:user, lanid:id})
+		.done(function(lanerantzuna) {
+			$(lanerantzuna).each(function (index, l) {
+				arazoMota=l.saila;
+				ard=l.arduraduna;
+				eraikina=l.eraikina;
+				pisua=l.pisua;
+				gela=l.gela;
+				lehentasuna=l.lehentasuna
+				$('#bidaltzailea').val(l.bidaltzailea)
+				$('#laburpena').val(l.laburpena)
+				$('#deskribapena').val(l.deskribapena)
+				})
+		});
+		/*eraikina lortu*/
+		kodefitx = server+"PHP/eraikinaLortu.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			console.log("ONDO")
+			$(koderantzuna).each(function (index, o) {
+				if(o.izena==eraikina)
+					var $option = $("<option selected='selected'/>").attr("value", o.izena).text(o.izena);
+				else
+					var $option = $("<option />").attr("value", o.izena).text(o.izena);
+				$('#eraikina').append($option);
+				$('#eraikina').selectmenu("refresh");
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})	
+		
+		/*solairua lortu*/
+		kodefitx = server+"PHP/solairuaLortu.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			console.log("ONDO")
+			$(koderantzuna).each(function (index, o) {
+				if(o.zenbakia==pisua)
+					var $option = $("<option selected='selected'/>").attr("value", o.zenbakia).text(o.zenbakia);
+				else
+					var $option = $("<option/>").attr("value", o.zenbakia).text(o.zenbakia);
+				$('#solairua').append($option);
+				$('#solairua').selectmenu("refresh");
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})	
+		
+		/*gela lortu*/
+		kodefitx = server+"PHP/gelaLortu.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			console.log("ONDO")
+			$(koderantzuna).each(function (index, o) {
+				if(o.izena==gela)
+					var $option = $("<option selected='selected'/>").attr("value", o.izena).text(o.izena);
+				else
+					var $option = $("<option/>").attr("value", o.izena).text(o.izena);
+				$('#gela').append($option);
+				$('#gela').selectmenu("refresh");
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})	
+		
+		/*ARDURADUNA BETE*/
+		ardfitx = server+"PHP/arduradunaLortu.php?jsoncallback=?"
+		$.getJSON( ardfitx, { usuario:user})
+		.done(function(arderantzuna) {
+			$(arderantzuna).each(function (index, o) {
+			if(o.username==ard)
+				var $option = $("<option selected='selected'/>").attr("value", o.username).text(o.username);
+			else
+				var $option = $("<option/>").attr("value", o.username).text(o.username);
+				$('#arduraduna').append($option);
+				$('#arduraduna').selectmenu("refresh");
+			});
+		})
+		.fail(function(arderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+			
+		/*ARAZO MOTA BETE*/
+		kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
+		$.getJSON( kodefitx, { usuario:user})
+		.done(function(koderantzuna) {
+			console.log("ONDO")
+			$(koderantzuna).each(function (index, o) {
+				if(o.izena==arazoMota)
+					var $option = $("<option selected='selected'/>").attr("value", o.kodea).text(o.izena);
+				else
+					var $option = $("<option/>").attr("value", o.kodea).text(o.izena);
+				$('#arazoM').append($option);
+				$('#arazoM').selectmenu("refresh");
+			});
+		})
+		.fail(function(koderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+		/*return false*/;			
+		//$("#abisuaBidali").fadeIn(500);
+		return false;		
+});
+$(document).ajaxStop(function () {
+    $("#abisuaEditatu").fadeIn(500)
+	$.mobile.loading('hide');
+});
+
+$("form").submit(function(){
+	//event.preventDefault();
+	$.mobile.loading('show');
+	var user = window.localStorage.getItem('username');
+   var id = window.localStorage.getItem('lanID');
+	var saila=$("#arazoM").val()
+	var arduraduna=$("#arduraduna").val()
+	var bidaltzailea=$("#bidaltzailea").val()
+	var eraikina=$("#eraikina").val()
+	var solairua=$("#solairua").val()
+	var gela=$("#gela").val()
+	var lehentasuna=$("#lehentasuna").val()
+	var laburpena=$("#laburpena").val()
+	var deskribapena=$("#deskribapena").val()
+	if(saila!="" && arduraduna!="" && eraikina!="" && solairua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!="" && id!=""){
+		//ARGAZKIRIK GABEKO ABISUA
+			abisuFitx2 = server+"PHP/abisuaEditatu.php?jsoncallback=?"
+			$.getJSON( abisuFitx2, { usuario:user, saila:saila, arduraduna:arduraduna, bidaltzailea:bidaltzailea, eraikina:eraikina, pisua:solairua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena, id:id})
+			.done(function(abisuerantzuna2) {
+				if(abisuerantzuna2.log=="true"){
+					console.log("ZUZEN TXERTATU DA")
+					alert(abisuerantzuna2.mezua);
+					window.location.replace("menua.html");
+					$.mobile.loading('hide');
+				}else{
+					alert(abisuerantzuna2.mezua);
+					window.location.replace("index.html");
+				}
+			})
+			.fail(function(abisuerantzuna2,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("abisuaEditatu Request Failed: " + err);
+			});
+	}else{
+		alert("Datu guztiak bete behar dira.");
+	}
+	return false;
+});
+</script>
+</body>
+</html>
