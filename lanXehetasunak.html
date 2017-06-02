@@ -161,7 +161,7 @@ var lanKop=0;
 //Langile berriaren formularioa sortu
 $('#berria').click(function () {
 	var lang=$("<fieldset  id='lan"+lanKop+"'/>")
-	var ard=$("<select name='langile[]' required id='ard"+lanKop+"'/>")
+	var ard=$("<select name='langile[]' id='ard"+lanKop+"'/>")
 	var opt=$("<option value='' >Langilea</option>")
 	var grida=$("<div class='ui-grid-a my-breakpointc'></div>")
 	var gridb=$("<div class='ui-grid-a'></div>")
@@ -193,7 +193,7 @@ $('#berria').click(function () {
 	gridc.append(block2c)
 	
 	ard.append(opt)
-	var datain=$("<input id='data"+lanKop+"' name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}' required/>")
+	var datain=$("<input id='data"+lanKop+"' name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}'/>")
 	var labelh=$("<label for='denborah"+lanKop+"'>Denbora (h):</label>")
 	var denborah=$("<input type='range' name='denborah[]' id='denborah"+lanKop+"' min='0' max='50' value='25' data-popup-enabled='true'>")
 	var labelmin=$("<label for='denboramin"+lanKop+"'>Denbora (min):</label>")
@@ -363,8 +363,8 @@ $('#lanid').val(id);
 							gridb.append(block2b)
 							gridc.append(block1c)
 							gridc.append(block2c)
-							ard.append(opt)
-							var datain=$("<input id='data"+lanKop+"' name='data[]' value='"+o.lanEguna+"' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\",\"useModal\": false, \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}'/>")
+							ard.append(opt)//,\"useModal\": false
+							var datain=$("<input id='data"+lanKop+"' name='data[]' value='"+o.lanEguna+"' placeholder='Egin klik data sartzeko...' onfocus='calClick("+lanKop+")' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}'/>")
 							var labelh=$("<label for='denborah"+lanKop+"'>Denbora (h):</label>")
 							var denborah=$("<input type='range' name='denborah[]' id='denborah"+lanKop+"' min='0' max='50' value='"+o.denborah+"' data-popup-enabled='true'>")
 							var labelmin=$("<label for='denboramin"+lanKop+"'>Denbora (min):</label>")
@@ -439,7 +439,7 @@ function ezabatuLangileOrduak(id, db){
 }
 
 $("form").submit(function(){
-//event.preventDefault();
+event.preventDefault();
 var egoera=$("#egoera").val()
 //if(egoera=="itxia"){
 	//if (confirm("Ziur lana itxi nahi duzula?")==true){
@@ -462,7 +462,7 @@ var egoera=$("#egoera").val()
 								location.reload();
 							})
 							.fail(function(data){
-							console.log("langileOrduakGorde errorea")
+							console.log("langileOrduakGorde.php errorea")
 							})
 						}
 						location.reload();
