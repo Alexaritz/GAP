@@ -12,27 +12,24 @@ $denboramin = $_POST['denboramin'];
 //if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 	
 //if(isset($_POST["submit"]) &&) {
-$erantzuna = array(); 
-//$erantzuna["log"] = "true";
-//echo count($langile);
+$erantzuna = array();
 
 for($i=0;$i<count($langile);$i++){
 	if($id[$i]!=""){
-	/*	$insert = $mysqli->query( "INSERT INTO langileorduak (id, lanID, langilea, denborah, denboramin, lanEguna) 
-		values ('$id[$i]','$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')
-		ON DUPLICATE KEY UPDATE  langilea='$langile[$i]', denborah='$denborah[$i]', denboramin='$denboramin[$i]', lanEguna='$data[$i]'" );*/
 		$update = $mysqli->query( "UPDATE langileorduak SET 
 		langilea=IF(langilea!='$langile[$i]','$langile[$i]', langilea),
 		denborah=IF(denborah!='$denborah[$i]','$denborah[$i]', denborah),
 		denboramin=IF(denboramin!='$denboramin[$i]','$denboramin[$i]', denboramin),
-		lanEguna=IF(lanEguna!='$data[$i]' , '$data[$i]', lanEguna)
+		lanEguna=IF(lanEguna!='$data[$i]', '$data[$i]', lanEguna)
 		WHERE id='$id[$i]'");
+	$erantzuna["mezua"] = "Zuzen eguneratu da.";
     }else{
 		$insert = $mysqli->query( "INSERT INTO langileorduak (lanID, langilea, denborah, denboramin, lanEguna) 
 		values ('$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')");
+		$erantzuna["mezua"] = "Zuzen txertatu da.";
     }
 }
-//$erantzuna[] = "Zuzen txertatu da."; 
+
 $resultadosJson=json_encode( $erantzuna );
 echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 /*}else{

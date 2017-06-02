@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html>
 <head>
-
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <!-- Include meta tag to ensure proper rendering and touch zooming -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -175,7 +175,7 @@ $('#berria').click(function () {
 	
 	var ezab=$('<input id="ezab'+lanKop+'" onclick="ezabatuLangileOrduak('+lanKop+','+false+');return false;" type="button" style="float:left;" data-mini="true" data-inline="true" data-icon="delete" value="Ezabatu"/>');
 	var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+lanKop+"' >lan zenb:"+lanKop+"</div>")
-	var dividezab=$("<div id='div2"+lanKop+"' ></div>")
+	var dividezab=$("<div id='div2"+lanKop+"'>div2"+lanKop+"</div>")
 	var inid=$("<input type='hidden' value='' name='id[]'/>")
 	dividezab.append(ezab)
 	dividezab.append(inid)
@@ -288,7 +288,7 @@ $('#lanid').val(id);
 			if(user==null || ard!=user){
 				$("#tab2").hide();
 				$("#bidal").text("Arduraduna");
-				$("#lanXehetasunak").fadeIn(500);
+			//	$("#lanXehetasunak").fadeIn(500);
 				$.mobile.loading('hide');
 			}else{
 				//lanaren xehetasunak lortu
@@ -439,7 +439,7 @@ function ezabatuLangileOrduak(id, db){
 }
 
 $("form").submit(function(){
-event.preventDefault();
+//event.preventDefault();
 var egoera=$("#egoera").val()
 //if(egoera=="itxia"){
 	//if (confirm("Ziur lana itxi nahi duzula?")==true){
@@ -455,62 +455,29 @@ var egoera=$("#egoera").val()
 				egoeraFitx = server+"PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
-						if(lanKop>0){
+				})
+				.fail(function(egoerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("1Request Failed: " + err);
+				})
+			})
+			.fail(function(d, textStatus, error) {
+				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
+			})
+			if(lanKop>0){
 							$.post( server+"PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
 							.done(function(data){
 								$.mobile.loading('hide');
 								location.reload();
 							})
-							.fail(function(data){
-							console.log("langileOrduakGorde.php errorea")
+							.fail(function(data,textStatus, error){
+							var err =data.responseText+ textStatus + ', ' + error;
+							console.log("langileOrduakGorde.php errorea" + err)
 							})
-						}
-						location.reload();
-				})
-				.fail(function(egoerantzuna,textStatus, error) {
-					var err = textStatus + ', ' + error;
-					console.log("1Request Failed: " + err);
-				})
-			})
-			.fail(function(d, textStatus, error) {
-				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
-			})
-	/*}else{
+			}else{
+				location.reload();
+			}
 	return false;
-	}*/
-/*}else{
-	$.mobile.loading('show');
-		var user = window.localStorage.getItem('username');
-		var lanid = window.localStorage.getItem('lanID');
-		var azalpena=$("#azalpena").val()
-		var materiala=$("#materiala").val()
-		var egoera=$("#egoera").val()
-		xehetasunFitx2 = "PHP/lanaOsatu.php?jsoncallback=?"
-			$.getJSON( xehetasunFitx2, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
-			.done(function(xeheterantzuna2) {
-				egoeraFitx = "PHP/egoeraEguneratu.php?jsoncallback=?"
-				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
-				.done(function(egoerantzuna) {
-						if(lanKop>0){
-							$.post( "PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
-							.done(function(data){
-								location.reload();
-								$.mobile.loading('hide');
-							})
-							.fail(function(data){
-							})
-						}
-						location.reload();
-				})
-				.fail(function(egoerantzuna,textStatus, error) {
-					var err = textStatus + ', ' + error;
-					console.log("1Request Failed: " + err);
-				})
-			})
-			.fail(function(d, textStatus, error) {
-				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
-			})
-}*/
 });
 
 </script>

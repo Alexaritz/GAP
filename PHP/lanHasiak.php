@@ -9,7 +9,7 @@ $erantzuna = array();
 		$num_rows=mysqli_num_rows($erab);
 		if ($num_rows> 0){
 			while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
-				$erantzuna[]=array_map('utf8_encode', $datos);
+				$erantzuna[]=array_map(null, $datos);
 			}
 		}
 		$resultadosJson=json_encode( $erantzuna );

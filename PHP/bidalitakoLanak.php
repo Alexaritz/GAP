@@ -15,7 +15,7 @@ $erantzuna = array();
 	$int=0;
 		$num_rows=mysqli_num_rows($erab);
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
-			$erantzuna[$int]=array_map('utf8_encode', $datos);
+			$erantzuna[$int]=array_map(null, $datos);
 			$int=$int+1;
 		}$erantzuna["log"] = "true";
 }else{
