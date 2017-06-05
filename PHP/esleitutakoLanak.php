@@ -1,5 +1,6 @@
 <?php
 include 'dbcon.php';
+include_once 'session.php';
 /* user + pass jaso*/
 $user = $_GET['usuario'];
 $kop = $_GET['kop'];

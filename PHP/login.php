@@ -6,11 +6,12 @@ $pass = $_GET['password'];
 
 $erantzuna = array(); 
 
-		$erab = $mysqli->query( "SELECT * FROM erabiltzailea WHERE username=('$user') and password=('$pass')" );
-		$num_rows=mysqli_num_rows($erab);
-		if ($num_rows> 0){
-			$row=mysqli_fetch_array($erab,MYSQLI_ASSOC);
-			if ($row["mota"]=="admin") $erantzuna["admin"] = "true";
+		$erab = $mysqli->prepare( "SELECT * FROM erabiltzailea WHERE username=? and password=?");
+		$erab->bind_param("ss", $user, $pass);
+		$erab->execute();
+		$erab->bind_result($id, $user, $pass, $admin);
+		if($erab-> fetch()){
+			if($admin=="admin") $erantzuna["admin"] = "true";
 			$_SESSION['logged'] = true;
 			$_SESSION['username'] = $user;
 			$erantzuna["mezua"] = "Datu zuzenak.";
