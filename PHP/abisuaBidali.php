@@ -19,14 +19,17 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 $erantzuna = array(); 
 $erantzuna["log"] = "true";
 	if ($saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
+		$erab = $mysqli->prepare( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)" );
+		$egoera="berria";
 		if ($argazkia==""){
-			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$bidaltzailea', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '', 'berria')" );
+			$erab->bind_param("ssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $argazkia, $egoera);
 		}else{
-			$erab = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
-			$num_rows=mysqli_num_rows($erab);
+			$arg = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
+			$num_rows=mysqli_num_rows($arg);
 			$argazkia=$num_rows . "argazkia.jpeg";
-			$insert = $mysqli->query( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES ('$user', '$saila', '$arduraduna', '$bidaltzailea', '$eraikina', '$pisua', '$gela', '$lehentasuna', '$laburpena', '$deskribapena', now(), '$argazkia', 'berria')" );
+			$erab->bind_param("ssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $argazkia, $egoera);
 		}
+		$erab->execute();
 		$erantzuna["mezua"] = "Zuzen txertatu da.";
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";

@@ -9,20 +9,25 @@ $admin = $_GET['admin'];
 $erantzuna = array(); 
 	if($kop2!=="") {
 		if($admin=="true"){//, data desc
-			$erab = $mysqli->query( "SELECT * FROM lanagindua order by id desc LIMIT $kop, $kop2" );
+			$erab = $mysqli->prepare("SELECT id, username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, laburpena, data, egoera FROM lanagindua order by id desc LIMIT ?, ?" );
+			$erab->bind_param("ii", $kop, $kop2);
 		}else{
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc LIMIT $kop, $kop2" );
+		$erab = $mysqli->prepare("SELECT id, username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, laburpena, data, egoera FROM lanagindua where arduraduna=? order by id desc LIMIT ?, ?" );
+		$erab->bind_param("sii", $user, $kop, $kop2);
 		}
 	}else{
 		if($admin=="true"){
-			$erab = $mysqli->query( "SELECT * FROM lanagindua order by id desc LIMIT $kop" );
+			$erab = $mysqli->prepare("SELECT id, username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, laburpena, data, egoera FROM lanagindua order by id desc LIMIT ?" );
+			$erab->bind_param("i", $kop);
 		}else{
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' order by id desc LIMIT $kop" );
+			$erab = $mysqli->prepare("SELECT id, username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, laburpena, data, egoera FROM lanagindua where arduraduna=? order by id desc LIMIT ?" );
+			$erab->bind_param("si", $user, $kop);
 		}
 	}
-		$num_rows=mysqli_num_rows($erab);
-		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
-			$erantzuna[]=array_map(null, $datos);
+		$erab->execute();
+		$erab->bind_result($id, $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $laburpena, $data, $egoera);
+		while ($erab->fetch()) {
+			$erantzuna[] = array('id'=> $id, 'username'=> $user, 'saila'=> $saila,'arduraduna'=> $arduraduna, 'bidaltzailea'=> $bidaltzailea, 'eraikina'=> $eraikina, 'pisua'=> $pisua, 'gela'=> $gela, 'laburpena'=> $laburpena, 'data'=> $data, 'egoera'=> $egoera);
 		}
 		$resultadosJson=json_encode( $erantzuna );
 /*emaitza json formatura bihurtzen da*/

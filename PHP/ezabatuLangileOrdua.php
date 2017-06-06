@@ -7,7 +7,9 @@ $id = $_GET['id'];
 $erantzuna = array(); 
 
 		//if($mysqli->query( "DELETE * FROM langileorduak WHERE id='$id'" )===TRUE{
-			$mysqli->query( "DELETE FROM langileorduak WHERE id=$id" );
+			$erab = $mysqli->prepare("DELETE FROM langileorduak WHERE id=?" );
+			$erab->bind_param("i", $id);
+			$erab->execute();
 			$erantzuna["zuzen"] = "ok";
 			$erantzuna["mezua"] = "Zuzen ezabatu da.";
 		/*}else{

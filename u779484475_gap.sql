@@ -4,7 +4,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-05-2017 a las 11:14:54
+-- Tiempo de generación: 06-06-2017 a las 11:07:19
 -- Versión del servidor: 10.1.22-MariaDB
 -- Versión de PHP: 5.2.17
 
@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `arazomota` (
   `kodea` int(11) NOT NULL AUTO_INCREMENT,
   `izena` varchar(50) NOT NULL,
-  PRIMARY KEY (`kodea`)
+  PRIMARY KEY (`kodea`),
+  UNIQUE KEY `izena` (`izena`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT AUTO_INCREMENT=8 ;
 
 --
@@ -59,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `arduraduna` (
   PRIMARY KEY (`id`),
   KEY `sailaCons` (`saila`),
   KEY `erabCons` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `arduraduna`
@@ -81,8 +82,9 @@ CREATE TABLE IF NOT EXISTS `erabiltzailea` (
   `password` varchar(50) NOT NULL,
   `mota` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `username_2` (`username`),
   KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `erabiltzailea`
@@ -103,7 +105,9 @@ INSERT INTO `erabiltzailea` (`id`, `username`, `password`, `mota`) VALUES
 CREATE TABLE IF NOT EXISTS `eraikina` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `izena` varchar(5) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `izena` (`izena`),
+  UNIQUE KEY `izena_2` (`izena`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
@@ -126,7 +130,8 @@ INSERT INTO `eraikina` (`id`, `izena`) VALUES
 CREATE TABLE IF NOT EXISTS `gela` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `izena` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `izena` (`izena`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
@@ -181,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `lanagindua` (
   `egoera` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `egoCos` (`egoera`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=84 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=98 ;
 
 --
 -- Volcado de datos para la tabla `lanagindua`
@@ -229,7 +234,7 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `bidaltzailea
 (40, 'Proba', 'Orokorra', '', '', '', 1, '1', 'Baxua', 'Froga iphon', 'Gdfjhghj', '2017-05-10 12:00:12', '', 'berria'),
 (41, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Baxua', 'dsadsa', 'dadasdas', '2017-05-10 12:09:21', '', 'berria'),
 (42, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'dsadas', 'dasddaddsdaadda', '2017-05-10 12:11:00', '', 'berria'),
-(43, 'proba', 'Orokorra', 'a', '', 'A', 1, '1', 'Baxua', 'vsdVSDV', 'vsdsdvsd', '2017-05-10 12:11:41', '', 'berria'),
+(43, 'proba', 'Galdaragintzako Mant.', 'a', 'Abc', 'M', 2, 'pasilloa', 'Normala', 'vsdVSDV', 'vsdsdvsd', '2017-05-10 12:11:41', '', 'berria'),
 (44, 'proba', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'VSCVDASV', 'VSAVSADSDVVSDSA', '2017-05-10 12:12:28', '', 'berria'),
 (45, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'dasdasdasd', 'asdasdasdada', '2017-05-10 12:19:58', '', 'berria'),
 (46, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'fdsafda', 'fsdfaafsasffdafsddafd', '2017-05-10 12:24:38', '', 'berria'),
@@ -241,7 +246,7 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `bidaltzailea
 (52, 'proba', 'Orokorra', 'a', '', 'A', 1, '1', 'Normala', 'Proba argazkia iyotzeko berria', 'Lalala', '2017-05-12 10:26:47', '30argazkia.jpeg', 'esleitua'),
 (53, 'a', 'Argia', 'a', '', 'A', 1, '1', 'Baxua', 'Proba explorer', 'adsdadas', '2017-05-12 10:30:33', '31argazkia.jpeg', 'esleitua'),
 (54, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'Proba chrome', 'LALALA', '2017-05-12 10:31:40', '32argazkia.jpeg', 'berria'),
-(55, 'a', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'fsdafsaf', 'adfsasdfsdvdsaa', '2017-05-12 10:45:40', '33argazkia.jpeg', 'berria'),
+(55, 'a', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'fsdafsaf', 'adfsasdfsdvdsaa', '2017-05-12 10:45:40', '33argazkia.jpeg', 'esleitua'),
 (56, 'proba', 'Argia', 'proba', '', 'A', 1, '1', 'Baxua', 'cczxcz', 'czxczx', '2017-05-12 10:45:56', '', 'berria'),
 (57, 'proba', 'Argia', 'proba', '', 'A', 1, '1', 'Baxua', 'czxczxc', 'czxcz', '2017-05-12 10:46:12', '34argazkia.jpeg', 'berria'),
 (58, 'a', 'Argia', 'proba', '', 'A', 1, '1', 'Normala', 'dsadasd', 'asdasdasd', '2017-05-12 10:46:33', '35argazkia.jpeg', 'berria'),
@@ -267,8 +272,22 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `bidaltzailea
 (79, 'a', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'haranburu espabila', 'mierda de pagina. es urgente ponerla mas bonita.', '2017-05-29 12:47:07', '45argazkia.jpeg', 'berria'),
 (80, 'informatika', 'Mant. Elektrikoa', 'a', 'alex', 'M', -1, 'komuna', 'Baxua', 'Proba hostinger+bidaltzailea', 'Proba hostinger+bidaltzaileaProba hostinger+bidaltzaileaProba hostinger+bidaltzaileaProba hostinger+bidaltzaileaProba hostinger+bidaltzailea', '2017-05-31 08:10:30', '46argazkia.jpeg', 'esleitua'),
 (81, 'proba', 'Mant. Informatikoa', 'a', 'proba', 'G', 2, '20', 'Baxua', 'Proba android', 'Lalalalalalala', '2017-05-31 08:22:41', '47argazkia.jpeg', 'esleitua'),
-(82, 'a', 'Galdaragintzako Mant.', 'a', 'a', 'A', 0, '3', 'Normala', 'ahhjshdf', 'fsdagfsged', '2017-05-31 08:31:31', '', 'berria'),
-(83, 'a', 'Berokuntza-Hotza Mant.', 'a', 'a', 'A', 0, 'pasilloa', 'Normala', 'Gkkfdd', 'Oso ondo', '2017-05-31 10:30:08', '48argazkia.jpeg', 'itxia');
+(82, 'a', 'Mant. Mekanikoa', 'proba', 'a', 'E', -1, 'pasilloa', 'Normala', 'ahhjshdf', 'fsdagfsged', '2017-05-31 08:31:31', '', 'berria'),
+(83, 'a', 'Berokuntza-Hotza Mant.', 'a', 'a', 'A', 0, 'pasilloa', 'Normala', 'Gkkfdd', 'Oso ondo', '2017-05-31 10:30:08', '48argazkia.jpeg', 'itxia'),
+(84, 'abc or 1=1', 'Mant. Elektrikoa', 'proba', ' ', 'E', -1, 'komuna', 'Baxua', 'sda', 'dsa', '2017-06-01 07:43:09', '', 'berria'),
+(85, 'a', 'Mant. Elektrikoa', 'a', 'a', 'E', -1, 'komuna', 'Baxua', 'ds<c', '<scd', '2017-06-01 08:19:11', '49argazkia.jpeg', 'itxia'),
+(87, 'a', 'Berokuntza-Hotza Mant.', 'a', 'a', 'M', 1, '2', 'Baxua', 'LALAAL', 'Knsdkgsdgsfg', '2017-06-01 09:51:33', '', 'esleitua'),
+(86, 'a', 'Mant. Elektrikoa', 'a', 'a', 'G', 2, 'pasilloa', 'Normala', 'Berogailua ez dabil.', 'Berogailua ez dabil. Berogailua ez dabil. Berogailua ez dabil.', '2017-06-01 08:30:01', '50argazkia.jpeg', 'esleitua'),
+(88, 'a', 'Berokuntza-Hotza Mant.', 'proba', 'a', 'A', 1, '18', 'Baxua', 'Iñigo potrok ikutzen', 'Sjddjdj', '2017-06-01 10:16:31', '51argazkia.jpeg', 'berria'),
+(89, 'A', 'Mant. Informatikoa', 'proba', 'A', 'F', 0, 'komuna', 'Premiazkoa', 'Hfdhhg', 'Ffdghgjjhjjjjj', '2017-06-01 10:16:39', '52argazkia.jpeg', 'berria'),
+(90, 'A', 'Berokuntza-Hotza Mant.', 'a', 'A', 'E', 1, '1', 'Normala', 'Eeeeeeejjk', 'Hhh', '2017-06-01 10:17:28', '53argazkia.jpeg', 'itxia'),
+(91, 'informatika', 'Galdaragintzako Mant.', 'proba', 'alex', 'E', 0, '10', 'Baxua', 'Argia ez dabil.', 'Ezkerreko argiak tarteka dardara egiten du eta oso molestoa da. ', '2017-06-01 10:50:21', '54argazkia.jpeg', 'itxia'),
+(92, 'a', 'Mant. Elektrikoa', 'a', 'a', 'E', 0, '0', 'Normala', 'fsd', 'fsda', '2017-06-02 10:00:09', '55argazkia.jpeg', 'esleitua'),
+(93, 'a', 'Mant. Informatikoa', 'a', 'a', 'E', 1, '3', 'Normala', 'ez du argiak funtzionatzen', 'Xjfjfjjz', '2017-06-02 10:02:55', '', 'berria'),
+(94, 'a', 'Berokuntza-Hotza Mant.', 'proba', 'a', 'E', -1, '1', 'Baxua', 'LABURPENA', 'PROBA INDIZEKIN', '2017-06-05 08:39:38', '', 'berria'),
+(95, 'a', 'Galdaragintzako Mant.', 'proba', 'a', 'E', 0, '1', 'Normala', 'vda', 'vadc', '2017-06-06 07:59:37', '', 'berria'),
+(96, 'a', 'Ikus-entzun Mant.', 'a', 'a', 'E', -1, 'komuna', 'Baxua', 'PROBA PREPARED+ARGAZKIA', 'PROBA PREPARED+ARGAZKIA', '2017-06-06 08:00:32', '', 'itxia'),
+(97, 'a', 'Galdaragintzako Mant.', 'a', 'a', 'F', 2, '11', 'Normala', 'dvf', 'vfadvadvdf', '2017-06-06 08:04:13', '56argazkia.jpeg', 'itxia');
 
 -- --------------------------------------------------------
 
@@ -279,13 +298,13 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `bidaltzailea
 CREATE TABLE IF NOT EXISTS `lanazalpena` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lanid` int(11) NOT NULL,
-  `arduraduna` varchar(50) NOT NULL,
-  `azalpena` varchar(1000) NOT NULL,
-  `materiala` varchar(1000) NOT NULL,
+  `arduraduna` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `azalpena` varchar(1000) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `materiala` varchar(1000) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `itxiData` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_azalpena` (`lanid`,`arduraduna`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=163 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=174 ;
 
 --
 -- Volcado de datos para la tabla `lanazalpena`
@@ -300,18 +319,29 @@ INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `azalpena`, `materiala`,
 (66, 69, 'a', '', '', '2017-05-18'),
 (67, 66, 'a', 'Lalala', 'Lololo', '2017-05-26'),
 (68, 64, 'a', '', '', '2017-05-18'),
-(108, 63, 'a', 'LANA EGINDA', 'BONBILA 1.', '2017-05-25'),
+(108, 63, 'a', 'LANA EGINDA', 'BONBILA 1. ñé', '2017-06-02'),
 (143, 72, 'a', 'LALA2', 'LALA2', '2017-05-24'),
-(144, 73, 'a', 'Prbababa', 'Androides', '2017-05-25'),
+(144, 73, 'a', 'Prbababa', 'Androides', '2017-06-01'),
 (154, 75, 'a', 'PROBA HOSTINGER', 'Proba erroreakin', '2017-05-30'),
 (155, 65, 'a', 'sdagsjfhsdfb', 'bbsdbsd', '2017-05-29'),
 (156, 53, 'a', 'AMAITUA.', 'BONBILA.', '2017-05-30'),
 (157, 52, 'a', 'Spinner', 'Spinner', '2017-05-30'),
 (158, 78, 'proba', 'Lalalala', 'Softwarea', '2017-05-31'),
-(159, 82, 'a', 'LALA', 'ALALA', '2017-05-31'),
+(159, 82, 'a', 'LALA', 'ALALA', '2017-06-01'),
 (160, 81, 'a', 'AZALPENA', 'MATERIALALALA', '2017-05-31'),
 (161, 80, 'a', '', '', '2017-05-31'),
-(162, 83, 'a', 'Bukatua ', 'Dana onfo', '2017-05-31');
+(162, 83, 'a', 'Bukatua ', 'Dana onfo', '2017-06-01'),
+(163, 85, 'a', 'Lalala', 'Bale', '2017-06-01'),
+(164, 86, 'a', 'KOALAKOALA', 'Software', '2017-06-01'),
+(165, 84, 'proba', '', '', '2017-06-01'),
+(166, 87, 'a', 'Argia', 'LÃ¡mpara', '2017-06-01'),
+(167, 55, 'a', '', '', '2017-06-01'),
+(168, 91, 'proba', '', '', '2017-06-01'),
+(169, 90, 'a', 'lkhgjhfdgshfg', 'fdagshhdgsfaghrytjfgn', '2017-06-02'),
+(170, 93, 'a', 'afds', 'afsd', '2017-06-05'),
+(171, 92, 'a', 'asvbd', 'adf', '2017-06-02'),
+(172, 97, 'a', '', '', '2017-06-06'),
+(173, 96, 'a', 'a', 'b', '2017-06-06');
 
 -- --------------------------------------------------------
 
@@ -323,6 +353,7 @@ CREATE TABLE IF NOT EXISTS `lanegoera` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `izena` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `izena_2` (`izena`),
   KEY `izena` (`izena`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -344,28 +375,29 @@ INSERT INTO `lanegoera` (`id`, `izena`) VALUES
 CREATE TABLE IF NOT EXISTS `langileorduak` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lanID` int(11) NOT NULL,
-  `langilea` varchar(50) NOT NULL,
+  `langilea` varchar(50) CHARACTER SET latin1 NOT NULL,
   `denborah` int(11) NOT NULL,
   `denboramin` int(11) NOT NULL,
   `lanEguna` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=153 ;
 
 --
 -- Volcado de datos para la tabla `langileorduak`
 --
 
 INSERT INTO `langileorduak` (`id`, `lanID`, `langilea`, `denborah`, `denboramin`, `lanEguna`) VALUES
-(8, 72, 'a', 1, 50, '2017-05-01'),
+(8, 72, '$langile[$i]', 0, 0, '0000-00-00'),
 (11, 72, 'a', 50, 0, '2017-05-24'),
 (12, 72, 'a', 5, 8, '2017-05-25'),
 (13, 72, 'a', 1, 50, '2017-05-01'),
 (15, 71, 'proba', 1, 30, '2017-05-24'),
 (16, 71, 'proba', 0, 1, '2017-05-23'),
-(18, 73, 'proba', 2, 59, '2017-05-24'),
-(22, 63, 'a', 6, 30, '2017-05-25'),
-(23, 63, 'proba', 7, 30, '2017-05-16'),
+(22, 63, 'a', 0, 30, '2017-05-25'),
+(122, 63, 'a', 1, 15, '2017-06-02'),
+(84, 63, 'a', 0, 30, '2017-05-25'),
+(89, 73, 'a', 5, 30, '2017-06-01'),
 (24, 66, 'a', 2, 30, '2017-05-18'),
 (42, 78, 'a', 1, 30, '2017-05-24'),
 (26, 75, 'proba', 23, 30, '2017-05-29'),
@@ -381,7 +413,37 @@ INSERT INTO `langileorduak` (`id`, `lanID`, `langilea`, `denborah`, `denboramin`
 (43, 82, 'a', 5, 30, '2017-05-23'),
 (44, 81, 'a', 2, 30, '2017-05-30'),
 (50, 81, 'a', 25, 30, '0000-00-00'),
-(51, 83, 'a', 25, 30, '2017-05-31');
+(51, 83, 'a', 25, 30, '2017-05-31'),
+(81, 82, 'proba', 18, 30, '2017-06-01'),
+(59, 82, 'a', 0, 59, '2017-05-31'),
+(57, 83, 'a', 1, 30, '2017-06-01'),
+(82, 82, 'proba', 0, 30, '2017-05-31'),
+(61, 83, 'a', 4, 30, '2017-06-07'),
+(85, 63, 'a', 50, 30, '2017-06-01'),
+(83, 85, 'a', 5, 30, '2017-06-01'),
+(86, 63, 'a', 50, 0, '2017-05-31'),
+(70, 86, 'a', 0, 0, '2017-06-01'),
+(75, 84, 'a', 0, 0, '2017-06-01'),
+(76, 84, 'a', 25, 30, '2017-05-30'),
+(77, 84, 'proba', 5, 11, '2017-06-01'),
+(78, 86, 'proba', 1, 30, '2017-06-01'),
+(79, 86, 'a', 0, 59, '2017-05-30'),
+(92, 91, 'proba', 7, 30, '2017-06-02'),
+(88, 85, 'a', 0, 11, '2017-06-01'),
+(91, 87, 'a', 3, 0, '2017-06-06'),
+(147, 93, 'proba', 4, 30, '2017-06-05'),
+(123, 63, 'proba', 4, 15, '2017-06-02'),
+(124, 63, 'a', 8, 30, '2017-06-01'),
+(133, 90, 'a', 25, 30, '2017-06-02'),
+(143, 92, 'a', 25, 30, '2017-06-01'),
+(137, 92, 'a', 25, 30, '2017-05-30'),
+(136, 92, 'a', 25, 30, '2017-05-30'),
+(146, 93, 'proba', 3, 30, '2017-06-05'),
+(141, 90, 'proba', 25, 30, '2017-06-02'),
+(142, 90, 'a', 25, 30, '2017-06-01'),
+(152, 96, 'a', 5, 1, '2017-06-06'),
+(148, 93, 'a', 2, 0, '2017-06-01'),
+(151, 96, 'proba', 3, 0, '2017-06-06');
 
 -- --------------------------------------------------------
 
@@ -393,6 +455,7 @@ CREATE TABLE IF NOT EXISTS `saila` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `izena` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `izena_2` (`izena`),
   KEY `izena` (`izena`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -414,19 +477,21 @@ INSERT INTO `saila` (`id`, `izena`) VALUES
 
 CREATE TABLE IF NOT EXISTS `solairua` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `zenbakia` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  `zenbakia` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `zenbakia` (`zenbakia`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `solairua`
 --
 
 INSERT INTO `solairua` (`id`, `zenbakia`) VALUES
-(1, -1),
-(2, 0),
-(3, 1),
-(4, 2);
+(1, '-1'),
+(2, '0'),
+(3, '1'),
+(4, '2'),
+(5, 'T');
 
 -- --------------------------------------------------------
 

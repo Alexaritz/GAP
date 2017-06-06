@@ -5,7 +5,11 @@ $user = $_GET['usuario'];
 $id = $_GET['lanid'];
 
 $erantzuna = array();
-		$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' and id='$id'" );
+//EZTA BEHAR
+		$erab = $mysqli->prepare( "SELECT * FROM lanagindua where arduraduna=? and id=?" );
+		$erab->bind_param("si", $egoera, $lanid);
+		$erab->execute();
+		//$erab = $mysqli->query( "SELECT * FROM lanagindua where arduraduna='$user' and id='$id'" );
 		$num_rows=mysqli_num_rows($erab);
 		if ($num_rows> 0){
 			while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){

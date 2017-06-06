@@ -4,10 +4,11 @@ include 'dbcon.php';
 $user = $_GET['usuario'];
 
 $erantzuna = array(); 
-
-		$erab = $mysqli->query( "SELECT * FROM arduraduna WHERE username=('$user')" );
-		$num_rows=mysqli_num_rows($erab);
-		if ($num_rows> 0){
+		$erab = $mysqli->prepare( "SELECT * FROM arduraduna WHERE username=?" );
+		$erab->bind_param("s", $user);
+		$erab->execute();
+		$erab->bind_result($id, $user, $saila);
+		if($erab-> fetch()){
 			$erantzuna["mezua"] = "Erabiltzailea arduraduna da.";
 			$erantzuna["arduraduna"] = "bai";
 		}else{

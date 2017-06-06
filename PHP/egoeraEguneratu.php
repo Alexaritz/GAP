@@ -8,7 +8,9 @@ $egoera = $_GET['egoera'];
 //if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
 	if ($lanid!=""){
-			$erab = $mysqli->query( "UPDATE lanagindua SET egoera='$egoera' WHERE id='$lanid' AND egoera!='$egoera'");
+			$erab = $mysqli->prepare( "UPDATE lanagindua SET egoera=? WHERE id=?");
+			$erab->bind_param("si", $egoera, $lanid);
+			$erab->execute();
 			$erantzuna["mezua"] = "Egoera eguneratu da.";
 	}else{
 		$erantzuna["mezua"] = "Errorea egoera eguneratzean.";

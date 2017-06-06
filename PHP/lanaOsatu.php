@@ -9,11 +9,19 @@ $materiala = $_GET['materiala'];
 //if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
 	if ($user!="" && $lanid!=""){
+			$erab = $mysqli->prepare("INSERT INTO lanazalpena (lanid, arduraduna, azalpena, materiala, itxiData) 
+			VALUES(?, ?, ?, ?, now()) ON DUPLICATE KEY UPDATE    
+			azalpena=VALUES(azalpena), 
+			materiala=VALUES(materiala),
+			itxiData=now()" );
+			$erab->bind_param("isss", $lanid, $user, $azalpena, $materiala);
+			$erab->execute();
+			/*
 			$erab = $mysqli->query( "INSERT INTO lanazalpena (lanid, arduraduna, azalpena, materiala, itxiData) 
 			VALUES('$lanid', '$user','$azalpena','$materiala',now()) ON DUPLICATE KEY UPDATE    
 			azalpena=IF(azalpena!='$azalpena', '$azalpena', azalpena), 
 			materiala=IF(materiala!='$materiala', '$materiala', materiala),
-			itxiData=IF(itxiData!=now(), now(), itxiData)" );
+			itxiData=IF(itxiData!=now(), now(), itxiData)" );*/
 			$erantzuna["mezua"] = "Zuzen txertatu da.";
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";

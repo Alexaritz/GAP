@@ -19,7 +19,9 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 $erantzuna = array(); 
 $erantzuna["log"] = "true";
 	if ($saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
-		$insert = $mysqli->query( "UPDATE lanagindua SET saila='$saila', arduraduna='$arduraduna', bidaltzailea='$bidaltzailea', eraikina='$eraikina', pisua='$pisua', gela='$gela', lehentasuna='$lehentasuna', laburpena='$laburpena', deskribapena='$deskribapena', egoera='berria' WHERE id='$id'" );
+		$erab = $mysqli->prepare("UPDATE lanagindua SET saila=?, arduraduna=?, bidaltzailea=?, eraikina=?, pisua=?, gela=?, lehentasuna=?, laburpena=?, deskribapena=?, egoera=? WHERE id=?" );
+		$erab->bind_param("sssssssssss", $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $egoera, $id);
+		$erab->execute();
 		$erantzuna["mezua"] = "Zuzen eguneratu da.";
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";

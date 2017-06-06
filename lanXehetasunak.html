@@ -447,7 +447,11 @@ var egoera=$("#egoera").val()
 		xehetasunFitx1 = server+"PHP/lanaOsatu.php?jsoncallback=?"
 			$.getJSON( xehetasunFitx1, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
 			.done(function(xeheterantzuna1) {
-				egoeraFitx = server+"PHP/egoeraEguneratu.php?jsoncallback=?"
+			})
+			.fail(function(d, textStatus, error) {
+				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
+			})
+			egoeraFitx = server+"PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
 				})
@@ -455,10 +459,6 @@ var egoera=$("#egoera").val()
 					var err = textStatus + ', ' + error;
 					console.log("1Request Failed: " + err);
 				})
-			})
-			.fail(function(d, textStatus, error) {
-				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
-			})
 			if(lanKop>0){
 							$.post( server+"PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
 							.done(function(data){
