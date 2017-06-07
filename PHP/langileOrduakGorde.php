@@ -15,17 +15,37 @@ $denboramin = $_POST['denboramin'];
 $erantzuna = array();
 
 for($i=0;$i<count($langile);$i++){
+	$lang=$langile[$i];
+	$denbh=$denborah[$i];
+	$denbmin=$denboramin[$i];
+	$dat=$data[$i];
+	$idlo=$id[$i];
 	if($id[$i]!=""){
-		$update = $mysqli->query( "UPDATE langileorduak SET 
+		$erab = $mysqli->prepare("UPDATE langileorduak SET 
+		langilea=?,
+		denborah=?,
+		denboramin=?,
+		lanEguna=?
+		WHERE id=?");
+		$erab->bind_param("siisi", $lang, $denbh, $denbmin,$dat, $idlo);
+		$erab->execute();
+	
+		/*$update = $mysqli->query( "UPDATE langileorduak SET 
 		langilea=IF(langilea!='$langile[$i]','$langile[$i]', langilea),
 		denborah=IF(denborah!='$denborah[$i]','$denborah[$i]', denborah),
 		denboramin=IF(denboramin!='$denboramin[$i]','$denboramin[$i]', denboramin),
 		lanEguna=IF(lanEguna!='$data[$i]', '$data[$i]', lanEguna)
-		WHERE id='$id[$i]'");
-	$erantzuna["mezua"] = "Zuzen eguneratu da.";
+		WHERE id='$id[$i]'");*/
+		$erantzuna["mezua"] = "Zuzen eguneratu da.";
     }else{
+		$erab = $mysqli->prepare("INSERT INTO langileorduak (lanID, langilea, denborah, denboramin, lanEguna) 
+		values (?,?,?,?,?)");
+		$erab->bind_param("isiis", $lanid, $lang,  $denbh, $denbmin,$dat);
+		$erab->execute();
+		
+		/*
 		$insert = $mysqli->query( "INSERT INTO langileorduak (lanID, langilea, denborah, denboramin, lanEguna) 
-		values ('$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')");
+		values ('$lanid','$langile[$i]','$denborah[$i]','$denboramin[$i]','$data[$i]')");*/
 		$erantzuna["mezua"] = "Zuzen txertatu da.";
     }
 }

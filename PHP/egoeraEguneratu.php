@@ -1,7 +1,7 @@
 <?php
 include 'dbcon.php';
 /*datuak jaso*/
-$user = $_GET['usuario'];
+//$user = $_GET['usuario'];
 $lanid = $_GET['lanid'];
 $egoera = $_GET['egoera'];
 

@@ -4,7 +4,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-06-2017 a las 11:07:19
+-- Tiempo de generación: 07-06-2017 a las 10:12:02
 -- Versión del servidor: 10.1.22-MariaDB
 -- Versión de PHP: 5.2.17
 
@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `arduraduna` (
   `username` varchar(50) NOT NULL,
   `saila` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
   KEY `sailaCons` (`saila`),
   KEY `erabCons` (`username`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `arduraduna` (
 --
 
 INSERT INTO `arduraduna` (`id`, `username`, `saila`) VALUES
-(1, 'proba', 'Berokuntza'),
+(1, 'aaramburu', 'Berokuntza'),
 (2, 'a', 'Orokorra ');
 
 -- --------------------------------------------------------
@@ -84,17 +85,18 @@ CREATE TABLE IF NOT EXISTS `erabiltzailea` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_2` (`username`),
   KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `erabiltzailea`
 --
 
 INSERT INTO `erabiltzailea` (`id`, `username`, `password`, `mota`) VALUES
-(1, 'proba', 'proba', ''),
+(1, 'aaramburu', 'aaramburu', ''),
 (2, 'a', 'a', ''),
 (3, 'informatika', 'informatika', ''),
-(4, 'admin', 'admin', 'admin');
+(4, 'admin', 'admin', 'admin'),
+(6, 'galdaragintza', 'galdaragintza', '');
 
 -- --------------------------------------------------------
 
@@ -193,99 +195,99 @@ CREATE TABLE IF NOT EXISTS `lanagindua` (
 --
 
 INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `bidaltzailea`, `eraikina`, `pisua`, `gela`, `lehentasuna`, `laburpena`, `deskribapena`, `data`, `argazkia`, `egoera`) VALUES
-(1, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Probak egiten ari naiz.', 'Lsogbzkav', '2017-05-05 09:17:59', '0argazkia.jpeg', 'itxia'),
-(2, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'faSDGQEEQQ', 'VRgrqvrevqwvw', '2017-05-05 11:39:10', '1argazkia.jpeg', 'itxia'),
-(3, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'gsdgsd', 'sgdsd', '2017-05-05 11:39:24', '2argazkia.jpeg', 'itxia'),
-(4, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'afdsfsa', 'sdscssc', '2017-05-05 11:39:43', '3argazkia.jpeg', 'itxia'),
-(5, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'vzx', 'xz', '2017-05-05 11:40:00', '4argazkia.jpeg', 'itxia'),
-(6, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'vcxzvz', 'zvz', '2017-05-05 11:40:31', '5argazkia.jpeg', 'itxia'),
-(7, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'fadsg', 'afsd', '2017-05-05 12:06:54', '6argazkia.jpeg', 'itxia'),
-(8, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Proba android ', 'BflZhskbcnzlsb', '2017-05-05 12:07:45', '7argazkia.jpeg', 'itxia'),
-(9, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Lrbslahxk', 'Nflslcbzks', '2017-05-05 12:13:12', '8argazkia.jpeg', 'itxia'),
-(10, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Krlqlxbzk', 'Mdognzlznx', '2017-05-05 12:13:38', '', 'itxia'),
-(11, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'LflxjN', 'XÃ±cbzlzj', '2017-05-05 12:18:52', '9argazkia.jpeg', 'itxia'),
-(12, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Lbfka', 'Ã‘dngnzlab', '2017-05-05 12:22:09', '10argazkia.jpeg', 'itxia'),
-(13, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Lfkflabfb', 'Lfjfmsld', '2017-05-05 12:24:37', '11argazkia.jpeg', 'itxia'),
-(14, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'a', 'A', '2017-05-05 12:24:57', '12argazkia.jpeg', 'esleitua'),
-(15, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'IrlajxlxjV', 'LcpvnMslxb', '2017-05-05 12:31:28', '13argazkia.jpeg', 'esleitua'),
-(16, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Premiazkoa', '2', 'A', '2017-05-05 12:32:49', '14argazkia.jpeg', 'esleitua'),
-(17, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'fewgaag', 'gfsdgsdfgsd', '2017-05-05 12:37:10', '15argazkia.jpeg', 'esleitua'),
-(18, 'Proba', 'Berokuntza', 'a', '', '', 0, '', 'Baxua', 'iphonetik', 'Argazkia erantxia', '2017-05-08 09:53:34', '16argazkia.jpeg', 'esleitua'),
-(19, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Berokuntza instalazioa ez dabil', 'V HD hdjjdbdbz', '2017-05-08 12:01:00', '17argazkia.jpeg', 'berria'),
-(21, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Proba egoerakiN', 'Lalala', '2017-05-08 13:04:14', '18argazkia.jpeg', 'berria'),
-(22, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Mcncmzl', 'Lcjgmzzlm', '2017-05-09 09:20:07', '19argazkia.jpeg', 'berria'),
-(23, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', '.dmdbNs', 'Ncmznzv', '2017-05-10 09:24:35', '20argazkia.jpeg', 'berria'),
-(24, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'Mfjzks', 'Nfnzlz', '2017-05-10 09:25:40', '21argazkia.jpeg', 'berria'),
-(25, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Baxua', 'aewkelroiuwaytsa', 'raetrysujgnvbczx<', '2017-05-10 09:26:30', '22argazkia.jpeg', 'berria'),
-(26, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Normala', 'Bxkchznxbz', 'CnxlKz', '2017-05-10 10:08:23', '23argazkia.jpeg', 'berria'),
-(27, 'proba', 'Orokorra', 'a', '', 'A', 1, '1', 'Baxua', 'Argazki gabeko proba', 'Argazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko proba', '2017-05-10 11:26:21', '', 'berria'),
-(28, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'fsda', 'fasd', '2017-05-10 11:27:52', '24argazkia.jpeg', 'berria'),
-(29, 'proba', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'fasdfsaf', 'asdfsdfs', '2017-05-10 11:28:03', '', 'berria'),
-(30, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'vsacvsavd', 'vsadsdvsvavsvd', '2017-05-10 11:30:17', '', 'berria'),
-(31, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'vds', 'vsda', '2017-05-10 11:31:10', '', 'berria'),
-(32, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'vxc', 'vxc', '2017-05-10 11:31:48', '', 'berria'),
-(33, 'proba', 'Berokuntza', 'a', '', 'A', 1, '1', 'Normala', 'vxc', 'vxc', '2017-05-10 11:32:46', '', 'berria'),
-(34, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Baxua', 'fsd', 'fsd', '2017-05-10 11:33:23', '', 'berria'),
-(35, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Baxua', 'fsdf', 'sfsdfs', '2017-05-10 11:34:09', '', 'berria'),
-(36, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'asgd', 'avsd', '2017-05-10 11:34:56', '25argazkia.jpeg', 'berria'),
-(37, 'proba', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'das', 'dsa', '2017-05-10 11:36:03', '', 'berria'),
-(38, 'proba', 'Argia', 'a', '', 'A', 1, '1', 'Baxua', 'vcx', 'vxc', '2017-05-10 11:38:26', '', 'berria'),
-(39, 'Proba', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'Froga iphone', 'Jjfdjkfg', '2017-05-10 11:58:39', '26argazkia.jpeg', 'berria'),
-(40, 'Proba', 'Orokorra', '', '', '', 1, '1', 'Baxua', 'Froga iphon', 'Gdfjhghj', '2017-05-10 12:00:12', '', 'berria'),
-(41, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Baxua', 'dsadsa', 'dadasdas', '2017-05-10 12:09:21', '', 'berria'),
-(42, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'dsadas', 'dasddaddsdaadda', '2017-05-10 12:11:00', '', 'berria'),
-(43, 'proba', 'Galdaragintzako Mant.', 'a', 'Abc', 'M', 2, 'pasilloa', 'Normala', 'vsdVSDV', 'vsdsdvsd', '2017-05-10 12:11:41', '', 'berria'),
-(44, 'proba', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'VSCVDASV', 'VSAVSADSDVVSDSA', '2017-05-10 12:12:28', '', 'berria'),
-(45, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'dasdasdasd', 'asdasdasdada', '2017-05-10 12:19:58', '', 'berria'),
-(46, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'fdsafda', 'fsdfaafsasffdafsddafd', '2017-05-10 12:24:38', '', 'berria'),
-(47, 'a', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'vbfxba', 'fbfbbfbffdb', '2017-05-11 11:33:25', '27argazkia.jpeg', 'berria'),
-(48, 'a', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'Proba android', 'Lalala', '2017-05-12 09:16:53', '28argazkia.jpeg', 'berria'),
-(49, 'Proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'Hdjdkkdjbd', 'Hdjdkzbdb', '2017-05-12 09:21:16', '29argazkia.jpeg', 'berria'),
-(50, 'Proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'Proba ihone', 'Lalalalal', '2017-05-12 09:22:25', '', 'berria'),
-(51, 'Proba', 'Orokorra', 'a', '', 'A', 1, '1', 'Baxua', 'Gghfdrt', 'Opiyreex', '2017-05-12 09:23:51', '', 'berria'),
-(52, 'proba', 'Orokorra', 'a', '', 'A', 1, '1', 'Normala', 'Proba argazkia iyotzeko berria', 'Lalala', '2017-05-12 10:26:47', '30argazkia.jpeg', 'esleitua'),
+(1, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Probak egiten ari naiz.', 'Lsogbzkav', '2017-05-05 09:17:59', '0argazkia.jpeg', 'itxia'),
+(2, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'faSDGQEEQQ', 'VRgrqvrevqwvw', '2017-05-05 11:39:10', '1argazkia.jpeg', 'itxia'),
+(3, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'gsdgsd', 'sgdsd', '2017-05-05 11:39:24', '2argazkia.jpeg', 'itxia'),
+(4, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'afdsfsa', 'sdscssc', '2017-05-05 11:39:43', '3argazkia.jpeg', 'itxia'),
+(5, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'vzx', 'xz', '2017-05-05 11:40:00', '4argazkia.jpeg', 'itxia'),
+(6, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'vcxzvz', 'zvz', '2017-05-05 11:40:31', '5argazkia.jpeg', 'itxia'),
+(7, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'fadsg', 'afsd', '2017-05-05 12:06:54', '6argazkia.jpeg', 'itxia'),
+(8, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Proba android ', 'BflZhskbcnzlsb', '2017-05-05 12:07:45', '7argazkia.jpeg', 'itxia'),
+(9, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Lrbslahxk', 'Nflslcbzks', '2017-05-05 12:13:12', '8argazkia.jpeg', 'itxia'),
+(10, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Krlqlxbzk', 'Mdognzlznx', '2017-05-05 12:13:38', '', 'itxia'),
+(11, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'LflxjN', 'XÃ±cbzlzj', '2017-05-05 12:18:52', '9argazkia.jpeg', 'itxia'),
+(12, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Lbfka', 'Ã‘dngnzlab', '2017-05-05 12:22:09', '10argazkia.jpeg', 'itxia'),
+(13, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Lfkflabfb', 'Lfjfmsld', '2017-05-05 12:24:37', '11argazkia.jpeg', 'itxia'),
+(14, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'a', 'A', '2017-05-05 12:24:57', '12argazkia.jpeg', 'esleitua'),
+(15, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'IrlajxlxjV', 'LcpvnMslxb', '2017-05-05 12:31:28', '13argazkia.jpeg', 'esleitua'),
+(16, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', '2', 'A', '2017-05-05 12:32:49', '14argazkia.jpeg', 'esleitua'),
+(17, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'fewgaag', 'gfsdgsdfgsd', '2017-05-05 12:37:10', '15argazkia.jpeg', 'esleitua'),
+(18, 'aaramburu', 'Berokuntza', 'a', '', '', 0, '', 'Baxua', 'iphonetik', 'Argazkia erantxia', '2017-05-08 09:53:34', '16argazkia.jpeg', 'esleitua'),
+(19, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Berokuntza instalazioa ez dabil', 'V HD hdjjdbdbz', '2017-05-08 12:01:00', '17argazkia.jpeg', 'berria'),
+(21, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Proba egoerakiN', 'Lalala', '2017-05-08 13:04:14', '18argazkia.jpeg', 'berria'),
+(22, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Mcncmzl', 'Lcjgmzzlm', '2017-05-09 09:20:07', '19argazkia.jpeg', 'berria'),
+(23, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', '.dmdbNs', 'Ncmznzv', '2017-05-10 09:24:35', '20argazkia.jpeg', 'berria'),
+(24, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'Mfjzks', 'Nfnzlz', '2017-05-10 09:25:40', '21argazkia.jpeg', 'berria'),
+(25, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'aewkelroiuwaytsa', 'raetrysujgnvbczx<', '2017-05-10 09:26:30', '22argazkia.jpeg', 'berria'),
+(26, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Bxkchznxbz', 'CnxlKz', '2017-05-10 10:08:23', '23argazkia.jpeg', 'berria'),
+(27, 'aaramburu', 'Orokorra', 'a', '', 'A', 1, '1', 'Baxua', 'Argazki gabeko proba', 'Argazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko probaArgazki gabeko proba', '2017-05-10 11:26:21', '', 'berria'),
+(28, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'fsda', 'fasd', '2017-05-10 11:27:52', '24argazkia.jpeg', 'berria'),
+(29, 'aaramburu', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'fasdfsaf', 'asdfsdfs', '2017-05-10 11:28:03', '', 'berria'),
+(30, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'vsacvsavd', 'vsadsdvsvavsvd', '2017-05-10 11:30:17', '', 'berria'),
+(31, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'vds', 'vsda', '2017-05-10 11:31:10', '', 'berria'),
+(32, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'vxc', 'vxc', '2017-05-10 11:31:48', '', 'berria'),
+(33, 'aaramburu', 'Berokuntza', 'a', '', 'A', 1, '1', 'Normala', 'vxc', 'vxc', '2017-05-10 11:32:46', '', 'berria'),
+(34, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'fsd', 'fsd', '2017-05-10 11:33:23', '', 'berria'),
+(35, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'fsdf', 'sfsdfs', '2017-05-10 11:34:09', '', 'berria'),
+(36, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'asgd', 'avsd', '2017-05-10 11:34:56', '25argazkia.jpeg', 'berria'),
+(37, 'aaramburu', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'das', 'dsa', '2017-05-10 11:36:03', '', 'berria'),
+(38, 'aaramburu', 'Argia', 'a', '', 'A', 1, '1', 'Baxua', 'vcx', 'vxc', '2017-05-10 11:38:26', '', 'berria'),
+(39, 'aaramburu', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'Froga iphone', 'Jjfdjkfg', '2017-05-10 11:58:39', '26argazkia.jpeg', 'berria'),
+(40, 'aaramburu', 'Orokorra', '', '', '', 1, '1', 'Baxua', 'Froga iphon', 'Gdfjhghj', '2017-05-10 12:00:12', '', 'berria'),
+(41, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'dsadsa', 'dadasdas', '2017-05-10 12:09:21', '', 'berria'),
+(42, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'dsadas', 'dasddaddsdaadda', '2017-05-10 12:11:00', '', 'berria'),
+(43, 'aaramburu', 'Galdaragintzako Mant.', 'a', 'Abc', 'M', 2, 'pasilloa', 'Normala', 'vsdVSDV', 'vsdsdvsd', '2017-05-10 12:11:41', '', 'berria'),
+(44, 'aaramburu', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'VSCVDASV', 'VSAVSADSDVVSDSA', '2017-05-10 12:12:28', '', 'berria'),
+(45, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'dasdasdasd', 'asdasdasdada', '2017-05-10 12:19:58', '', 'berria'),
+(46, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'fdsafda', 'fsdfaafsasffdafsddafd', '2017-05-10 12:24:38', '', 'berria'),
+(47, 'a', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'vbfxba', 'fbfbbfbffdb', '2017-05-11 11:33:25', '27argazkia.jpeg', 'berria'),
+(48, 'a', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'Proba android', 'Lalala', '2017-05-12 09:16:53', '28argazkia.jpeg', 'berria'),
+(49, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'Hdjdkkdjbd', 'Hdjdkzbdb', '2017-05-12 09:21:16', '29argazkia.jpeg', 'berria'),
+(50, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'Proba ihone', 'Lalalalal', '2017-05-12 09:22:25', '', 'berria'),
+(51, 'aaramburu', 'Orokorra', 'a', '', 'A', 1, '1', 'Baxua', 'Gghfdrt', 'Opiyreex', '2017-05-12 09:23:51', '', 'berria'),
+(52, 'aaramburu', 'Orokorra', 'a', '', 'A', 1, '1', 'Normala', 'Proba argazkia iyotzeko berria', 'Lalala', '2017-05-12 10:26:47', '30argazkia.jpeg', 'esleitua'),
 (53, 'a', 'Argia', 'a', '', 'A', 1, '1', 'Baxua', 'Proba explorer', 'adsdadas', '2017-05-12 10:30:33', '31argazkia.jpeg', 'esleitua'),
-(54, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'Proba chrome', 'LALALA', '2017-05-12 10:31:40', '32argazkia.jpeg', 'berria'),
+(54, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'Proba chrome', 'LALALA', '2017-05-12 10:31:40', '32argazkia.jpeg', 'berria'),
 (55, 'a', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'fsdafsaf', 'adfsasdfsdvdsaa', '2017-05-12 10:45:40', '33argazkia.jpeg', 'esleitua'),
-(56, 'proba', 'Argia', 'proba', '', 'A', 1, '1', 'Baxua', 'cczxcz', 'czxczx', '2017-05-12 10:45:56', '', 'berria'),
-(57, 'proba', 'Argia', 'proba', '', 'A', 1, '1', 'Baxua', 'czxczxc', 'czxcz', '2017-05-12 10:46:12', '34argazkia.jpeg', 'berria'),
-(58, 'a', 'Argia', 'proba', '', 'A', 1, '1', 'Normala', 'dsadasd', 'asdasdasd', '2017-05-12 10:46:33', '35argazkia.jpeg', 'berria'),
-(59, 'proba', 'Argia', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'Idlxnzn', 'Xlgnzmm,', '2017-05-12 10:47:01', '36argazkia.jpeg', 'itxia'),
-(60, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'Proba prevent', 'Xnznzc', '2017-05-12 11:27:22', '37argazkia.jpeg', 'itxia'),
-(61, 'proba', 'Orokorra', 'proba', '', 'A', 1, '1', 'Normala', 'PROBA ANDROID', 'PROBA', '2017-05-15 12:52:29', '38argazkia.jpeg', 'itxia'),
-(62, 'alex', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Normala', 'Argiak ez du funtzionatzen.', 'LALALA', '2017-05-16 11:56:33', '39argazkia.jpeg', 'berria'),
+(56, 'aaramburu', 'Argia', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'cczxcz', 'czxczx', '2017-05-12 10:45:56', '', 'berria'),
+(57, 'aaramburu', 'Argia', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'czxczxc', 'czxcz', '2017-05-12 10:46:12', '34argazkia.jpeg', 'berria'),
+(58, 'a', 'Argia', 'aaramburu', '', 'A', 1, '1', 'Normala', 'dsadasd', 'asdasdasd', '2017-05-12 10:46:33', '35argazkia.jpeg', 'berria'),
+(59, 'aaramburu', 'Argia', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'Idlxnzn', 'Xlgnzmm,', '2017-05-12 10:47:01', '36argazkia.jpeg', 'itxia'),
+(60, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'Proba prevent', 'Xnznzc', '2017-05-12 11:27:22', '37argazkia.jpeg', 'itxia'),
+(61, 'aaramburu', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Normala', 'PROBA ANDROID', 'PROBA', '2017-05-15 12:52:29', '38argazkia.jpeg', 'itxia'),
+(62, 'alex', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Normala', 'Argiak ez du funtzionatzen.', 'LALALA', '2017-05-16 11:56:33', '39argazkia.jpeg', 'berria'),
 (63, 'a', 'Orokorra', 'a', '', 'A', 1, '1', 'Normala', 'Proba', 'Probaba', '2017-05-18 09:41:12', '40argazkia.jpeg', 'berria'),
 (64, 'a', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'Probasaiog', 'abe', '2017-05-18 09:43:03', '', 'esleitua'),
 (65, 'a', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'rehrt', 'hrtghr', '2017-05-18 09:51:26', '', 'esleitua'),
 (66, 'a', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'dsaGsd', 'gsDGAS', '2017-05-18 09:51:47', '', 'itxia'),
-(67, 'a', 'Argia', 'proba', '', 'A', 1, '1', 'Baxua', 'dsaGSD', 'GSADGSD', '2017-05-18 09:53:03', '', 'berria'),
-(68, 'a', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'fsd', 'sd', '2017-05-18 09:54:11', '', 'berria'),
+(67, 'a', 'Argia', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'dsaGSD', 'GSADGSD', '2017-05-18 09:53:03', '', 'berria'),
+(68, 'a', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'fsd', 'sd', '2017-05-18 09:54:11', '', 'berria'),
 (69, 'a', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'fsdsgd', 'fdhdfxshd', '2017-05-18 09:54:53', '', 'esleitua'),
-(70, 'proba', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'asgdh', 'gasd', '2017-05-18 09:56:28', '', 'esleitua'),
-(71, 'proba', 'Argia', 'a', '', 'A', 1, '1', 'Normala', 'dvsa', 'sdag', '2017-05-18 09:57:16', '', 'esleitua'),
+(70, 'aaramburu', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'asgdh', 'gasd', '2017-05-18 09:56:28', '', 'esleitua'),
+(71, 'aaramburu', 'Argia', 'a', '', 'A', 1, '1', 'Normala', 'dvsa', 'sdag', '2017-05-18 09:57:16', '', 'esleitua'),
 (72, 'a', 'Argia', 'a', '', 'A', 1, '1', 'Baxua', 'PROBA ASPALDIKO PARTEZ', 'PROBA', '2017-05-24 10:27:26', '41argazkia.jpeg', 'itxia'),
 (73, 'a', 'Argia', 'a', '', 'A', 1, '1', 'Baxua', 'PROBA PC', 'LALALA', '2017-05-25 09:20:27', '', 'itxia'),
-(74, 'a', 'Berokuntza', 'proba', '', 'A', 1, '1', 'Baxua', 'PROBA HOSTINGER', 'LALALA', '2017-05-25 10:22:38', '42argazkia.jpeg', 'berria'),
+(74, 'a', 'Berokuntza', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'PROBA HOSTINGER', 'LALALA', '2017-05-25 10:22:38', '42argazkia.jpeg', 'berria'),
 (75, 'alex', 'Berokuntza', 'a', '', 'A', 1, '1', 'Baxua', 'PROBA EZ ARDURADUNA', 'dKJFAGKHKLJFCBSJKDGSLGADLKSGSFADHGHJBAHCBASHBKGlguklfadskglag aklsfbag agd', '2017-05-25 10:29:20', '', 'itxia'),
-(77, 'proba', 'Argia', 'proba', '', 'A', 1, '1', 'Baxua', 'Proba android+hosting', 'Probaba', '2017-05-29 08:18:29', '43argazkia.jpeg', 'berria'),
-(78, 'a', 'Argia', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'koala', 'kao', '2017-05-29 08:47:02', '44argazkia.jpeg', 'itxia'),
-(79, 'a', 'Orokorra', 'proba', '', 'A', 1, '1', 'Premiazkoa', 'haranburu espabila', 'mierda de pagina. es urgente ponerla mas bonita.', '2017-05-29 12:47:07', '45argazkia.jpeg', 'berria'),
+(77, 'aaramburu', 'Argia', 'aaramburu', '', 'A', 1, '1', 'Baxua', 'Proba android+hosting', 'Probaba', '2017-05-29 08:18:29', '43argazkia.jpeg', 'berria'),
+(78, 'a', 'Argia', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'koala', 'kao', '2017-05-29 08:47:02', '44argazkia.jpeg', 'itxia'),
+(79, 'a', 'Orokorra', 'aaramburu', '', 'A', 1, '1', 'Premiazkoa', 'haranburu espabila', 'mierda de pagina. es urgente ponerla mas bonita.', '2017-05-29 12:47:07', '45argazkia.jpeg', 'berria'),
 (80, 'informatika', 'Mant. Elektrikoa', 'a', 'alex', 'M', -1, 'komuna', 'Baxua', 'Proba hostinger+bidaltzailea', 'Proba hostinger+bidaltzaileaProba hostinger+bidaltzaileaProba hostinger+bidaltzaileaProba hostinger+bidaltzaileaProba hostinger+bidaltzailea', '2017-05-31 08:10:30', '46argazkia.jpeg', 'esleitua'),
-(81, 'proba', 'Mant. Informatikoa', 'a', 'proba', 'G', 2, '20', 'Baxua', 'Proba android', 'Lalalalalalala', '2017-05-31 08:22:41', '47argazkia.jpeg', 'esleitua'),
-(82, 'a', 'Mant. Mekanikoa', 'proba', 'a', 'E', -1, 'pasilloa', 'Normala', 'ahhjshdf', 'fsdagfsged', '2017-05-31 08:31:31', '', 'berria'),
+(81, 'aaramburu', 'Mant. Informatikoa', 'a', 'proba', 'G', 2, '20', 'Baxua', 'Proba android', 'Lalalalalalala', '2017-05-31 08:22:41', '47argazkia.jpeg', 'esleitua'),
+(82, 'a', 'Mant. Mekanikoa', 'aaramburu', 'a', 'E', -1, 'pasilloa', 'Normala', 'ahhjshdf', 'fsdagfsged', '2017-05-31 08:31:31', '', 'berria'),
 (83, 'a', 'Berokuntza-Hotza Mant.', 'a', 'a', 'A', 0, 'pasilloa', 'Normala', 'Gkkfdd', 'Oso ondo', '2017-05-31 10:30:08', '48argazkia.jpeg', 'itxia'),
-(84, 'abc or 1=1', 'Mant. Elektrikoa', 'proba', ' ', 'E', -1, 'komuna', 'Baxua', 'sda', 'dsa', '2017-06-01 07:43:09', '', 'berria'),
+(84, 'abc or 1=1', 'Mant. Elektrikoa', 'aaramburu', ' ', 'E', -1, 'komuna', 'Baxua', 'sda', 'dsa', '2017-06-01 07:43:09', '', 'berria'),
 (85, 'a', 'Mant. Elektrikoa', 'a', 'a', 'E', -1, 'komuna', 'Baxua', 'ds<c', '<scd', '2017-06-01 08:19:11', '49argazkia.jpeg', 'itxia'),
 (87, 'a', 'Berokuntza-Hotza Mant.', 'a', 'a', 'M', 1, '2', 'Baxua', 'LALAAL', 'Knsdkgsdgsfg', '2017-06-01 09:51:33', '', 'esleitua'),
 (86, 'a', 'Mant. Elektrikoa', 'a', 'a', 'G', 2, 'pasilloa', 'Normala', 'Berogailua ez dabil.', 'Berogailua ez dabil. Berogailua ez dabil. Berogailua ez dabil.', '2017-06-01 08:30:01', '50argazkia.jpeg', 'esleitua'),
-(88, 'a', 'Berokuntza-Hotza Mant.', 'proba', 'a', 'A', 1, '18', 'Baxua', 'Iñigo potrok ikutzen', 'Sjddjdj', '2017-06-01 10:16:31', '51argazkia.jpeg', 'berria'),
-(89, 'A', 'Mant. Informatikoa', 'proba', 'A', 'F', 0, 'komuna', 'Premiazkoa', 'Hfdhhg', 'Ffdghgjjhjjjjj', '2017-06-01 10:16:39', '52argazkia.jpeg', 'berria'),
+(88, 'a', 'Berokuntza-Hotza Mant.', 'aaramburu', 'a', 'A', 1, '18', 'Baxua', 'Iñigo potrok ikutzen', 'Sjddjdj', '2017-06-01 10:16:31', '51argazkia.jpeg', 'berria'),
+(89, 'A', 'Mant. Informatikoa', 'aaramburu', 'A', 'F', 0, 'komuna', 'Premiazkoa', 'Hfdhhg', 'Ffdghgjjhjjjjj', '2017-06-01 10:16:39', '52argazkia.jpeg', 'berria'),
 (90, 'A', 'Berokuntza-Hotza Mant.', 'a', 'A', 'E', 1, '1', 'Normala', 'Eeeeeeejjk', 'Hhh', '2017-06-01 10:17:28', '53argazkia.jpeg', 'itxia'),
-(91, 'informatika', 'Galdaragintzako Mant.', 'proba', 'alex', 'E', 0, '10', 'Baxua', 'Argia ez dabil.', 'Ezkerreko argiak tarteka dardara egiten du eta oso molestoa da. ', '2017-06-01 10:50:21', '54argazkia.jpeg', 'itxia'),
+(91, 'informatika', 'Galdaragintzako Mant.', 'aaramburu', 'alex', 'E', 0, '10', 'Baxua', 'Argia ez dabil.', 'Ezkerreko argiak tarteka dardara egiten du eta oso molestoa da. ', '2017-06-01 10:50:21', '54argazkia.jpeg', 'itxia'),
 (92, 'a', 'Mant. Elektrikoa', 'a', 'a', 'E', 0, '0', 'Normala', 'fsd', 'fsda', '2017-06-02 10:00:09', '55argazkia.jpeg', 'esleitua'),
 (93, 'a', 'Mant. Informatikoa', 'a', 'a', 'E', 1, '3', 'Normala', 'ez du argiak funtzionatzen', 'Xjfjfjjz', '2017-06-02 10:02:55', '', 'berria'),
-(94, 'a', 'Berokuntza-Hotza Mant.', 'proba', 'a', 'E', -1, '1', 'Baxua', 'LABURPENA', 'PROBA INDIZEKIN', '2017-06-05 08:39:38', '', 'berria'),
-(95, 'a', 'Galdaragintzako Mant.', 'proba', 'a', 'E', 0, '1', 'Normala', 'vda', 'vadc', '2017-06-06 07:59:37', '', 'berria'),
+(94, 'a', 'Berokuntza-Hotza Mant.', 'aaramburu', 'a', 'E', -1, '1', 'Baxua', 'LABURPENA', 'PROBA INDIZEKIN', '2017-06-05 08:39:38', '', 'berria'),
+(95, 'a', 'Galdaragintzako Mant.', 'aaramburu', 'a', 'E', 0, '1', 'Normala', 'vda', 'vadc', '2017-06-06 07:59:37', '', 'esleitua'),
 (96, 'a', 'Ikus-entzun Mant.', 'a', 'a', 'E', -1, 'komuna', 'Baxua', 'PROBA PREPARED+ARGAZKIA', 'PROBA PREPARED+ARGAZKIA', '2017-06-06 08:00:32', '', 'itxia'),
 (97, 'a', 'Galdaragintzako Mant.', 'a', 'a', 'F', 2, '11', 'Normala', 'dvf', 'vfadvadvdf', '2017-06-06 08:04:13', '56argazkia.jpeg', 'itxia');
 
@@ -304,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `lanazalpena` (
   `itxiData` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_azalpena` (`lanid`,`arduraduna`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=174 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=175 ;
 
 --
 -- Volcado de datos para la tabla `lanazalpena`
@@ -340,8 +342,9 @@ INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `azalpena`, `materiala`,
 (169, 90, 'a', 'lkhgjhfdgshfg', 'fdagshhdgsfaghrytjfgn', '2017-06-02'),
 (170, 93, 'a', 'afds', 'afsd', '2017-06-05'),
 (171, 92, 'a', 'asvbd', 'adf', '2017-06-02'),
-(172, 97, 'a', '', '', '2017-06-06'),
-(173, 96, 'a', 'a', 'b', '2017-06-06');
+(172, 97, 'a', 'aa', 'b', '2017-06-07'),
+(173, 96, 'a', 'a', 'b', '2017-06-06'),
+(174, 95, 'aaramburu', 'Lala', 'Lala', '2017-06-07');
 
 -- --------------------------------------------------------
 
@@ -381,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `langileorduak` (
   `lanEguna` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=153 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=163 ;
 
 --
 -- Volcado de datos para la tabla `langileorduak`
@@ -443,7 +446,12 @@ INSERT INTO `langileorduak` (`id`, `lanID`, `langilea`, `denborah`, `denboramin`
 (142, 90, 'a', 25, 30, '2017-06-01'),
 (152, 96, 'a', 5, 1, '2017-06-06'),
 (148, 93, 'a', 2, 0, '2017-06-01'),
-(151, 96, 'proba', 3, 0, '2017-06-06');
+(151, 96, 'proba', 3, 0, '2017-06-06'),
+(159, 97, 'a', 0, 30, '2017-06-07'),
+(161, 97, 'aaramburu', 4, 0, '2017-06-01'),
+(158, 97, 'aaramburu', 5, 30, '2017-06-01'),
+(160, 97, 'a', 2, 6, '2017-06-07'),
+(162, 95, 'aaramburu', 1, 30, '2017-06-07');
 
 -- --------------------------------------------------------
 

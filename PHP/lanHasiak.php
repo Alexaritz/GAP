@@ -5,12 +5,12 @@ $user = $_GET['usuario'];
 $id = $_GET['lanid'];
 
 $erantzuna = array();
-		$erab = $mysqli->query( "SELECT * FROM lanazalpena where arduraduna='$user' and lanid='$id'" );
-		$num_rows=mysqli_num_rows($erab);
-		if ($num_rows> 0){
-			while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
-				$erantzuna[]=array_map(null, $datos);
-			}
+		$erab = $mysqli->prepare( "SELECT azalpena, materiala FROM lanazalpena where arduraduna=? and lanid=?" );
+		$erab->bind_param("si", $user, $id );
+		$erab->execute();
+		$erab->bind_result($azalpena, $materiala);
+		while ($erab->fetch()) {
+			$erantzuna[] = array('azalpena'=> $azalpena, 'materiala'=> $materiala);
 		}
 		$resultadosJson=json_encode( $erantzuna );
 /*emaitza json formatura bihurtzen da*/
