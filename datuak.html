@@ -1,0 +1,139 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MENUA</title>
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- Include the jQuery Mobile library -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"</script>
+
+	
+	
+<style>
+body{
+  display: none;
+}
+</style>
+<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
+</head>
+<body> 
+
+<div data-role="page" id="menu">
+	<div data-role="header" class="ui-grid-b">
+		<div class="ui-block-a"><a onclick="logout();" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div>
+		<div class="ui-block-b center" align="center"><center><p>Menua</p></center></div>
+		<div class="ui-block-c"></div>
+	</div>
+	
+	<div data-role="content">
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<select id="taulam" name="taulam">
+					<option value="">Taula</option>
+					<option value="lanAgindua">Lan Aginduak</option>
+					<option value="lanAzalpena">Lan Azalpenak</option>
+					<option value="lanOrdua">Langile Orduak</option>
+				</select>
+			</div>
+			<div class="ui-block-b">
+				<input type="button" value="Erakutsi" id="erakutsi" onclick="taulaSortu();" data-theme="b"/>
+			</div>
+		</div>
+		
+		<!----><!--class="ui-responsive table-stroke"-->
+		<table id="taula" name="taula" width="100%">
+		</table>
+		<input type="button" value="Exportatu" id="erakutsi" onclick="exportexcel();" data-theme="b"/>
+	</div>
+	 
+</div>
+
+<script>
+function taulaSortu(){
+	var mota=$("#taulam").val();
+	if(mota=="lanAzalpena"){
+		var thead=$('<thead>');
+		var tr=$('<tr>');
+		var tr2=$('<tr>');
+		var tbody=$('<tbody>');
+		thead.append(tr);
+		tr.append("<th >Lan id</th> <th data-priority='1' >Arduraduna</th> <th data-priority='2' >Azalpena</th> <th data-priority='3' >Materiala</th>  <th data-priority='4' >Itxi Data</th>");
+		$('#taula').append(thead);
+		$('#taula').append(tbody);
+		//$('#taula').table('refresh');
+		lanAzalpenak = server+"PHP/lanAzalpenak.php?jsoncallback=?"
+			$.getJSON( lanAzalpenak, {usuario:user})
+			.done(function(lanAzalpenak) {
+			 
+				//$(lanAzalpenak).each(function (index, o) {
+				/*tbody.append("<tr><th>"+o.lanid+"</th><td>"+o.arduraduna+"</td><td>"+o.azalpena+"</td><td>"+o.materiala+"</td><td>"+o.itxiData+"</td></tr>");
+				});*/
+				//var str =lanAzalpenak.prop('outerHTML');
+				console.log(lanAzalpenak);
+				 $('#taula').DataTable({
+						responsive: true,
+						 
+						ajax:  {
+						  url: server+"PHP/lanAzalpenak.php?jsoncallback=?",
+						  dataSrc: ''
+					   },
+					   columns: [
+					  { data: "lanid" }, 
+					  { data: "arduraduna" }, 
+					  { data: "azalpena" },
+					  { data: "materiala" },
+					  { data: "itxiData" }
+						]
+					});
+					$('body').trigger('create');
+				//});
+			})
+			.fail(function(lanAzalpenak,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("Request Failed: " + err);
+			});
+	}
+}
+$('a.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = table.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+    } )
+function exportexcel() {  
+            $("#taula").table2excel({  
+                name: "Table2Excel",  
+                filename: "myFileName",  
+                fileext: ".xls"  
+            });  
+        }  
+var server="http://gapalex.esy.es/"
+$(document).ready(function(){
+	user = window.localStorage.getItem('username');
+	$("body").fadeIn(500);
+});
+
+function logout(){
+	window.localStorage.clear();
+	window.location.replace(server+"PHP/logout.php");
+}
+</script>
+
+</body>
+</html>
