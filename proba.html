@@ -1,50 +1,199 @@
-<?php
-$connect = mysqli_connect("localhost", "root", "", "testing");
-$sql = "SELECT * FROM tbl_customer";  
-$result = mysqli_query($connect, $sql);
-?>
-<html>  
- <head>  
-  <title>Export MySQL data to Excel in PHP</title>  
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
- </head>  
- <body>  
-  <div class="container">  
-   <br />  
-   <br />  
-   <br />  
-   <div class="table-responsive">  
-    <h2 align="center">Export MySQL data to Excel in PHP</h2><br /> 
-    <table class="table table-bordered">
-     <tr>  
-                         <th>Name</th>  
-                         <th>Address</th>  
-                         <th>City</th>  
-       <th>Postal Code</th>
-       <th>Country</th>
-                    </tr>
-     <?php
-     while($row = mysqli_fetch_array($result))  
-     {  
-        echo '  
-       <tr>  
-         <td>'.$row["CustomerName"].'</td>  
-         <td>'.$row["Address"].'</td>  
-         <td>'.$row["City"].'</td>  
-         <td>'.$row["PostalCode"].'</td>  
-         <td>'.$row["Country"].'</td>
-       </tr>  
-        ';  
-     }
-     ?>
-    </table>
-    <br />
-    <form method="post" action="export.php">
-     <input type="submit" name="export" class="btn btn-success" value="Export" />
-    </form>
-   </div>  
-  </div>  
- </body>  
+<!DOCTYPE html> 
+<html>
+<head>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MENUA</title>
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- Include the jQuery Mobile library -->
+
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="http://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-flash-1.3.1/b-html5-1.3.1/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-flash-1.3.1/b-html5-1.3.1/datatables.min.js"></script>
+
+
+<!--
+<script src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"</script>
+
+<script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"</script>
+
+<script src="jszip/dist/jszip.js"</script>
+<script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"</script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+	
+	
+	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"</script>
+	<script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"</script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"</script>
+	<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"</script>
+	<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"</script>
+	<script src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"</script>-->
+<style>
+
+</style>
+<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
+</head>
+<body> 
+
+<div data-role="page" id="menu">
+	<div data-role="header" class="ui-grid-b">
+		<div class="ui-block-a"><a onclick="logout();" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div>
+		<div class="ui-block-b center"><p>Menua</p></div>
+		<div class="ui-block-c"></div>
+	</div>
+	
+	<div data-role="content">
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<select id="taulam" name="taulam">
+					<option value="">Taula</option>
+					<option value="lanAgindua">Lan Aginduak</option>
+					<option value="lanAzalpena">Lan Azalpenak</option>
+					<option value="lanOrdua">Langile Orduak</option>
+				</select>
+			</div>
+			<div class="ui-block-b">
+				<input type="button" value="Erakutsi" id="erakutsi" onclick="taulaSortu();" data-theme="b"/>
+			</div>
+		</div>
+		
+		<!----><!--class="ui-responsive table-stroke"-->
+		<table id="taula" >
+		</table>
+		<input type="button" value="Exportatu" id="exportatu" onclick="exportexcel();" data-theme="b"/>
+	</div>
+	 
+</div>
+
+<script>
+function taulaSortu(){
+	var mota=$("#taulam").val();
+	if(mota=="lanAzalpena"){
+		var thead=$('<thead>');
+		var tr=$('<tr>');
+		var tr2=$('<tr>');
+		var tbody=$('<tbody>');
+		thead.append(tr);
+		tr.append("<th >Lan id</th> <th data-priority='1' >Arduraduna</th> <th data-priority='2' >Azalpena</th> <th data-priority='3' >Materiala</th>  <th data-priority='4' >Itxi Data</th>");
+		$('#taula').append(thead);
+		$('#taula').append(tbody);
+		//$('#taula').table('refresh');
+		/*lanAzalpenak = server+"PHP/lanAzalpenak.php?jsoncallback=?"
+			$.getJSON( lanAzalpenak, {usuario:user})
+			.done(function(lanAzalpenak) {*/
+			 
+				//$(lanAzalpenak).each(function (index, o) {
+				/*tbody.append("<tr><th>"+o.lanid+"</th><td>"+o.arduraduna+"</td><td>"+o.azalpena+"</td><td>"+o.materiala+"</td><td>"+o.itxiData+"</td></tr>");
+				});*/
+				//var str =lanAzalpenak.prop('outerHTML');
+				console.log(lanAzalpenak);
+				 $('#taula').DataTable({
+						responsive: true,
+						dom: 'Bfrtip',
+						buttons: [
+							'excelHtml5',
+							'csvHtml5',
+							'pdfHtml5'
+						],
+						ajax:  {
+						  url: server+"PHP/lanAzalpenak.php?jsoncallback=?",
+						  dataSrc: ''
+					   },
+					   columns: [
+					  { data: "lanid" }, 
+					  { data: "arduraduna" }, 
+					  { data: "azalpena" },
+					  { data: "materiala" },
+					  { data: "itxiData" }
+						]
+					});
+					//$('body').trigger('create');
+				//});
+			/*})
+			.fail(function(lanAzalpenak,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("Request Failed: " + err);
+			});*/
+	}
+}
+$('a.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = table.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+    } )
+function exportexcel() {  
+            $("#taula").table2excel({  
+                name: "Table2Excel",  
+                filename: "myFileName",  
+                fileext: ".xls"  
+            });  
+        }  
+var server="http://gapalex.esy.es/"
+$(document).ready(function(){
+	user = window.localStorage.getItem('username');
+	var thead=$('<thead>');
+		var tr=$('<tr>');
+		var tr2=$('<tr>');
+		var tbody=$('<tbody>');
+		thead.append(tr);
+		tr.append("<th >Lan id</th> <th data-priority='1' >Arduraduna</th> <th data-priority='2' >Azalpena</th> <th data-priority='3' >Materiala</th>  <th data-priority='4' >Itxi Data</th>");
+		$('#taula').append(thead);
+		$('#taula').append(tbody);
+		lanAzalpenak = server+"PHP/lanAzalpenak.php?jsoncallback=?"
+			$.getJSON( lanAzalpenak, {usuario:user})
+			.done(function(lanAzalpenak) {
+				console.log(lanAzalpenak);
+				 $('#taula').DataTable({
+						responsive: true,
+						ajax:  {
+						  url: server+"PHP/lanAzalpenak.php?jsoncallback=?",
+						  dataSrc: ''
+					   },
+					   dom: 'Bfrtip',
+						buttons: [
+							'excelHtml5',
+							'csvHtml5',
+							'pdfHtml5'
+						],
+					   columns: [
+					  { data: "lanid" }, 
+					  { data: "arduraduna" }, 
+					  { data: "azalpena" },
+					  { data: "materiala" },
+					  { data: "itxiData" }
+						]
+					});
+					//$('body').trigger('create');
+				//});
+			})
+			.fail(function(lanAzalpenak,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				alert("Request Failed: " + err);
+			});
+	$("body").fadeIn(500);
+});
+
+function logout(){
+	window.localStorage.clear();
+	window.location.replace(server+"PHP/logout.php");
+}
+</script>
+
+</body>
 </html>
