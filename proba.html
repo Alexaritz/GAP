@@ -75,8 +75,10 @@ if(user==null || user==undefined){
 		<input name="mind" id="mind" type="text">
 		<input name="maxd" id="maxd" type="text">
 		<!----><!--class="ui-responsive table-stroke"-->
-		<table id="taula" >
-		</table>
+		<div id="datuak">
+			<table id="taula" >
+			</table>
+		</div>
 		<input type="button" value="Exportatu" id="exportatu" onclick="exportexcel();" data-theme="b"/>
 	</div>
 	 
@@ -154,6 +156,9 @@ function exportexcel() {
 var server="http://gapalex.esy.es/"
 $(document).ready(function(){
 	user = window.localStorage.getItem('username');
+	
+	var showhide=$('<a class="toggle-vis" data-column="0">Lan Id</a> - <a class="toggle-vis" data-column="1">Arduraduna</a> - <a class="toggle-vis" data-column="2">Azalpena</a> - <a class="toggle-vis" data-column="3">Materiala</a> - <a class="toggle-vis" data-column="4">Itxi data</a> - <a class="toggle-vis" data-column="5">Saila</a>- <a class="toggle-vis" data-column="6">Langilea</a>');
+	$('#datuak').append(showhide);
 	var thead=$('<thead>');
 		var tr=$('<tr>');
 		var tr2=$('<tr>');
@@ -174,12 +179,12 @@ $(document).ready(function(){
 						  url: server+"PHP/lanAzalpenak.php?jsoncallback=?",
 						  dataSrc: ''
 					   },
-					   dom: 'Bfrtip',
+					  /* dom: 'Bfrtip',
 						buttons: [
 							'excelHtml5',
 							'csvHtml5',
 							'pdfHtml5'
-						],
+						],*/
 					   columns: [
 					  { data: "lanid" }, 
 					  { data: "arduraduna" }, 
@@ -202,6 +207,19 @@ $(document).ready(function(){
 			});*/
 	$("body").fadeIn(500);
 
+	
+	 $('a.toggle-vis').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        // Get the column API object
+        var column = table.column( $(this).attr('data-column') );
+ 
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+    } );
+	
+	
+	
 
   $.fn.dataTableExt.afnFiltering.push(
     function( oSettings, aData, iDataIndex ) {

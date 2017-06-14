@@ -12,14 +12,19 @@
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"</script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-flash-1.3.1/b-html5-1.3.1/b-print-1.3.1/cr-1.3.3/fh-3.1.2/rg-1.0.0/sc-1.4.2/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-flash-1.3.1/b-html5-1.3.1/b-print-1.3.1/cr-1.3.3/fh-3.1.2/rg-1.0.0/sc-1.4.2/datatables.min.js"></script>
 
-	
-	
 <style>
 body{
   display: none;
 }
+tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
 </style>
 <script>
 user = window.localStorage.getItem('username');
@@ -31,7 +36,7 @@ if(user==null || user==undefined){
 </head>
 <body> 
 
-<div data-role="page" id="menu">
+<div data-role="page" id="datuak">
 	<div data-role="header" class="ui-grid-b">
 		<div class="ui-block-a"><a onclick="logout();" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div>
 		<div class="ui-block-b center" align="center"><center><p>Menua</p></center></div>
@@ -43,20 +48,20 @@ if(user==null || user==undefined){
 			<div class="ui-block-a">
 				<select id="taulam" name="taulam">
 					<option value="">Taula</option>
-					<option value="lanAgindua">Lan Aginduak</option>
-					<option value="lanAzalpena">Lan Azalpenak</option>
-					<option value="lanOrdua">Langile Orduak</option>
+					<option value="1">Lan Aginduak</option>
+					<option value="2">Lan Azalpenak</option>
+					<option value="3">Langile Orduak</option>
+					<option value="4">Guztiak</option>
 				</select>
 			</div>
 			<div class="ui-block-b">
 				<input type="button" value="Erakutsi" id="erakutsi" onclick="taulaSortu();" data-theme="b"/>
 			</div>
 		</div>
-		
-		<!----><!--class="ui-responsive table-stroke"-->
-		<table id="taula" name="taula" width="100%">
+		<div id="datuak">
+		<table id="taula" name="taula">
 		</table>
-		<input type="button" value="Exportatu" id="erakutsi" onclick="exportexcel();" data-theme="b"/>
+		</div>
 	</div>
 	 
 </div>
@@ -64,69 +69,80 @@ if(user==null || user==undefined){
 <script>
 function taulaSortu(){
 	var mota=$("#taulam").val();
-	if(mota=="lanAzalpena"){
-		var thead=$('<thead>');
-		var tr=$('<tr>');
-		var tr2=$('<tr>');
+	if(mota=="4"){
+	var thead=$('<thead>');
 		var tbody=$('<tbody>');
-		thead.append(tr);
-		tr.append("<th >Lan id</th> <th data-priority='1' >Arduraduna</th> <th data-priority='2' >Azalpena</th> <th data-priority='3' >Materiala</th>  <th data-priority='4' >Itxi Data</th>");
+		thead.append("<tr><th >Lan id</th><th>Username</th><th>Bidaltzailea</th><th>Eraikina</th><th>Pisua</th><th>Gela</th><th>Arduraduna</th> <th>Azalpena</th> <th>Materiala</th>  <th>Itxi Data</th><th>Saila</th><th>Langilea</th><th>Lan Eguna</th></tr>");
 		$('#taula').append(thead);
 		$('#taula').append(tbody);
-		//$('#taula').table('refresh');
-		lanAzalpenak = server+"PHP/lanAzalpenak.php?jsoncallback=?"
-			$.getJSON( lanAzalpenak, {usuario:user})
-			.done(function(lanAzalpenak) {
-			 
-				//$(lanAzalpenak).each(function (index, o) {
-				/*tbody.append("<tr><th>"+o.lanid+"</th><td>"+o.arduraduna+"</td><td>"+o.azalpena+"</td><td>"+o.materiala+"</td><td>"+o.itxiData+"</td></tr>");
-				});*/
-				//var str =lanAzalpenak.prop('outerHTML');
-				console.log(lanAzalpenak);
-				 $('#taula').DataTable({
-						responsive: true,
-						 
+		//
+		$('#taula').append("<tfoot><tr><th >Lan id</th><th>Username</th><th>Bidaltzailea</th><th>Eraikina</th><th>Pisua</th><th>Gela</th><th>Arduraduna</th> <th>Azalpena</th> <th>Materiala</th>  <th>Itxi Data</th><th>Saila</th><th>Langilea</th><th>Lan Eguna</th></tr></tfoot>");
+				 var t=$('#taula').DataTable({
 						ajax:  {
 						  url: server+"PHP/lanAzalpenak.php?jsoncallback=?",
 						  dataSrc: ''
 					   },
+					   dom: 'Bfrtip',
+						buttons: [
+							'colvis',
+							'excelHtml5',
+							'csvHtml5',
+							'pdfHtml5'
+						],
 					   columns: [
-					  { data: "lanid" }, 
+					  { data: "lanid"}, 
+					  { data: "username" }, 
+					  { data: "bidaltzailea" }, 
+					  { data: "eraikina" }, 
+					  { data: "pisua" }, 
+					  { data: "gela" }, 
 					  { data: "arduraduna" }, 
 					  { data: "azalpena" },
 					  { data: "materiala" },
-					  { data: "itxiData" }
-						]
-					});
-					$('body').trigger('create');
-				//});
-			})
-			.fail(function(lanAzalpenak,textStatus, error) {
-				var err = textStatus + ', ' + error;
-				alert("Request Failed: " + err);
-			});
+					  { data: "itxiData"},
+					  { data: "saila" },
+					  { data: "langilea" },
+					  { data: "lanEguna" }
+						],
+						rowGroup: {
+							dataSrc: 'lanid'
+						}
+					});		
+					
+					$('#taula tfoot th').each( function () {
+						var title = $(this).text();
+						$(this).html( '<input type="text" placeholder="Filtratu '+title+'" />' );
+					} );
+				 
+					// DataTable
+					var table = $('#taula');
+				 
+					// Apply the search
+					t.columns().every( function () {
+						var that = this;
+				 
+						$( 'input', this.footer() ).on( 'keyup change', function () {
+							if ( that.search() !== this.value ) {
+								that
+									.search( this.value )
+									.draw();
+							}
+						} );
+					} );	
+
+
+					
 	}
+	
+	
+	
+	
 }
-$('a.toggle-vis').on( 'click', function (e) {
-        e.preventDefault();
- 
-        // Get the column API object
-        var column = table.column( $(this).attr('data-column') );
- 
-        // Toggle the visibility
-        column.visible( ! column.visible() );
-    } )
-function exportexcel() {  
-            $("#taula").table2excel({  
-                name: "Table2Excel",  
-                filename: "myFileName",  
-                fileext: ".xls"  
-            });  
-        }  
+
 var server="http://gapalex.esy.es/"
 $(document).ready(function(){
 	user = window.localStorage.getItem('username');
-	$("body").fadeIn(500);
+	$("body").fadeIn(500);	
 });
 
 function logout(){

@@ -3,14 +3,13 @@ include 'dbcon.php';
 /* user + pass jaso*/
 $user = $_GET['usuario'];
 $id = $_GET['lanid'];
-
+//
 $erantzuna = array();
-		$erab = $mysqli->prepare( "SELECT lanazalpena.id, lanazalpena.lanid, lanazalpena.arduraduna, lanazalpena.azalpena, lanazalpena.materiala, lanazalpena.itxiData, lanagindua.saila, langileorduak.langilea FROM lanazalpena INNER JOIN lanagindua ON lanazalpena.lanid = lanagindua.id INNER JOIN langileorduak ON lanazalpena.lanid=langileorduak.lanID" );
-		//$erab->bind_param("si", $user, $id );
+		$erab = $mysqli->prepare( "SELECT lanazalpena.id, lanagindua.username, lanagindua.bidaltzailea, lanagindua.eraikina, lanagindua.pisua, lanagindua.gela, lanazalpena.lanid, lanazalpena.arduraduna, lanazalpena.azalpena, lanazalpena.materiala, lanazalpena.itxiData, lanagindua.saila, langileorduak.langilea, langileorduak.lanEguna FROM lanazalpena INNER JOIN lanagindua ON lanazalpena.lanid = lanagindua.id INNER JOIN langileorduak ON lanazalpena.lanid=langileorduak.lanID" );
 		$erab->execute();
-		$erab->bind_result($id, $lanid, $arduraduna, $azalpena, $materiala, $itxiData, $saila, $langilea);
+		$erab->bind_result($id, $username, $bidaltzailea, $eraikina, $pisua, $gela, $lanid, $arduraduna, $azalpena, $materiala, $itxiData, $saila, $langilea, $lanEguna);
 		while ($erab->fetch()) {
-			$erantzuna[] = array('id'=> $id, 'lanid'=> $lanid, 'arduraduna'=> $arduraduna, 'azalpena'=> $azalpena, 'materiala'=> $materiala, 'itxiData'=> $itxiData, 'saila'=> $saila, 'langilea'=> $langilea);
+			$erantzuna[] = array('id'=> $id, 'username'=> $username, 'bidaltzailea'=> $bidaltzailea, 'eraikina'=> $eraikina, 'pisua'=> $pisua, 'gela'=> $gela, 'lanid'=> $lanid, 'arduraduna'=> $arduraduna, 'azalpena'=> $azalpena, 'materiala'=> $materiala, 'itxiData'=> $itxiData, 'saila'=> $saila, 'langilea'=> $langilea, 'lanEguna'=> $lanEguna);
 		}
 		$resultadosJson=json_encode( $erantzuna );
 /*emaitza json formatura bihurtzen da*/
