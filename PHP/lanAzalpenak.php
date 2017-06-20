@@ -5,11 +5,11 @@ $user = $_GET['usuario'];
 $id = $_GET['lanid'];
 //
 $erantzuna = array();
-		$erab = $mysqli->prepare( "SELECT lanazalpena.id, lanagindua.username, lanagindua.bidaltzailea, lanagindua.eraikina, lanagindua.pisua, lanagindua.gela, lanazalpena.lanid, lanazalpena.arduraduna, lanazalpena.azalpena, lanazalpena.materiala, lanazalpena.itxiData, lanagindua.saila, langileorduak.langilea, langileorduak.lanEguna FROM lanazalpena INNER JOIN lanagindua ON lanazalpena.lanid = lanagindua.id INNER JOIN langileorduak ON lanazalpena.lanid=langileorduak.lanID" );
+		$erab = $mysqli->prepare( "SELECT lanagindua.id, lanagindua.username, lanagindua.bidaltzailea, lanagindua.eraikina, lanagindua.pisua, lanagindua.gela, lanagindua.lehentasuna, lanagindua.laburpena, lanagindua.deskribapena, lanagindua.data, lanagindua.egoera, lanazalpena.lanid, lanazalpena.arduraduna, lanazalpena.azalpena, lanazalpena.materiala, lanazalpena.itxiData, lanagindua.saila, langileorduak.langilea, langileorduak.denborah, langileorduak.denboramin, langileorduak.lanEguna FROM lanazalpena INNER JOIN lanagindua ON lanazalpena.lanid = lanagindua.id INNER JOIN langileorduak ON lanazalpena.lanid=langileorduak.lanID" );
 		$erab->execute();
-		$erab->bind_result($id, $username, $bidaltzailea, $eraikina, $pisua, $gela, $lanid, $arduraduna, $azalpena, $materiala, $itxiData, $saila, $langilea, $lanEguna);
+		$erab->bind_result($id, $username, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $data, $egoera, $lanid, $arduraduna, $azalpena, $materiala, $itxiData, $saila, $langilea, $denborah, $denboramin, $lanEguna);
 		while ($erab->fetch()) {
-			$erantzuna[] = array('id'=> $id, 'username'=> $username, 'bidaltzailea'=> $bidaltzailea, 'eraikina'=> $eraikina, 'pisua'=> $pisua, 'gela'=> $gela, 'lanid'=> $lanid, 'arduraduna'=> $arduraduna, 'azalpena'=> $azalpena, 'materiala'=> $materiala, 'itxiData'=> $itxiData, 'saila'=> $saila, 'langilea'=> $langilea, 'lanEguna'=> $lanEguna);
+			$erantzuna[] = array('id'=> $id, 'username'=> $username, 'bidaltzailea'=> $bidaltzailea, 'eraikina'=> $eraikina, 'pisua'=> $pisua, 'gela'=> $gela, 'lehentasuna'=> $lehentasuna, 'laburpena'=> $laburpena, 'deskribapena'=>$deskribapena, 'data'=>$data, 'egoera'=>$egoera, 'lanid'=> $lanid, 'arduraduna'=> $arduraduna, 'azalpena'=> $azalpena, 'materiala'=> $materiala, 'itxiData'=> $itxiData, 'saila'=> $saila, 'langilea'=> $langilea, 'denborah'=> $denborah, 'denboramin'=> $denboramin, 'lanEguna'=> $lanEguna);
 		}
 		$resultadosJson=json_encode( $erantzuna );
 /*emaitza json formatura bihurtzen da*/
