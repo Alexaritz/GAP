@@ -452,7 +452,8 @@ var egoera=$("#egoera").val()
 			.fail(function(d, textStatus, error) {
 				console.error("getJSON failed, status: " + textStatus + ", error: "+error+ JSON.stringify(d))
 			})
-			egoeraFitx = server+"PHP/egoeraEguneratu.php?jsoncallback=?"
+			.always(function() {
+				egoeraFitx = server+"PHP/egoeraEguneratu.php?jsoncallback=?"
 				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
 				.done(function(egoerantzuna) {
 				})
@@ -460,19 +461,22 @@ var egoera=$("#egoera").val()
 					var err = textStatus + ', ' + error;
 					console.log("1Request Failed: " + err);
 				})
-			if(lanKop>0){
+				.always(function() {
+					if(lanKop>0){
 							$.post( server+"PHP/langileOrduakGorde.php", $("#abisuaOsatu").serialize())
-							.done(function(data){
-								$.mobile.loading('hide');
-								location.reload();
-							})
-							.fail(function(data,textStatus, error){
-							var err =data.responseText+ textStatus + ', ' + error;
-							console.log("langileOrduakGorde.php errorea" + err)
-							})
-			}else{
-				location.reload();
-			}
+								.done(function(data){
+									$.mobile.loading('hide');
+									location.reload();
+								})
+								.fail(function(data,textStatus, error){
+								var err =data.responseText+ textStatus + ', ' + error;
+								console.log("langileOrduakGorde.php errorea" + err)
+								})
+					}else{
+						location.reload();
+					}
+				});
+			});
 	return false;
 });
 
