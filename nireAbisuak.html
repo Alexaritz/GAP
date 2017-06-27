@@ -49,7 +49,7 @@ margin:0%;
 	<div class="ui-grid-b" data-role="header" data-position="fixed" id="head">
 		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
 		<div class="ui-block-b"><center><p>Nire Abisuak</p></center></div>
-		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
+		<div class="ui-block-c"><a onclick="logout()" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
 	<fieldset id="collaps" class="ui-grid-a my-breakpoint">
 		<div id="esleituDiv" class="ui-block-a">
@@ -75,6 +75,11 @@ margin:0%;
 
 <script>
 var server="http://gapalex.esy.es/"//
+
+function logout(){
+	window.localStorage.clear();
+	window.location.replace(server+"PHP/logout.php");
+}
 function bidalitakoAbisuak(){
 	$.mobile.loading('show');
 	lanFitx2 = server+"PHP/bidalitakoLanak.php?jsoncallback=?"
@@ -163,6 +168,7 @@ function nireAbisuak(){
 				$('#esleituak').listview('refresh');				
 			});
 			$.mobile.loading('hide');
+			
 		})
 		.always(function(lanErantzuna2) {
 		
@@ -178,7 +184,7 @@ $(document).on('pagebeforeshow', '#nireAbisuak', function(){
 //$(document).ready(function(){
 kopB=5;
 kop2B="";
-kop=5;
+kop=10;
 kop2="";
 $.mobile.loading('show');
 	user = window.localStorage.getItem('username');
@@ -186,18 +192,22 @@ $.mobile.loading('show');
 	arduradunaDafitx = server+"PHP/arduradunaDa.php?jsoncallback=?"
 		$.getJSON( arduradunaDafitx, { usuario:user})
 		.done(function(arduDaeran) {
-			if(arduDaeran.arduraduna == "bai" || admin=="true"){
-				/// arduraduna bada, esleitutako abisuak erakutsi
-				$("#collap").attr("style","display:inline");
-				nireAbisuak();
+			if(arduDaeran!="logout"){
+				if(arduDaeran.arduraduna == "bai" || admin=="true"){
+					/// arduraduna bada, esleitutako abisuak erakutsi
+					$("#collap").attr("style","display:inline");
+					nireAbisuak();
+				}else{
+					$("#bidaliDiv").attr("style","float:none");
+					$("#bidaliDiv").attr("style","width:99%");
+				}
+				bidalitakoAbisuak();
 			}else{
-				$("#bidaliDiv").attr("style","float:none");
-				$("#bidaliDiv").attr("style","width:99%");
+				logout();
 			}
-			bidalitakoAbisuak();
 			//$("#collaps").fadeIn(500)
 		})
-		.fail(function(koderantzuna,textStatus, error) {
+		.fail(function(arduDaeran,textStatus, error) {
 			var err = textStatus + ', ' + error;
             console.log("arduradunaDa Request Failed: " + err);
 		})

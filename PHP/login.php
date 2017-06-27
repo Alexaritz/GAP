@@ -3,7 +3,7 @@ include 'dbcon.php';
 /* user + pass jaso*/
 $user = $_GET['usuario'];
 $pass = $_GET['password'];
-
+session_start();
 $erantzuna = array(); 
 
 		$erab = $mysqli->prepare( "SELECT * FROM erabiltzailea WHERE username=? and password=?");

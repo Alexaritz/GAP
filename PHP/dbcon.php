@@ -1,6 +1,5 @@
 <?php
 header("Content-Type: text/html;charset=utf-8");
-session_start();
 $servidor = "mysql.hostinger.es";//localhost mysql.hostinger.es
 $usuario = "u779484475_alex";//root u779484475_alex
 $password = "";//

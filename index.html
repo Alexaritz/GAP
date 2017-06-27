@@ -58,7 +58,6 @@ $('#loginForm').submit(function() {
 		loginfitx = server+"PHP/login.php?jsoncallback=?"
 		$.getJSON( loginfitx, { usuario:user ,password:pass})
 		.done(function(loginerantzuna) {
-			//alert(loginerantzuna.mezua)
 			if(loginerantzuna.onarpena == "ok"){
 				/// ondo balidatzen bada, menura joan
 				window.localStorage.setItem('username',user);

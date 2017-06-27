@@ -1,9 +1,13 @@
 <?php
 include 'dbcon.php';
+include_once 'session.php';
 /* user jaso*/
-$user = $_GET['usuario'];
-
 $erantzuna = array(); 
+$user = $_GET['usuario'];
+if (!$_SESSION['logged']) {
+  $erantzuna[]="logout";
+}else{
+
 		$erab = $mysqli->prepare( "SELECT * FROM arduraduna WHERE username=?" );
 		$erab->bind_param("s", $user);
 		$erab->execute();
@@ -15,7 +19,7 @@ $erantzuna = array();
 			$erantzuna["mezua"] = "Erabiltzailea ez da arduraduna.";
 			$erantzuna["arduraduna"] = "ez";
 		}
-
+}
 /*emaitza json formatura bihurtzen da*/
 $resultadosJson = json_encode($erantzuna);
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */

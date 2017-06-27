@@ -2,11 +2,16 @@
 include 'dbcon.php';
 include_once 'session.php';
 /* user + pass jaso*/
+if (!$_SESSION['logged']) {
+  $erantzuna[]="logout";
+   exit();
+}else{
 $user = $_GET['usuario'];
 $kop = $_GET['kop'];
 $kop2 = $_GET['kop2'];
 $admin = $_GET['admin'];
 $erantzuna = array(); 
+
 	if($kop2!=="") {
 		if($admin=="true"){//, data desc
 			$erab = $mysqli->prepare("SELECT id, username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, laburpena, data, egoera FROM lanagindua order by id desc LIMIT ?, ?" );
@@ -33,4 +38,5 @@ $erantzuna = array();
 /*emaitza json formatura bihurtzen da*/
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */
 echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+}
 ?>
