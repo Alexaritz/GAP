@@ -154,103 +154,114 @@ id = window.localStorage.getItem('lanID');
 				$('#laburpena').val(l.laburpena)
 				$('#deskribapena').val(l.deskribapena)
 				})
-		});
-		/*eraikina lortu*/
-		kodefitx = server+"PHP/eraikinaLortu.php?jsoncallback=?"
-		$.getJSON( kodefitx, { usuario:user})
-		.done(function(koderantzuna) {
-			console.log("ONDO")
-			$(koderantzuna).each(function (index, o) {
-				if(o.izena==eraikina)
-					var $option = $("<option selected='selected'/>").attr("value", o.izena).text(o.izena);
-				else
-					var $option = $("<option />").attr("value", o.izena).text(o.izena);
-				$('#eraikina').append($option);
-				$('#eraikina').selectmenu("refresh");
+		})
+		.always(function() {
+			/*eraikina lortu*/
+			kodefitx = server+"PHP/eraikinaLortu.php?jsoncallback=?"
+			$.getJSON( kodefitx, { usuario:user})
+			.done(function(koderantzuna) {
+				console.log("ONDO")
+				$(koderantzuna).each(function (index, o) {
+					if(o.izena==eraikina)
+						var $option = $("<option selected='selected'/>").attr("value", o.izena).text(o.izena);
+					else
+						var $option = $("<option />").attr("value", o.izena).text(o.izena);
+					$('#eraikina').append($option);
+					$('#eraikina').selectmenu("refresh");
+				});
+			})
+			.fail(function(koderantzuna,textStatus, error) {
+				var err = textStatus + ', ' + error;
+				console.log("Request Failed: " + err);
+			})	
+			.always(function() {
+				
+				/*solairua lortu*/
+				kodefitx = server+"PHP/solairuaLortu.php?jsoncallback=?"
+				$.getJSON( kodefitx, { usuario:user})
+				.done(function(koderantzuna) {
+					console.log("ONDO")
+					$(koderantzuna).each(function (index, o) {
+						if(o.zenbakia==pisua)
+							var $option = $("<option selected='selected'/>").attr("value", o.zenbakia).text(o.zenbakia);
+						else
+							var $option = $("<option/>").attr("value", o.zenbakia).text(o.zenbakia);
+						$('#solairua').append($option);
+						$('#solairua').selectmenu("refresh");
+					});
+				})
+				.fail(function(koderantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Request Failed: " + err);
+				})	
+				.always(function() {
+					
+					/*gela lortu*/
+					kodefitx = server+"PHP/gelaLortu.php?jsoncallback=?"
+					$.getJSON( kodefitx, { usuario:user})
+					.done(function(koderantzuna) {
+						console.log("ONDO")
+						$(koderantzuna).each(function (index, o) {
+							if(o.izena==gela)
+								var $option = $("<option selected='selected'/>").attr("value", o.izena).text(o.izena);
+							else
+								var $option = $("<option/>").attr("value", o.izena).text(o.izena);
+							$('#gela').append($option);
+							$('#gela').selectmenu("refresh");
+						});
+					})
+					.fail(function(koderantzuna,textStatus, error) {
+						var err = textStatus + ', ' + error;
+						console.log("Request Failed: " + err);
+					})	
+					.always(function() {
+					
+						/*ARDURADUNA BETE*/
+						ardfitx = server+"PHP/arduradunaLortu.php?jsoncallback=?"
+						$.getJSON( ardfitx, { usuario:user})
+						.done(function(arderantzuna) {
+							$(arderantzuna).each(function (index, o) {
+							if(o.username==ard)
+								var $option = $("<option selected='selected'/>").attr("value", o.username).text(o.username);
+							else
+								var $option = $("<option/>").attr("value", o.username).text(o.username);
+								$('#arduraduna').append($option);
+								$('#arduraduna').selectmenu("refresh");
+							});
+						})
+						.fail(function(arderantzuna,textStatus, error) {
+							var err = textStatus + ', ' + error;
+							console.log("Request Failed: " + err);
+						})
+						.always(function() {
+						
+							/*ARAZO MOTA BETE*/
+							kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
+							$.getJSON( kodefitx, { usuario:user})
+							.done(function(koderantzuna) {
+								console.log("ONDO")
+								$(koderantzuna).each(function (index, o) {
+									if(o.izena==arazoMota)
+										var $option = $("<option selected='selected'/>").attr("value", o.kodea).text(o.izena);
+									else
+										var $option = $("<option/>").attr("value", o.kodea).text(o.izena);
+									$('#arazoM').append($option);
+									$('#arazoM').selectmenu("refresh");
+								});
+							})
+							.fail(function(koderantzuna,textStatus, error) {
+								var err = textStatus + ', ' + error;
+								console.log("Request Failed: " + err);
+							})		
+							//$("#abisuaBidali").fadeIn(500);
+								
+						});
+					
+					});
+				});
 			});
-		})
-		.fail(function(koderantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-		})	
-		
-		/*solairua lortu*/
-		kodefitx = server+"PHP/solairuaLortu.php?jsoncallback=?"
-		$.getJSON( kodefitx, { usuario:user})
-		.done(function(koderantzuna) {
-			console.log("ONDO")
-			$(koderantzuna).each(function (index, o) {
-				if(o.zenbakia==pisua)
-					var $option = $("<option selected='selected'/>").attr("value", o.zenbakia).text(o.zenbakia);
-				else
-					var $option = $("<option/>").attr("value", o.zenbakia).text(o.zenbakia);
-				$('#solairua').append($option);
-				$('#solairua').selectmenu("refresh");
-			});
-		})
-		.fail(function(koderantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-		})	
-		
-		/*gela lortu*/
-		kodefitx = server+"PHP/gelaLortu.php?jsoncallback=?"
-		$.getJSON( kodefitx, { usuario:user})
-		.done(function(koderantzuna) {
-			console.log("ONDO")
-			$(koderantzuna).each(function (index, o) {
-				if(o.izena==gela)
-					var $option = $("<option selected='selected'/>").attr("value", o.izena).text(o.izena);
-				else
-					var $option = $("<option/>").attr("value", o.izena).text(o.izena);
-				$('#gela').append($option);
-				$('#gela').selectmenu("refresh");
-			});
-		})
-		.fail(function(koderantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-		})	
-		
-		/*ARDURADUNA BETE*/
-		ardfitx = server+"PHP/arduradunaLortu.php?jsoncallback=?"
-		$.getJSON( ardfitx, { usuario:user})
-		.done(function(arderantzuna) {
-			$(arderantzuna).each(function (index, o) {
-			if(o.username==ard)
-				var $option = $("<option selected='selected'/>").attr("value", o.username).text(o.username);
-			else
-				var $option = $("<option/>").attr("value", o.username).text(o.username);
-				$('#arduraduna').append($option);
-				$('#arduraduna').selectmenu("refresh");
-			});
-		})
-		.fail(function(arderantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-		})
-			
-		/*ARAZO MOTA BETE*/
-		kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
-		$.getJSON( kodefitx, { usuario:user})
-		.done(function(koderantzuna) {
-			console.log("ONDO")
-			$(koderantzuna).each(function (index, o) {
-				if(o.izena==arazoMota)
-					var $option = $("<option selected='selected'/>").attr("value", o.kodea).text(o.izena);
-				else
-					var $option = $("<option/>").attr("value", o.kodea).text(o.izena);
-				$('#arazoM').append($option);
-				$('#arazoM').selectmenu("refresh");
-			});
-		})
-		.fail(function(koderantzuna,textStatus, error) {
-			var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-		})
-		/*return false*/;			
-		//$("#abisuaBidali").fadeIn(500);
-		return false;		
+		});	
+return false;		
 });
 $(document).ajaxStop(function () {
     $("#abisuaEditatu").fadeIn(500)
@@ -261,7 +272,7 @@ $("form").submit(function(){
 	//event.preventDefault();
 	$.mobile.loading('show');
 	var user = window.localStorage.getItem('username');
-   var id = window.localStorage.getItem('lanID');
+    var id = window.localStorage.getItem('lanID');
 	var saila=$("#arazoM").val()
 	var arduraduna=$("#arduraduna").val()
 	var bidaltzailea=$("#bidaltzailea").val()

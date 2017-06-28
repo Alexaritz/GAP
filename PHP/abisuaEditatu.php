@@ -1,5 +1,6 @@
 <?php
 include 'dbcon.php';
+include_once 'session.php';
 /* user + pass jaso*/
 $user = $_GET['usuario'];
 $id = $_GET['id'];
@@ -19,8 +20,8 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 $erantzuna = array(); 
 $erantzuna["log"] = "true";
 	if ($saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
-		$erab = $mysqli->prepare("UPDATE lanagindua SET saila=?, arduraduna=?, bidaltzailea=?, eraikina=?, pisua=?, gela=?, lehentasuna=?, laburpena=?, deskribapena=?, egoera=? WHERE id=?" );
-		$erab->bind_param("sssssssssss", $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $egoera, $id);
+		$erab = $mysqli->prepare("UPDATE lanagindua SET saila=?, arduraduna=?, bidaltzailea=?, eraikina=?, pisua=?, gela=?, lehentasuna=?, laburpena=?, deskribapena=? WHERE id=?" );
+		$erab->bind_param("ssssssssss", $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $id);
 		$erab->execute();
 		$erantzuna["mezua"] = "Zuzen eguneratu da.";
 	}else{

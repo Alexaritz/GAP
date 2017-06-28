@@ -13,7 +13,7 @@ $admin = $_GET['admin'];
 $erantzuna = array(); 
 
 	if($kop2!=="") {
-		if($admin=="true"){//, data desc
+		if($admin=="true" && $_SESSION['admin']==true){//, data desc
 			$erab = $mysqli->prepare("SELECT id, username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, laburpena, data, egoera FROM lanagindua order by id desc LIMIT ?, ?" );
 			$erab->bind_param("ii", $kop, $kop2);
 		}else{
@@ -21,7 +21,7 @@ $erantzuna = array();
 		$erab->bind_param("sii", $user, $kop, $kop2);
 		}
 	}else{
-		if($admin=="true"){
+		if($admin=="true" && $_SESSION['admin']==true){
 			$erab = $mysqli->prepare("SELECT id, username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, laburpena, data, egoera FROM lanagindua order by id desc LIMIT ?" );
 			$erab->bind_param("i", $kop);
 		}else{

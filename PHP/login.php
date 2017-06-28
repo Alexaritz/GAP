@@ -11,7 +11,10 @@ $erantzuna = array();
 		$erab->execute();
 		$erab->bind_result($id, $user, $pass, $admin);
 		if($erab-> fetch()){
-			if($admin=="admin") $erantzuna["admin"] = "true";
+			if($admin=="admin"){
+				$erantzuna["admin"] = "true";
+				$_SESSION['admin'] = true;
+			}
 			$_SESSION['logged'] = true;
 			$_SESSION['username'] = $user;
 			$erantzuna["mezua"] = "Datu zuzenak.";

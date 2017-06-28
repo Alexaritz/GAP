@@ -12,6 +12,7 @@ $gela = $_GET['gela'];
 $lehentasuna = $_GET['lehentasuna'];
 $laburpena = $_GET['laburpena'];
 $deskribapena = $_GET['deskribapena'];
+$data = $_GET['data'];
 $argazkia = $_GET['argazkia'];
 
 if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
@@ -20,15 +21,15 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 $erantzuna = array(); 
 $erantzuna["log"] = "true";
 	if ($saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
-		$erab = $mysqli->prepare( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, argazkia, egoera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)" );
-		$egoera="berria";
+		$erab = $mysqli->prepare( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, prebdata, argazkia, egoera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(),?, ?, ?)" );
+		$egoera="prebentiboa";
 		if ($argazkia==""){
-			$erab->bind_param("ssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $argazkia, $egoera);
+			$erab->bind_param("sssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $data, $argazkia, $egoera);
 		}else{
 			$arg = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
 			$num_rows=mysqli_num_rows($arg);
 			$argazkia=$num_rows . "argazkia.jpeg";
-			$erab->bind_param("ssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $argazkia, $egoera);
+			$erab->bind_param("sssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $data, $argazkia, $egoera);
 		}
 		$erab->execute();
 		$erantzuna["mezua"] = "Zuzen txertatu da.";

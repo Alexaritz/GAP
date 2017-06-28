@@ -17,7 +17,7 @@ body{
 </style>
 <script>
 user = window.localStorage.getItem('username');
-admin = window.localStorage.getItem('admin');
+
 if(user==null || user==undefined){
 	alert("Saioa amaitu da. Saiatu berriro.")
 	window.location.replace("index.html");
@@ -41,14 +41,16 @@ if(user==null || user==undefined){
 	</div>
 	 
 </div>
-
 <script>
 var server="http://gapalex.esy.es/"
 $(document).ready(function(){
+admin="false";
+admin = window.localStorage.getItem('admin');
 	if(admin=="true"){
-		console.log("das")
-			var dat=$('<input type="button" class="hideb" value="Datuak ikusi" id="datuakIkusi" onclick="location.href = \'datuak.html\';" data-theme="b"/>');
+			var dat=$('<input type="button" value="Datuak ikusi" id="datuakIkusi" onclick="location.href = \'datuak.html\';" data-theme="b"/>');
+			var preb=$('<input type="button" value="Lan prebentiboak sortu" id="prebetiboakSortu" onclick="location.href = \'prebentiboaSortu.html\';" data-theme="b"/>');
 			$('#content').append(dat);
+			$('#content').append(preb);
 			$('#content').trigger('create')
 	}
 	$("body").fadeIn(500);

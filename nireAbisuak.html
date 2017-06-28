@@ -97,7 +97,11 @@ function bidalitakoAbisuak(){
 							var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
 						}else if (m.egoera=="esleitua"){
 							var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
-						}else{
+						}
+						else if (m.egoera=="prebentiboa"){
+							var li2= $("<li data-role='list-divider' style='background-color:DarkCyan;'/>");
+						}
+						else{
 							var li2= $("<li data-role='list-divider'  style='background-color:Green;'/>");
 						}
 						var li= $("<li/>");
@@ -146,6 +150,8 @@ function nireAbisuak(){
 					var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
 				}else if (m.egoera=="esleitua"){
 					var li2= $("<li data-role='list-divider' style='background-color:GoldenRod;'/>");
+				}else if (m.egoera=="prebentiboa"){
+							var li2= $("<li data-role='list-divider' style='background-color:DarkCyan;'/>");
 				}else{
 					var li2= $("<li data-role='list-divider' style='background-color:Green;'/>");
 				}
