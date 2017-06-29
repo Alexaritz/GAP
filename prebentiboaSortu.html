@@ -240,7 +240,6 @@ function calClick() {
 }
 $("form").submit(function(){
 	//event.preventDefault();
-	$.mobile.loading('show');
 	var user = window.localStorage.getItem('username');
 	var saila=$("#arazoM").val()
 	var arduraduna=$("#arduraduna").val()
@@ -254,6 +253,7 @@ $("form").submit(function(){
 	var data=$("#data").val()
 	var argazkia = $("#fileToUpload").val()
 	if(saila!="" && arduraduna!="" && eraikina!="" && solairua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!="" && data!="" && bidaltzailea!=""){
+	$.mobile.loading('show');
 		if (argazkia!=""){//ARGAZKIAREKIN IGO
 			$.ajax({
 				url: "PHP/upload.php", // Url to which the request is send

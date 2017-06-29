@@ -10,6 +10,9 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <!-- Include the jQuery Mobile library -->
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<!-- Include toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css">
 <style>
 body{
   display: none;
@@ -37,7 +40,6 @@ if(user==null || user==undefined){
 	<div id="content" data-role="content">	
 		<input type="button" value="Abisua Bidali" id="abisuaBidali" onclick="location.href = 'abisuaBidali.html';" data-theme="b"/>
 		<input type="button" value="Nire Abisuak" id="nireAbisuak" onclick="location.href = 'nireAbisuak.html';" data-theme="b" />
-		
 	</div>
 	 
 </div>
@@ -53,9 +55,41 @@ admin = window.localStorage.getItem('admin');
 			$('#content').append(preb);
 			$('#content').trigger('create')
 	}
+	/*Prebentiboak begiratu*/
+		prebfitx = server+"PHP/esleitutakoPrebentiboak.php?jsoncallback=?"
+		$.getJSON( prebfitx, { usuario:user})
+		.done(function(preberantzuna) {
+			$(preberantzuna).each(function (index, o) {
+				toastr.options = {
+				  "closeButton": true,
+				  "debug": false,
+				  "newestOnTop": false,
+				  "progressBar": true,
+				  "positionClass": "toast-bottom-full-width",
+				  "preventDuplicates": false,
+				  "onclick": null,
+				  "showDuration": "300",
+				  "hideDuration": "1000",
+				  "timeOut": "15000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut"
+				}
+			Command: toastr["info"]('Lan prebentiboa duzu gaur<br/><button type="button" onclick="lanXehetasunak('+o.id+'); return false;" class="btn clear">Ikusi</button></>');
+			});
+		})
+		.fail(function(arderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("esleitutakoPrebentiboak Request Failed: " + err);
+		})
 	$("body").fadeIn(500);
 });
-
+function lanXehetasunak(id){
+	window.localStorage.setItem('lanID',id);
+	window.location.replace("lanXehetasunak.html");
+}
 function logout(){
 	window.localStorage.clear();
 	window.location.replace(server+"PHP/logout.php");
