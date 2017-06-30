@@ -272,6 +272,7 @@ $('#lanid').val(id);
 				ard=l.arduraduna
 				$('#id').text(l.id);
 				$('#saila').text(l.saila);
+				saila=l.saila;
 				lanegoera=l.egoera;
 				$('#lehentasuna').text(l.lehentasuna);
 				if(ard!=user) $('#bidaltzailea').text(l.arduraduna);
@@ -324,11 +325,14 @@ $('#lanid').val(id);
 				.done(function(egoeraerantzuna) {
 					console.log("KODEA ONDO")
 					$(egoeraerantzuna).each(function (index, o) {
-						if(o.izena==lanegoera)
-							var $option = $("<option selected='selected'cid='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
-						else
+						if(o.izena==lanegoera){
+							var $option = $("<option selected='selected' id='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
+						}
+						else if (saila!="Prebentiboa" && o.izena=="prebentiboa"){
+						}
+						else{
 							var $option = $("<option id='"+o.izena+"'/>").attr("value", o.izena).text(o.izena);
-							
+						}
 							$('#egoera').append($option);
 						
 					});

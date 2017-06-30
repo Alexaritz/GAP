@@ -12,7 +12,7 @@ $gela = $_GET['gela'];
 $lehentasuna = $_GET['lehentasuna'];
 $laburpena = $_GET['laburpena'];
 $deskribapena = $_GET['deskribapena'];
-$data = $_GET['data'];
+$datak = $_GET['data'];
 $argazkia = $_GET['argazkia'];
 
 if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
@@ -20,6 +20,8 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
 //if(isset($_POST["submit"]) &&) {
 $erantzuna = array(); 
 $erantzuna["log"] = "true";
+for($i=0;$i<count($datak);$i++){
+	$data=$datak[$i];
 	if ($saila!="" && $arduraduna!="" && $eraikina!="" && $pisua!="" && $gela!="" && $lehentasuna!="" && $laburpena!="" && $deskribapena!=""){
 		$erab = $mysqli->prepare( "INSERT INTO lanagindua(username, saila, arduraduna, bidaltzailea, eraikina, pisua, gela, lehentasuna, laburpena, deskribapena, data, prebdata, argazkia, egoera) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(),?, ?, ?)" );
 		$egoera="prebentiboa";
@@ -36,10 +38,12 @@ $erantzuna["log"] = "true";
 	}else{
 		$erantzuna["mezua"] = "Errorea txertatzean. Datu guztiak bete behar dira.";
 	}
+}
 }else{
 	$erantzuna["mezua"] = "Saioa amaitu da. Logeatu berriro.";
 	$erantzuna["log"] = "false";
 }
+
 /*emaitza json formatura bihurtzen da*/
 $resultadosJson = json_encode($erantzuna);
 /* emaitza erakusten da, nabigatzaileetan errorerik ez emateko moduan */

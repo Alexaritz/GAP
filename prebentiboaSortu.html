@@ -76,6 +76,11 @@ border-style:none;
 #abisuaBidali{
 	display: none;
 }
+
+.controlgroup-textinput{
+    padding-top:.22em;
+    padding-bottom:.22em;
+}
 </style>
 </head>
 
@@ -93,7 +98,7 @@ border-style:none;
 				<div class="ui-block-a">
 					<select id="arazoM" name="arazoM" disabled="disabled" required>
 							<option value="">Arazo mota</option>
-							<option value="1" selected>Prebentiboa</option>
+							<option value="Prebentiboa" selected>Prebentiboa</option>
 					</select>
 				</div>
 				<div class="ui-block-b">
@@ -133,7 +138,9 @@ border-style:none;
 				</div>
 			</fieldset>
 			<textarea name="deskribapena" id="deskribapena"  placeholder="Deskribapena..." required></textarea>
-			<input id='data' name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick()' data-icon='calendar' type='text'  data-role='datebox' data-options='{"mode": "calbox", "useButton": false, "overrideDateFormat": "%Y/%m/%d"}'/>
+			<input id='data0' name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick(this.id)' data-icon='calendar' type='text'  data-role='datebox' data-options='{"mode": "calbox", "useButton": false, "overrideDateFormat": "%Y/%m/%d"}'/>
+			<div id="databerriak"></div>
+			<button id="berria" type="button">Data berria</button>	
 			<span id="uploader" class="ui-btn ui-icon-camera ui-btn-icon-left ui-corner-all fileinput-button">
 				<span>Argazkia igo (Hautazkoa)</span>
 				<input type="file" accept="image/*" name="fileToUpload" id="fileToUpload">
@@ -221,6 +228,22 @@ $(document).ajaxStop(function () {
     $("#abisuaBidali").fadeIn(500)
 	$.mobile.loading('hide');
 });
+var dataKop=1;
+$('#berria').click(function () {
+	var dat="<input id=data"+dataKop+" name='data[]' placeholder='Egin klik data sartzeko...' onfocus='calClick(this.id)' data-icon='calendar' type='text'  data-role='datebox' data-options='{\"mode\": \"calbox\", \"useButton\": false, \"overrideDateFormat\": \"%Y/%m/%d\"}'/>";
+	var ezab='<input id="ezab'+dataKop+'" onclick="ezabatuData('+dataKop+');return false;" type="button" data-icon="delete" value="Ezabatu"/>';
+	var div=$("<div id='divd"+dataKop+"' class='ui-grid-a'><div class='ui-block-a' style='width: 75%'>"+dat+"</div><div class='ui-block-b' style='width: 25%'>"+ezab+"</div></div>");
+	$("#data"+dataKop+"").datebox();
+	$("#databerriak").append(div);
+	$("#databerriak").trigger('create');
+	dataKop=dataKop+1;
+});
+function ezabatuData(id){
+	$("#divd"+id+"").remove();
+	$("#databerriak").trigger('create');
+}
+
+
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -235,8 +258,9 @@ $("#fileToUpload").change(function() {
         var argazkia=$("#fileToUpload").val()
 		readURL(this);
     });
-function calClick() {
-   $("#data").datebox('open');
+function calClick(id) {
+id="#"+id;
+   $(id).datebox('open');
 }
 $("form").submit(function(){
 	//event.preventDefault();
@@ -250,9 +274,16 @@ $("form").submit(function(){
 	var lehentasuna=$("#lehentasuna").val()
 	var laburpena=$("#laburpena").val()
 	var deskribapena=$("#deskribapena").val()
-	var data=$("#data").val()
+	var data = new Array();
+	$("input:text[name='data[]']").each(function() {
+	console.log("dataKops")
+	   data.push($(this).val());
+	});
+	
+	console.log(data);
+	//var data=$("#data").val()
 	var argazkia = $("#fileToUpload").val()
-	if(saila!="" && arduraduna!="" && eraikina!="" && solairua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!="" && data!="" && bidaltzailea!=""){
+	if(saila!="" && arduraduna!="" && eraikina!="" && solairua!="" && gela!="" && lehentasuna!="" && laburpena!="" && deskribapena!="" /*&& data!=""*/ && bidaltzailea!=""){
 	$.mobile.loading('show');
 		if (argazkia!=""){//ARGAZKIAREKIN IGO
 			$.ajax({
@@ -263,8 +294,8 @@ $("form").submit(function(){
 				cache: false,             // To unable request pages to be cached
 				processData:false,        // To send DOMDocument or non processed data file it is set to false
 			})
-			.done(function(data){
-				if(data.ok=="zuzena"){
+			.done(function(datuak){
+				if(datuak.ok=="zuzena"){
 					abisuFitx = server+"PHP/prebentiboaSortu.php?jsoncallback=?"
 					$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, bidaltzailea:bidaltzailea, eraikina:eraikina, solairua:solairua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena, data:data, argazkia:argazkia})
 					.done(function(abisuerantzuna) {
@@ -282,7 +313,7 @@ $("form").submit(function(){
 						alert("Request Failed: " + err);
 					})
 				}else{
-					alert(data.erantzuna);
+					alert(datuak.erantzuna);
 					window.location.replace("abisuaBidali.html");
 				}	
 			})
