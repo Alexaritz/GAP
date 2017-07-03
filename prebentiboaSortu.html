@@ -300,7 +300,7 @@ $("form").submit(function(){
 					$.getJSON( abisuFitx, { usuario:user, saila:saila, arduraduna:arduraduna, bidaltzailea:bidaltzailea, eraikina:eraikina, solairua:solairua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena, data:data, argazkia:argazkia})
 					.done(function(abisuerantzuna) {
 						if(abisuerantzuna.log=="true"){
-							alert(abisuerantzuna.mezua);
+							//alert(abisuerantzuna.mezua);
 							window.location.replace("menua.html");
 							$.mobile.loading('hide');
 						}else{
@@ -326,8 +326,7 @@ $("form").submit(function(){
 			$.getJSON( abisuFitx2, { usuario:user, saila:saila, arduraduna:arduraduna, bidaltzailea:bidaltzailea, eraikina:eraikina, solairua:solairua, gela:gela, lehentasuna:lehentasuna,laburpena:laburpena,deskribapena:deskribapena, data:data,argazkia:argazkia})
 			.done(function(abisuerantzuna2) {
 				if(abisuerantzuna2.log=="true"){
-					console.log("ZUZEN TXERTATU DA")
-					alert(abisuerantzuna2.mezua);
+					//alert(abisuerantzuna2.mezua);
 					window.location.replace("menua.html");
 					$.mobile.loading('hide');
 				}else{

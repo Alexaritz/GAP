@@ -7,7 +7,7 @@ $user = $_GET['usuario'];
 $erantzuna = array();
 $datuak = array();
 if($_SESSION['logged']){
-		$erab = $mysqli->prepare( "SELECT id FROM lanagindua WHERE arduraduna=? and egoera='prebentiboa' and prebdata=CURDATE()" );
+		$erab = $mysqli->prepare( "SELECT id FROM lanagindua WHERE arduraduna=? and egoera='prebentiboa' and DATE_FORMAT(prebdata,'%m-%d')<=DATE_FORMAT(CURDATE(),'%m-%d')" );
 		$erab->bind_param("s", $user );
 		$erab->execute();
 		$erab->bind_result($id);
