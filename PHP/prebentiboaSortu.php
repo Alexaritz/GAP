@@ -14,11 +14,11 @@ $laburpena = $_GET['laburpena'];
 $deskribapena = $_GET['deskribapena'];
 $datak = $_GET['data'];
 $argazkia = $_GET['argazkia'];
-
-if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $user!=""){
+$erantzuna = array(); 
+if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $_SESSION['admin'] == true && $user!=""){
 	
 //if(isset($_POST["submit"]) &&) {
-$erantzuna = array(); 
+
 $erantzuna["log"] = "true";
 for($i=0;$i<count($datak);$i++){
 	$data=$datak[$i];

@@ -101,24 +101,17 @@ $('#erabForm').submit(function() {
 	var pass = $("#password").val()
 	var telf = $("#telf").val()
 	var email = $("#email").val()
-	var mota = $("#erabForm input[type='radio']:checked").val();
+	var mota = $("#erabForm input[type='radio']:checked").val()
 	
 	// php-ari deitu, datuak balidatzeko
-		loginfitx = server+"PHP/login.php?jsoncallback=?"
-		$.getJSON( loginfitx, { name:name, surnames:surnames, usuario:user ,password:pass, telf:telf, email:email})
-		.done(function(loginerantzuna) {
-			if(loginerantzuna.onarpena == "ok"){
+		erabfitx = server+"PHP/erabiltzaileaSortu.php?jsoncallback=?"
+		$.getJSON( erabfitx, { name:name, surnames:surnames, usuario:user ,password:pass, telf:telf, email:email, mota:mota})
+		.done(function(eraberantzuna) {
+			if(eraberantzuna.onarpena == "ok"){
 				/// ondo balidatzen bada, menura joan
-				window.localStorage.setItem('username',user);
-				window.localStorage.setItem('password',pass);
-				if(loginerantzuna.admin == "true"){	
-					window.localStorage.setItem('admin',"true");
-				}else{
-					window.localStorage.setItem('admin',"false");
-				}
 				window.location.replace("menua.html");
 			}else{
-				alert(loginerantzuna.mezua);
+				alert(eraberantzuna.mezua);
 			}
 		})
 		return false;

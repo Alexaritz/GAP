@@ -9,9 +9,9 @@ $erantzuna = array();
 		$erab = $mysqli->prepare( "SELECT * FROM erabiltzailea WHERE username=? and password=?");
 		$erab->bind_param("ss", $user, $pass);
 		$erab->execute();
-		$erab->bind_result($id, $user, $pass, $admin);
+		$erab->bind_result($id, $izena, $abizenak, $user, $pass, $telefonoa, $email, $mota);
 		if($erab-> fetch()){
-			if($admin=="admin"){
+			if($mota=="admin"){
 				$erantzuna["admin"] = "true";
 				$_SESSION['admin'] = true;
 			}
