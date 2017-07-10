@@ -1,0 +1,128 @@
+<!DOCTYPE html> 
+<html>
+<head>
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+img {
+	display: block;
+    margin: auto;
+	max-height: 250px;
+	width: 90%;
+	max-width: 704px;
+}
+</style>
+</head>
+
+<body> 
+<div data-role="page" id="index">
+
+	<div class="ui-grid-b" data-role="header" data-position="fixed" id="head">
+		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
+		<div class="ui-block-b"><center><p>Erabiltzailea sortu</p></center></div>
+		<div class="ui-block-c"><a onclick="logout()" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
+	</div>
+    
+	<div data-role="content" class="app">	
+		<form id="erabForm" >
+			<div class="ui-grid-a">
+				<div class="ui-block-a">
+					<label> Izena: </label>
+					<input type="text" id="name" name="name">
+				</div>
+				<div class="ui-block-b">
+					<label> Abizenak: </label>
+					<input type="text" id="surnames" name="surnames">
+				</div>
+			</div>
+			<div class="ui-grid-a">
+				<div class="ui-block-a">
+					<label> Erabiltzaile izena: </label>
+					<input type="text" id="username" name="username">
+				</div>
+				<div class="ui-block-b">
+					<label> Pasahitza: </label>
+					<input type="password" id="password" name="password">
+				</div>
+			</div>
+			<div class="ui-grid-a">
+				<div class="ui-block-a">
+					<label> Telefonoa: </label>
+					<input type="tel" pattern="[0-9]{9}" id="telf" name="telf" title="Formatu okerra"/>
+				</div>
+				<div class="ui-block-b">
+					<label> Email: </label>
+					<input type="email" id="email" name="email">
+				</div>
+			</div>
+				<div class="ui-grid-b">
+					<label> Erabiltzaile mota: </label>
+						<div class="ui-block-a">
+							<input type="radio" name="mota" id="irak" value="irak" checked="checked"  />
+							<label for="irak">Irakaslea</label>
+						</div>
+						<div class="ui-block-b">
+							<input type="radio" name="mota" id="ard" value="ard"  />
+							<label for="ard">Arduraduna</label>
+						</div>
+						<div class="ui-block-c">
+							<input type="radio" name="mota" id="admin" value="admin"  />
+							<label for="admin">Administratzailea</label>
+						</div>
+				</div>
+				<input type="submit" value="Gorde" id="gorde" data-theme="b">
+      
+    	</form>			   
+	</div>
+	 
+</div>
+<script>
+var server="http://gapalex.esy.es/"//
+
+function logout(){
+	window.localStorage.clear();
+	window.location.replace(server+"PHP/logout.php");
+}
+$('#erabForm').submit(function() { 
+	// erabiltzailearen datuak bildu
+	var name = $("#name").val()
+	var surnames = $("#surnames").val()
+	var user = $("#username").val()
+	var pass = $("#password").val()
+	var telf = $("#telf").val()
+	var email = $("#email").val()
+	var mota = $("#erabForm input[type='radio']:checked").val();
+	
+	// php-ari deitu, datuak balidatzeko
+		loginfitx = server+"PHP/login.php?jsoncallback=?"
+		$.getJSON( loginfitx, { name:name, surnames:surnames, usuario:user ,password:pass, telf:telf, email:email})
+		.done(function(loginerantzuna) {
+			if(loginerantzuna.onarpena == "ok"){
+				/// ondo balidatzen bada, menura joan
+				window.localStorage.setItem('username',user);
+				window.localStorage.setItem('password',pass);
+				if(loginerantzuna.admin == "true"){	
+					window.localStorage.setItem('admin',"true");
+				}else{
+					window.localStorage.setItem('admin',"false");
+				}
+				window.location.replace("menua.html");
+			}else{
+				alert(loginerantzuna.mezua);
+			}
+		})
+		return false;
+});
+</script>
+</body>
+</html>
