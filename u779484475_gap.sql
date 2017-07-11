@@ -4,7 +4,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-06-2017 a las 11:04:14
+-- Tiempo de generación: 11-07-2017 a las 10:35:50
 -- Versión del servidor: 10.1.22-MariaDB
 -- Versión de PHP: 5.2.17
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `arduraduna` (
   UNIQUE KEY `username` (`username`),
   KEY `sailaCons` (`saila`),
   KEY `erabCons` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `arduraduna`
@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `arduraduna` (
 INSERT INTO `arduraduna` (`id`, `username`, `saila`) VALUES
 (1, 'aaramburu', 'Berokuntza'),
 (2, 'a', 'Orokorra '),
-(4, 'alex', 'Orokorra ');
+(4, 'alex', 'Orokorra '),
+(5, 'alexaritz', '');
 
 -- --------------------------------------------------------
 
@@ -80,25 +81,30 @@ INSERT INTO `arduraduna` (`id`, `username`, `saila`) VALUES
 
 CREATE TABLE IF NOT EXISTS `erabiltzailea` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `izena` varchar(50) NOT NULL,
+  `abizenak` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
+  `telefonoa` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `mota` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_2` (`username`),
   KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `erabiltzailea`
 --
 
-INSERT INTO `erabiltzailea` (`id`, `username`, `password`, `mota`) VALUES
-(1, 'aaramburu', 'aaramburu', ''),
-(2, 'a', 'a', ''),
-(3, 'informatika', 'informatika', ''),
-(4, 'admin', 'admin', 'admin'),
-(6, 'galdaragintza', 'galdaragintza', ''),
-(7, 'alex', 'alex', '');
+INSERT INTO `erabiltzailea` (`id`, `izena`, `abizenak`, `username`, `password`, `telefonoa`, `email`, `mota`) VALUES
+(1, '', '', 'aaramburu', 'aaramburu', '', '', ''),
+(2, '', '', 'a', 'a', '', '', ''),
+(3, '', '', 'informatika', 'informatika', '', '', ''),
+(4, '', '', 'admin', 'admin', '', '', 'admin'),
+(6, '', '', 'galdaragintza', 'galdaragintza', '', '', ''),
+(7, '', '', 'alex', 'alex', '', '', ''),
+(8, 'Alexander', 'Haranburu Peñagarikano', 'alexaritz', 'a', '666666666', 'aalexaritz@gmail.com', 'ard');
 
 -- --------------------------------------------------------
 
@@ -191,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `lanagindua` (
   `egoera` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `egoCos` (`egoera`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=109 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=122 ;
 
 --
 -- Volcado de datos para la tabla `lanagindua`
@@ -303,7 +309,20 @@ INSERT INTO `lanagindua` (`id`, `username`, `saila`, `arduraduna`, `bidaltzailea
 (105, 'alex', 'Mant. Orokorra', 'aaramburu', 'alex', 'E', 0, 'pasilloa', 'Normala', 'Ordenagailua ez dabil.', 'Saioa hastean berpiztu egiten da, batzuetan soilik.', '2017-06-28 09:33:57', '0000-00-00', '60argazkia.jpeg', 'berria'),
 (106, 'informatika', 'Mant. Informatikoa', 'alex', 'Iñigo', 'E', 0, '10', 'Baxua', 'Ordenagailua ez dabil.', 'Itzali egiten da.', '2017-06-28 10:07:42', '0000-00-00', '61argazkia.jpeg', 'berria'),
 (107, 'a', 'Galdaragintzako Mant.', 'aaramburu', 'a', 'A', -1, '10', 'Normala', 'sagdg', 'sdgagsd', '2017-06-28 10:44:00', '0000-00-00', '', 'berria'),
-(108, 'admin', '1', 'a', 'admin', 'A', 0, '1', 'Normala', 'PREB PROBA', 'fadbfda', '2017-06-28 10:57:17', '2017-06-28', '', 'prebentiboa');
+(108, 'admin', 'Prebentiboa', 'a', 'admin', 'A', 0, '1', 'Normala', 'PREB PROBA', 'fadbfda', '2017-06-28 10:57:17', '2017-06-28', '', 'esleitua'),
+(109, 'admin', 'Prebentiboa', 'alex', 'admin', 'E', 0, '10', 'Normala', 'adgsgsadg', 'sdagsag', '2017-06-29 10:22:10', '2017-06-29', '', 'esleitua'),
+(110, 'admin', 'Prebentiboa', 'alex', 'admin', 'E', 0, '10', 'Premiazkoa', 'badfbaxcbd', 'abxcbcdb', '2017-06-29 10:24:25', '2017-06-29', '', 'esleitua'),
+(111, 'admin', 'Prebentiboa', 'a', 'admin', 'A', 0, '10', 'Normala', 'PROBA BIHARKO', 'Proba hurrengo eguneako jarrita, notifikaziok ondo itteuen ikusteko.', '2017-06-29 10:37:46', '2017-06-30', '', 'esleitua'),
+(118, 'a', 'Mant. Elektrikoa', 'alex', 'a', 'E', 1, '9', 'Normala', 'Internet Explorer Proba', 'A', '2017-07-03 07:31:56', '0000-00-00', '62argazkia.jpeg', 'esleitua'),
+(112, 'admin', 'Mant. Orokorra', 'a', 'admin', 'A', 0, '10', 'Normala', 'Preb egun berean', 'PROBA.', '2017-06-30 08:32:41', '2017-06-30', '', 'berria'),
+(113, 'admin', 'Prebentiboa', 'alex', 'admin', 'A', 0, '10', 'Normala', 'PREBENTIBO PROBA', 'PROBA.', '2017-06-30 09:28:20', '2017-06-30', '', 'esleitua'),
+(114, 'admin', 'Prebentiboa', 'a', 'admin', 'E', -1, '1', 'Normala', 'fsdaffdsa', 'fafsdsa', '2017-06-30 11:21:53', '2017-06-30', '', 'esleitua'),
+(115, 'admin', 'Prebentiboa', 'a', 'admin', 'E', -1, '1', 'Normala', 'fsdaffdsa', 'fafsdsa', '2017-06-30 11:21:53', '2018-06-30', '', 'esleitua'),
+(116, 'admin', 'Prebentiboa', 'alex', 'admin', 'A', -1, '0', 'Normala', 'Proba hainbat data', 'LALALA', '2017-06-30 11:23:39', '2017-06-30', '', 'esleitua'),
+(117, 'admin', 'Prebentiboa', 'alex', 'admin', 'A', -1, '0', 'Normala', 'Proba hainbat data', 'LALALA', '2017-06-30 11:23:39', '2017-07-01', '', 'esleitua'),
+(119, 'admin', 'Prebentiboa', 'a', 'admin', 'A', 1, '10', 'Normala', 'PROBA INTERNET EXPLORER', 'A', '2017-07-03 07:42:55', '2017-07-03', '', 'esleitua'),
+(120, 'admin', 'Prebentiboa', 'a', 'admin', 'A', 1, '10', 'Normala', 'PROBA INTERNET EXPLORER', 'A', '2017-07-03 07:42:55', '2017-07-04', '', 'prebentiboa'),
+(121, 'a', 'Galdaragintzako Mant.', 'a', 'a', 'E', 0, '1', 'Normala', 'Ez dabil.', 'Arazoak ditu.', '2017-07-06 19:46:21', '0000-00-00', '', 'itxia');
 
 -- --------------------------------------------------------
 
@@ -320,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `lanazalpena` (
   `itxiData` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_azalpena` (`lanid`,`arduraduna`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=178 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=191 ;
 
 --
 -- Volcado de datos para la tabla `lanazalpena`
@@ -361,7 +380,20 @@ INSERT INTO `lanazalpena` (`id`, `lanid`, `arduraduna`, `azalpena`, `materiala`,
 (174, 95, 'aaramburu', 'Lala', 'Lala', '2017-06-07'),
 (175, 101, 'a', '', '', '2017-06-13'),
 (176, 103, 'a', 'Objetiboa aldatu zaio, izurratuta zegoelako.', 'Fx Objetiboa.', '2017-06-27'),
-(177, 105, 'alex', 'Begiratu da, hasi gabe.', '', '2017-06-28');
+(177, 105, 'alex', 'Begiratu da, hasi gabe.', '', '2017-06-28'),
+(178, 110, 'alex', '', '', '2017-06-29'),
+(179, 111, 'a', '', '', '2017-07-03'),
+(180, 108, 'a', '', '', '2017-07-03'),
+(181, 113, 'alex', '', '', '2017-07-03'),
+(182, 115, 'a', '', '', '2017-07-03'),
+(183, 109, 'alex', '', '', '2017-07-03'),
+(184, 117, 'alex', '', '', '2017-07-03'),
+(185, 116, 'alex', '', '', '2017-07-03'),
+(186, 118, 'alex', 'Hasi naiz.', 'Ezer ez.', '2017-07-03'),
+(187, 114, 'a', '', '', '2017-07-03'),
+(188, 119, 'a', 'HASITA;', '', '2017-07-03'),
+(189, 120, 'a', '', '', '2017-07-06'),
+(190, 121, 'a', 'Konturatu gara tuerka bat falta zitzaiola. Torloiua ezarri diogu.', 'Torloiua.', '2017-07-06');
 
 -- --------------------------------------------------------
 
@@ -402,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `langileorduak` (
   `lanEguna` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=172 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=177 ;
 
 --
 -- Volcado de datos para la tabla `langileorduak`
@@ -474,7 +506,11 @@ INSERT INTO `langileorduak` (`id`, `lanID`, `langilea`, `denborah`, `denboramin`
 (168, 103, 'a', 2, 30, '2017-06-21'),
 (169, 103, 'aaramburu', 0, 15, '2017-06-22'),
 (170, 103, 'a', 1, 30, '2017-06-21'),
-(171, 105, 'alex', 0, 15, '2017-06-28');
+(171, 105, 'alex', 0, 15, '2017-06-28'),
+(172, 118, 'alex', 0, 30, '2017-07-03'),
+(173, 119, 'alex', 2, 30, '2017-07-03'),
+(174, 119, 'a', 1, 0, '2017-07-03'),
+(176, 121, 'alex', 0, 15, '2017-07-06');
 
 -- --------------------------------------------------------
 
