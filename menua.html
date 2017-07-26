@@ -38,8 +38,8 @@ if(user==null || user==undefined){
 	</div>
 	
 	<div id="content" data-role="content">	
-		<input type="button" value="Abisua Bidali" id="abisuaBidali" onclick="location.href = 'abisuaBidali.html';" data-theme="b"/>
-		<input type="button" value="Nire Abisuak" id="nireAbisuak" onclick="location.href = 'nireAbisuak.html';" data-theme="b" />
+		<input type="button" value="Abisua bidali" id="abisuaBidali" onclick="location.href = 'abisuaBidali.html';" data-theme="b"/>
+		<input type="button" value="Nire abisuak" id="nireAbisuak" onclick="location.href = 'nireAbisuak.html';" data-theme="b" />
 	</div>
 	 
 </div>
@@ -49,7 +49,7 @@ $(document).ready(function(){
 admin="false";
 admin = window.localStorage.getItem('admin');
 	if(admin=="true"){
-			var dat=$('<input type="button" value="Datuak ikusi" id="datuakIkusi" onclick="location.href = \'datuak.html\';" data-theme="b"/>');
+			var dat=$('<input type="button" value="Datuak exportatu" id="datuakIkusi" onclick="location.href = \'datuak.html\';" data-theme="b"/>');
 			var preb=$('<input type="button" value="Lan prebentiboak sortu" id="prebetiboakSortu" onclick="location.href = \'prebentiboaSortu.html\';" data-theme="b"/>');
 			var erab=$('<input type="button" value="Erabiltzailea sortu" id="erabiltzaileaSortu" onclick="location.href = \'erabiltzaileaSortu.html\';" data-theme="b"/>');
 			$('#content').append(dat);
