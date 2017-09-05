@@ -1,0 +1,83 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script>
+user = window.localStorage.getItem('username');
+if(user==null || user==undefined){
+	alert("Saioa amaitu da. Saiatu berriro.")
+	window.location.replace("index.html");
+}
+</script>
+</head>
+<body> 
+
+<div data-role="page" id="datuak">
+	<div class="ui-grid-b" data-role="header" >
+		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
+		<div class="ui-block-b"><center><p>Erabiltzailea hautatu</p></center></div>
+		<div class="ui-block-c"><a onclick="location.href = 'amaitu.html';" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
+	</div>
+	
+	
+	<div data-role="content" class="app">
+		<form class="ui-filterable">
+			<input id="filterBasic-input" data-type="search">
+		</form>
+		<ul id="erab" data-role="listview" data-filter="true" data-input="#filterBasic-input">
+		</ul>
+	</div>
+</div>
+<script>
+
+var server="http://gapalex.esy.es/"//
+
+$(document).ready(function(){
+var user = window.localStorage.getItem('username');
+//ERABILTZAILEAK LORTU
+		ardfitx = server+"PHP/erabiltzaileaLortu.php?jsoncallback=?"
+		$.getJSON( ardfitx, { usuario:user})
+		.done(function(eraberantzuna) {
+			console.log("ONDO")
+			var mota="";
+			$(eraberantzuna).each(function (index, o) {
+			var mota="";
+				if(o.mota=="irak")
+					mota="Irakaslea"
+				else if(o.mota=="ard")
+					mota="Arduraduna"
+				else
+					mota="Aministratzailea"
+				var lo=$("<li><a id='"+o.id+"' href='#' onClick='erabiltzaileaBistaratu(this.id); return false;'>"+o.username+" - "+mota+"</a><li/>")
+				$('#erab').append(lo);
+			});
+			$('#erab').listview('refresh');
+		})
+		.fail(function(eraberantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+		return false;		
+});
+
+function erabiltzaileaBistaratu(id){
+	window.localStorage.setItem('userID',id);
+	window.location.replace("erabEditatu.html");
+}
+function logout(){
+	window.localStorage.clear();
+	window.location.replace(server+"PHP/logout.php");
+}
+
+</script>
+</body>
+</html>

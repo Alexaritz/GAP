@@ -52,10 +52,12 @@ admin = window.localStorage.getItem('admin');
 			var dat=$('<input type="button" value="Datuak exportatu" id="datuakIkusi" onclick="location.href = \'datuak.html\';" data-theme="b"/>');
 			var preb=$('<input type="button" value="Lan prebentiboak sortu" id="prebetiboakSortu" onclick="location.href = \'prebentiboaSortu.html\';" data-theme="b"/>');
 			var erab=$('<input type="button" value="Erabiltzailea sortu" id="erabiltzaileaSortu" onclick="location.href = \'erabiltzaileaSortu.html\';" data-theme="b"/>');
+			var erabedit=$('<input type="button" value="Erabiltzailea editatu" id="erabiltzaileaEditatu" onclick="location.href = \'erabiltzaileaEditatu.html\';" data-theme="b"/>');
 			$('#content').append(dat);
 			$('#content').append(preb);
 			$('#content').append(erab);
-			$('#content').trigger('create')
+			$('#content').append(erabedit);
+			$('#content').trigger('create');
 	}
 	/*Prebentiboak begiratu*/
 		prebfitx = server+"PHP/esleitutakoPrebentiboak.php?jsoncallback=?"

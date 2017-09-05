@@ -53,20 +53,20 @@ if(user==null || user==undefined){
 	</div>
 	
 	<div data-role="content">
-		<div class="ui-grid-a">
+		<!--<div class="ui-grid-a">
 			<div class="ui-block-a">
 				<select id="taulam" name="taulam">
 					<option value="">Taula</option>
-					<!--<option value="1">Lan Aginduak</option>
+					<option value="1">Lan Aginduak</option>
 					<option value="2">Lan Azalpenak</option>
-					<option value="3">Langile Orduak</option>-->
+					<option value="3">Langile Orduak</option>
 					<option value="4">Guztiak</option>
 				</select>
 			</div>
 			<div class="ui-block-b">
 				<input type="button" value="Erakutsi" id="erakutsi" onclick="taulaSortu();" data-theme="b"/>
 			</div>
-		</div>
+		</div>-->
 		<div class="ui-grid-a">
 			<div class="ui-block-a">
 				<input type="text" placeholder="Data min" style="display: none" onfocus="calClick(this)" name="datamin" id="datamin" data-role="datebox" data-options='{"mode":"calbox" , "useButton": false}'>
@@ -104,133 +104,125 @@ function calClick(a) {
    $(id).datebox('open');
 }
 function taulaSortu(){
-	var mota=$("#taulam").val();
-	if(mota=="4"){
+	//var mota=$("#taulam").val();
+	//if(mota=="4"){
 	$("#datamin").attr("style","display:inline");
 	$("#datamax").attr("style","display:inline");
 	$("#resmin").attr("style","display:inline");
 	$("#resmax").attr("style","display:inline");
 	var thead=$('<thead>');
 		var tbody=$('<tbody>');
-		thead.append("<tr><th >Lan id</th><th>Username</th><th>Bidaltzailea</th><th>Eraikina</th><th>Pisua</th><th>Gela</th><th>Lehentasuna</th><th>Laburpena</th><th>Deskribapena</th><th>Data</th><th>Egoera</th><th>Arduraduna</th> <th>Azalpena</th> <th>Materiala</th>  <th>Itxi Data</th><th>Saila</th><th>Langilea</th><th>Denbora (h)</th><th>Denbora (min)</th><th>Lan Eguna</th></tr>");
+		thead.append("<tr><th >Lan id</th><th>Username</th><th>Bidaltzailea</th><th>Eraikina</th><th>Pisua</th><th>Gela</th><th>Lehentasuna</th><th>Laburpena</th><th>Deskribapena</th><th>Data</th><th>Egoera azalpenak</th><th>Egoera</th><th>Arduraduna</th> <th>Azalpena</th> <th>Materiala</th>  <th>Itxi Data</th><th>Saila</th><th>Langilea</th><th>Denbora (h)</th><th>Denbora (min)</th><th>Lan Eguna</th></tr>");
 		$('#taula').append(thead);
 		$('#taula').append(tbody);
 		//
-		$('#taula').append("<tfoot><tr><th >Lan id</th><th>Username</th><th>Bidaltzailea</th><th>Eraikina</th><th>Pisua</th><th>Gela</th><th>Lehentasuna</th><th>Laburpena</th><th>Deskribapena</th><th>Data</th><th>Egoera</th><th>Arduraduna</th> <th>Azalpena</th> <th>Materiala</th>  <th>Itxi Data</th><th>Saila</th><th>Langilea</th><th>Denbora (h)</th><th>Denbora (min)</th><th>Lan Eguna</th></tr></tfoot>");
-				 t=$('#taula').DataTable({
-						ajax:  {
-						  url: server+"PHP/lanAzalpenak.php?jsoncallback=?",
-						  dataSrc: ''
-					   },
-					   dom: 'Bfrtip',
-						buttons: [
-							'colvis',
-							'excelHtml5',
-							'csvHtml5',
-							'pdfHtml5'
-						],
-					   columns: [
-					  { data: "lanid"}, 
-					  { data: "username" }, 
-					  { data: "bidaltzailea" }, 
-					  { data: "eraikina", "visible": false}, 
-					  { data: "pisua", "visible": false}, 
-					  { data: "gela", "visible": false}, 
-					  { data: "lehentasuna", "visible": false}, 
-					  { data: "laburpena", "visible": false}, 
-					  { data: "deskribapena", "visible": false}, 
-					  { data: "data", "visible": false}, 
-					  { data: "egoera", "visible": false}, 
-					  { data: "arduraduna" }, 
-					  { data: "azalpena" },
-					  { data: "materiala" },
-					  { data: "itxiData"},
-					  { data: "saila" },
-					  { data: "langilea" },
-					  { data: "denborah", "visible": false},
-					  { data: "denboramin", "visible": false},
-					  { data: "lanEguna" }
-						],
-						rowGroup: {
-							dataSrc: 'lanid'
-						}
-					});		
-					
-					$('#taula tfoot th').each( function () {
-						var title = $(this).text();
-						$(this).html( '<input type="text" placeholder="Filtratu '+title+'" />' );
-					} );
-				 
-					// DataTable
-					var table = $('#taula');
-				 
-					// Apply the search
-					t.columns().every( function () {
-						var that = this;
-				 
-						$( 'input', this.footer() ).on( 'keyup change', function () {
-							if ( that.search() !== this.value ) {
-								that
-									.search( this.value )
-									.draw();
-							}
-						} );
-					} );	
+		$('#taula').append("<tfoot><tr><th >Lan id</th><th>Username</th><th>Bidaltzailea</th><th>Eraikina</th><th>Pisua</th><th>Gela</th><th>Lehentasuna</th><th>Laburpena</th><th>Deskribapena</th><th>Data</th><th>Egoera azalpenak</th><th>Egoera</th><th>Arduraduna</th> <th>Azalpena</th> <th>Materiala</th>  <th>Itxi Data</th><th>Saila</th><th>Langilea</th><th>Denbora (h)</th><th>Denbora (min)</th><th>Lan Eguna</th></tr></tfoot>");
+		 t=$('#taula').DataTable({
+			ajax:  {
+			  url: server+"PHP/lanAzalpenak.php?jsoncallback=?",
+			  dataSrc: ''
+		   },
+		   dom: 'Bfrtip',
+			buttons: [
+				'colvis',
+				'excelHtml5',
+				'csvHtml5'
+			],
+			responsive: true,
+		   columns: [
+		  { data: "lanid"}, 
+		  { data: "username" }, 
+		  { data: "bidaltzailea" }, 
+		  { data: "eraikina", "visible": false}, 
+		  { data: "pisua", "visible": false}, 
+		  { data: "gela", "visible": false}, 
+		  { data: "lehentasuna", "visible": false}, 
+		  { data: "laburpena", "visible": false}, 
+		  { data: "deskribapena", "visible": false}, 
+		  { data: "data", "visible": false}, 
+		  { data: "egoAzalpena", "visible": false}, 
+		  { data: "egoera", "visible": false}, 
+		  { data: "arduraduna" }, 
+		  { data: "azalpena" },
+		  { data: "materiala" },
+		  { data: "itxiData"},
+		  { data: "saila" },
+		  { data: "langilea" },
+		  { data: "denborah", "visible": false},
+		  { data: "denboramin", "visible": false},
+		  { data: "lanEguna" }
+			],
+			rowGroup: {
+				dataSrc: 'lanid'
+			}
+		});		
+		
+		$('#taula tfoot th').each( function () {
+			var title = $(this).text();
+			$(this).html( '<input type="text" placeholder="Filtratu '+title+'" />' );
+		} );
+	 
+		// DataTable
+		var table = $('#taula');
+	 
+		// Apply the search
+		t.columns().every( function () {
+			var that = this;
+	 
+			$( 'input', this.footer() ).on( 'keyup change', function () {
+				if ( that.search() !== this.value ) {
+					that
+						.search( this.value )
+						.draw();
+				}
+			} );
+		} );	
 
 
-					
-					  $.fn.dataTable.ext.search.push(
-						function (settings, data, dataIndex) {
-							//var min = $('#min').datepicker("getDate");
-							
-							if($("#datamin").val()!="")
-							 var min = new Date( $("#datamin").val());
-							 else min=null;
-							 if($("#datamax").val()!="")
-							  var max = new Date( $("#datamax").val());
-							   else max=null;
-							//var max = $('#max').datepicker("getDate");
-							var startDate = new Date(data[19]);
-							//console.log(min)
-							if (min == null && max == null) { return true; }
-							if (min == null && startDate <= max) { return true;}
-							if(max == null && startDate >= min) {return true;}
-							if (startDate <= max && startDate >= min) { return true; }
-							return false;
-						}
-						);
+		
+		  $.fn.dataTable.ext.search.push(
+			function (settings, data, dataIndex) {
+				//var min = $('#min').datepicker("getDate");
+				
+				if($("#datamin").val()!="")
+				 var min = new Date( $("#datamin").val());
+				 else min=null;
+				 if($("#datamax").val()!="")
+				  var max = new Date( $("#datamax").val());
+				   else max=null;
+				//var max = $('#max').datepicker("getDate");
+				var startDate = new Date(data[19]);
+				//console.log(min)
+				if (min == null && max == null) { return true; }
+				if (min == null && startDate <= max) { return true;}
+				if(max == null && startDate >= min) {return true;}
+				if (startDate <= max && startDate >= min) { return true; }
+				return false;
+			}
+			);
 
-							$('#datamin').datebox({
-								onSelect: function(date){
-									 t.draw();
-								}
-							});
-							$('#datamax').datebox({
-								onSelect: function(date){
-									 t.draw();
-								}
-							});
-							
-						/*	$("#min").datepicker({ onSelect: function () { t.draw(); }, changeMonth: true, changeYear: true });
-							$("#max").datepicker({ onSelect: function () { t.draw(); }, changeMonth: true, changeYear: true });*/
+			$('#datamin').datebox({
+				onSelect: function(date){
+					 t.draw();
+				}
+			});
+			$('#datamax').datebox({
+				onSelect: function(date){
+					 t.draw();
+				}
+			});
 
-							// Event listener to the two range filtering inputs to redraw on input
-							$('#datamin, #datamax').change(function () {
-								t.draw();
-							});
-					
-					
-					
-	}
-	
-	
-	
-	
+			// Event listener to the two range filtering inputs to redraw on input
+			$('#datamin, #datamax').change(function () {
+				t.draw();
+			});				
+	//}
 }
 
-var server="http://gapalex.esy.es/"
+var server="http://gapalex.esy.es/";
 $(document).ready(function(){
 	user = window.localStorage.getItem('username');
+	taulaSortu();
 	$("body").fadeIn(500);	
 });
 

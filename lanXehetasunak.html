@@ -138,6 +138,8 @@ tr:nth-child(even) {
 					</div>
 					<div class="ui-bar ui-bar-a">Argazkia</div>
 					<div class="ui-body"><img id="image" alt="Ez dauka argazkirik." width="100%"></img></div>
+					<div class="ui-bar ui-bar-a">Azalpena</div>
+					<div class="ui-body" id="erabAzalpena"></div>
 		</div>
 		<div id="fragment-2">
 			<form id="abisuaOsatu"  action="#">
@@ -155,6 +157,7 @@ tr:nth-child(even) {
 					<input style="display:none" name="lanid" id="lanid" type="text" />
 					<textarea name="azalpena"  id="azalpena"  placeholder="Azalpena..."></textarea>
 					<textarea name="materiala"  id="materiala"  placeholder="Erabilitako materiala..."></textarea>
+					<textarea name="egoAzalpena"  id="egoAzalpena"  placeholder="Bidaltzailearentzako egoera azalpena..."></textarea>
 				</fieldset>
 				<div id="lanberriak"></div>
 				<button id="berria" type="button">Langile berria</button>
@@ -176,13 +179,13 @@ $('#berria').click(function () {
 	var gridc=$("<div class='ui-grid-a'></div>")
 	var block1=$("<div class='ui-block-a'></div>")
 	var block2=$("<div class='ui-block-b'></div>")
-	var block1b=$("<div class='ui-block-a'></div>")
-	var block2b=$("<div class='ui-block-b'></div>")
+	var block1b=$("<div class='ui-block-a'>Langilea:</div>")
+	var block2b=$("<div class='ui-block-b'>Lan-eguna:</div>")
 	var block1c=$("<div class='ui-block-a'></div>")
 	var block2c=$("<div class='ui-block-b'></div>")
 	
 	var ezab=$('<input id="ezab'+lanKop+'" onclick="ezabatuLangileOrduak('+lanKop+','+false+');return false;" type="button" style="float:left;" data-mini="true" data-inline="true" data-icon="delete" value="Ezabatu"/>');
-	var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+lanKop+"' >lan zenb:"+lanKop+"</div>")
+	var lanorduID=$("<div name=lanOrdu[] style='float:right;' id='lanOrdu"+lanKop+"' ></div>")
 	var dividezab=$("<div id='div2"+lanKop+"'></div>")
 	var inid=$("<input type='hidden' value='' name='id[]'/>")
 	dividezab.append(ezab)
@@ -254,7 +257,6 @@ function lanPopulatu(zenb, user) {
             console.log("arduradunaLortu Request Failed: " + err);
 		})
 }
-//$(document).on('pagebeforeshow',function(){console.log('pagebeforeshow');});
 $(document).ready(function(){
 //$(document).on('pagebeforeshow', '#nireAbisuak', function(){       
 $.mobile.loading('show');
@@ -274,6 +276,7 @@ $('#lanid').val(id);
 				$('#saila').text(l.saila);
 				saila=l.saila;
 				lanegoera=l.egoera;
+				egoAzalpena=l.azalpena;
 				$('#lehentasuna').text(l.lehentasuna);
 				if(ard!=user) $('#bidaltzailea').text(l.arduraduna);
 				else 
@@ -285,7 +288,8 @@ $('#lanid').val(id);
 				$('#data').text(l.data);
 				$('#laburpena').text(l.laburpena);
 				$('#deskribapena').text(l.deskribapena);
-				if(lanegoera=="prebentiboa"){
+				$('#erabAzalpena').text(l.azalpena);
+				if(saila=="Prebentiboa"){
 					$('#prebdata').text(l.prebdata);
 					$('#prebentiboa').attr("style","display:inline");
 				}
@@ -313,6 +317,7 @@ $('#lanid').val(id);
 						$(lanxeheterantzuna).each(function (index, o) {
 							$("#azalpena").val(o.azalpena);
 							$("#materiala").val(o.materiala);
+							$("#egoAzalpena").val(egoAzalpena);
 						});
 					})
 					.fail(function(lanxeheterantzuna,textStatus, error) {
@@ -506,6 +511,7 @@ var egoera=$("#egoera").val()
 		var lanid = window.localStorage.getItem('lanID');
 		var azalpena=$("#azalpena").val()
 		var materiala=$("#materiala").val()
+		var egoAzalpena=$("#egoAzalpena").val()
 		var egoera=$("#egoera").val()
 		xehetasunFitx1 = server+"PHP/lanaOsatu.php?jsoncallback=?"
 			$.getJSON( xehetasunFitx1, { usuario:user, lanid:lanid, azalpena:azalpena, materiala:materiala})
@@ -516,7 +522,7 @@ var egoera=$("#egoera").val()
 			})
 			.always(function() {
 				egoeraFitx = server+"PHP/egoeraEguneratu.php?jsoncallback=?"
-				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoera:egoera})
+				$.getJSON( egoeraFitx, { usuario:user, lanid:lanid, egoAzalpena:egoAzalpena, egoera:egoera})
 				.done(function(egoerantzuna) {
 				})
 				.fail(function(egoerantzuna,textStatus, error) {

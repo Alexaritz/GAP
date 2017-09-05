@@ -10,9 +10,9 @@ $erantzuna = array();
 		$erab = $mysqli->prepare( "SELECT * FROM lanagindua where  id=?" );
 		$erab->bind_param("i", $id );
 		$erab->execute();
-		$erab->bind_result($id, $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $data, $prebdata, $argazkia, $egoera);
+		$erab->bind_result($id, $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $data, $prebdata, $argazkia, $azalpena, $egoera);
 		while ($erab->fetch()) {
-			$erantzuna[] = array('id'=> $id, 'username'=> $user, 'saila'=> $saila,'arduraduna'=> $arduraduna, 'bidaltzailea'=> $bidaltzailea, 'eraikina'=> $eraikina, 'pisua'=> $pisua, 'gela'=> $gela, 'lehentasuna'=> $lehentasuna, 'laburpena'=> $laburpena, 'deskribapena'=>$deskribapena, 'data'=> $data, 'prebdata'=> $prebdata, 'argazkia'=>$argazkia, 'egoera'=> $egoera);
+			$erantzuna[] = array('id'=> $id, 'username'=> $user, 'saila'=> $saila,'arduraduna'=> $arduraduna, 'bidaltzailea'=> $bidaltzailea, 'eraikina'=> $eraikina, 'pisua'=> $pisua, 'gela'=> $gela, 'lehentasuna'=> $lehentasuna, 'laburpena'=> $laburpena, 'deskribapena'=>$deskribapena, 'data'=> $data, 'prebdata'=> $prebdata, 'argazkia'=>$argazkia, 'azalpena'=> $azalpena, 'egoera'=> $egoera);
 		}
 
 /*

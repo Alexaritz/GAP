@@ -93,8 +93,10 @@ function bidalitakoAbisuak(){
 			$(lanErantzuna2).each(function (index, data) {
 				$.each(data, function (index, m) {
 					if(typeof m === 'object'){
-						if (m.saila=="Prebentiboa"){
+						if (m.saila=="Prebentiboa" && m.egoera!="itxia"){
 							var li2= $("<li data-role='list-divider' style='background-color:DarkCyan;'/>");
+						}else if (m.saila=="Prebentiboa" && m.egoera=="itxia"){
+								var li2= $("<li data-role='list-divider' style='background-color:#00008B;'/>");
 						}else{
 							if(m.egoera=="berria"){
 								var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
@@ -147,9 +149,11 @@ function nireAbisuak(){
 		$.getJSON(lanFitx, { usuario:user, kop:kop, kop2:kop2,admin:admin})
 		.done(function(lanErantzuna) {
 			$(lanErantzuna).each(function (index, m) {
-				if (m.saila=="Prebentiboa"){
+				if (m.saila=="Prebentiboa" && m.egoera!="itxia"){
 					var li2= $("<li data-role='list-divider' style='background-color:DarkCyan;'/>");
-				}else{
+				}else if (m.saila=="Prebentiboa" && m.egoera=="itxia"){
+								var li2= $("<li data-role='list-divider' style='background-color: #00008B;'/>");
+					}else{
 					if(m.egoera=="berria"){
 						var li2= $("<li data-role='list-divider' style='background-color:DarkRed;'/>");
 					}else if (m.egoera=="esleitua"){
@@ -192,7 +196,7 @@ $(document).ajaxStop(function () {
 });
 $(document).on('pagebeforeshow', '#nireAbisuak', function(){  
 //$(document).ready(function(){
-kopB=5;
+kopB=10;
 kop2B="";
 kop=10;
 kop2="";

@@ -21,15 +21,18 @@ img {
 	width: 90%;
 	max-width: 704px;
 }
+#erabForm{
+	display: none;
+}
 </style>
 </head>
 
 <body> 
-<div data-role="page" id="index">
+<div data-role="page" id="erabEdit">
 
 	<div class="ui-grid-b" data-role="header" data-position="fixed" id="head">
-		<div class="ui-block-a"><a onclick="location.href = 'menua.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
-		<div class="ui-block-b"><center><p>Erabiltzailea sortu</p></center></div>
+		<div class="ui-block-a"><a onclick="location.href = 'erabiltzaileaEditatu.html';" class="ui-btn ui-icon-arrow-l ui-btn-icon-left">Atzera</a></div>
+		<div class="ui-block-b"><center><p>Erabiltzailea editatu</p></center></div>
 		<div class="ui-block-c"><a onclick="logout()" style="position: absolute;right: 0;" class="ui-btn ui-icon-power ui-btn-icon-left">Saioa itxi</a></div> 
 	</div>
     
@@ -52,13 +55,13 @@ img {
 				</div>
 				<div class="ui-block-b">
 					<label> Pasahitza: </label>
-					<input type="password" id="password" name="password" required>
+					<input type="password" id="password" name="password">
 				</div>
 			</div>
 			<div class="ui-grid-a">
 				<div class="ui-block-a">
 					<label> Telefonoa: </label>
-					<input type="tel" pattern="[0-9]{9}" id="telf" name="telf" title="Formatu okerra"/>
+					<input type="tel" pattern="[0-9]{9}" id="telf" name="telf" title="Formatu okerra" required/>
 				</div>
 				<div class="ui-block-b">
 					<label> Posta elektronikoa: </label>
@@ -80,6 +83,9 @@ img {
 							<label for="admin">Administratzailea</label>
 						</div>
 				</div>
+				<select id="saila" name="saila" required>
+							<option value="">Saila</option>
+				</select>
 				<input type="submit" value="Gorde" id="gorde" data-theme="b">
       
     	</form>			   
@@ -93,6 +99,62 @@ function logout(){
 	window.localStorage.clear();
 	window.location.replace(server+"PHP/logout.php");
 }
+$(document).ajaxStop(function () {
+    $("#erabForm").fadeIn(500)
+	$.mobile.loading('hide');
+});
+$(document).ready(function(){
+var user = window.localStorage.getItem('username');
+var userID = window.localStorage.getItem('userID');
+//ERABILTZAILEAK LORTU
+		ardfitx = server+"PHP/erabDatuak.php?jsoncallback=?"
+		$.getJSON( ardfitx, { usuario:user, userID:userID})
+		.done(function(eraberantzuna) {
+			console.log("ONDO")
+			$(eraberantzuna).each(function (index, o) {
+				$("#name").val(o.izena);
+				$("#surnames").val(o.abizenak);
+				$("#username").val(o.username)
+				$("#telf").val(o.telf);
+				$("#email").val(o.email);
+				if(o.mota=="ard"){
+						/*SAILA BETE*/
+						kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
+						$.getJSON( kodefitx, { usuario:user})
+						.done(function(koderantzuna) {
+							console.log("ONDO")
+							$(koderantzuna).each(function (index, u) {
+								if(o.saila==u.izena){
+									var $option = $("<option selected='selected'/>").attr("value", u.izena).text(u.izena);
+								}else
+									var $option = $("<option/>").attr("value", u.izena).text(u.izena);
+								$('#saila').append($option);
+								$('#saila').selectmenu("refresh");
+							});
+						})
+						.fail(function(koderantzuna,textStatus, error) {
+							var err = textStatus + ', ' + error;
+							console.log("Request Failed: " + err);
+						})	
+					$("#ard").prop("checked", true).checkboxradio("refresh");
+				}else if(o.mota=="admin")
+					$("#admin").prop("checked", true)
+				else
+					console.log(o.mota+""+o.saila);
+				$("#irak").checkboxradio("refresh");
+				$("#ard").checkboxradio("refresh");
+				$("#admin").checkboxradio("refresh");
+				
+				
+			});
+			//$('#erab').listview('refresh');
+		})
+		.fail(function(eraberantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
+		return false;		
+});
 $('#erabForm').submit(function() { 
 	// erabiltzailearen datuak bildu
 	var name = $("#name").val()
@@ -102,11 +164,9 @@ $('#erabForm').submit(function() {
 	var telf = $("#telf").val()
 	var email = $("#email").val()
 	var mota = $("#erabForm input[type='radio']:checked").val()
-	if(mota=="ard")
-		var saila = $("#saila").val()
-	
+	var saila = $("#saila").val()
 	// php-ari deitu, datuak balidatzeko
-		erabfitx = server+"PHP/erabiltzaileaSortu.php?jsoncallback=?"
+		erabfitx = server+"PHP/erabiltzaileaEditatu.php?jsoncallback=?"
 		$.getJSON( erabfitx, { name:name, surnames:surnames, usuario:user ,password:pass, telf:telf, email:email, mota:mota, saila:saila})
 		.done(function(eraberantzuna) {
 			if(eraberantzuna.onarpena == "ok"){
