@@ -14,16 +14,32 @@ $salt = "pepper";//random_bytes(20);
 session_start();
 $erantzuna = array(); 
 if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $_SESSION['admin'] == true && $user!=""){
-		$pass = crypt($pass, $salt);
+		
 		if($pass==""){
-			$erab = $mysqli->prepare( "UPDATE erabiltzailea SET izena=?, abizenak=?, username=?, telefonoa=?, email=?, mota=?");
-			$erab->bind_param("ssssss", $name, $surnames, $user, $telf, $email, $mota);
+			$erab = $mysqli->prepare( "UPDATE erabiltzailea SET izena=?, abizenak=?, username=?, telefonoa=?, email=?, mota=? WHERE username=?");
+			$erab->bind_param("sssssss", $name, $surnames, $user, $telf, $email, $mota, $user);
 		}else{
-			$erab = $mysqli->prepare( "UPDATE erabiltzailea SET izena=?, abizenak=?, username=?, password=?, telefonoa=?, email=?, mota=?");	
-			$erab->bind_param("sssssss", $name, $surnames, $user, $pass, $telf, $email, $mota);
+			$pass = crypt($pass, $salt);
+			$erab = $mysqli->prepare( "UPDATE erabiltzailea SET izena=?, abizenak=?, username=?, password=?, telefonoa=?, email=?, mota=? WHERE username=?");	
+			$erab->bind_param("sssssss", $name, $surnames, $user, $pass, $telf, $email, $mota, $user);
 		}
 		$erab->execute();
-		if($mota=="ard"){
+		$erab = $mysqli->query( "SELECT * FROM arduraduna WHERE username='$user'" );
+		if($erab->num_rows >= 1 && $mota=="ard"){
+			$ard = $mysqli->prepare( "UPDATE arduraduna SET saila=? WHERE username=?");
+			$ard->bind_param("ss", $saila, $user);
+			$ard->execute();
+		}else if ($erab->num_rows >= 1 && $mota!="ard"){
+			$ard = $mysqli->prepare( "DELETE FROM arduraduna WHERE username=?");
+			$ard->bind_param("s", $user);
+			$ard->execute();
+		}else if($erab->num_rows != 1 && $mota=="ard"){
+			$ard = $mysqli->prepare( "INSERT INTO arduraduna (username, saila) VALUES (?,?)");
+			$ard->bind_param("ss", $user, $saila);
+			$ard->execute();
+		}
+		//$ard->execute();
+		/*if($mota=="ard"){
 			$erab = $mysqli->query( "SELECT * FROM arduraduna WHERE username='$user'" );
 			//$num_rows=mysqli_num_rows($erab);
 			if($erab->num_rows >= 1){
@@ -33,8 +49,8 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $_SESSION['admin
 				$ard = $mysqli->prepare( "INSERT INTO arduraduna (username, saila) VALUES (?,?)");
 				$ard->bind_param("ss", $user, $saila);
 			}
-			$ard->execute();
-		}
+			
+		}*/
 		$erantzuna["mezua"] = "Datu zuzenak.";
 		$erantzuna["onarpena"] = "ok";
 }else{

@@ -28,7 +28,7 @@ $erantzuna["log"] = "true";
 			$arg = $mysqli->query( "SELECT * FROM lanagindua where  argazkia!=''" );
 			$num_rows=mysqli_num_rows($arg);
 			$argazkia=$num_rows . "argazkia.jpeg";
-			$erab->bind_param("ssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $argazkia, $azalpena, $egoera);
+			$erab->bind_param("ssssssssssss", $user, $saila, $arduraduna, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $argazkia, $egoera);
 		}
 		$erab->execute();
 		$erantzuna["mezua"] = "Zuzen txertatu da.";

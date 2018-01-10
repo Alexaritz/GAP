@@ -51,7 +51,7 @@ img {
 			<div class="ui-grid-a">
 				<div class="ui-block-a">
 					<label> Erabiltzaile izena: </label>
-					<input type="text" id="username" name="username" required>
+					<input type="text" id="username" name="username" disabled required>
 				</div>
 				<div class="ui-block-b">
 					<label> Pasahitza: </label>
@@ -87,6 +87,7 @@ img {
 							<option value="">Saila</option>
 				</select>
 				<input type="submit" value="Gorde" id="gorde" data-theme="b">
+				<input type="button" value="Ezabatu" id="ezabatu"  data-theme="b">
       
     	</form>			   
 	</div>
@@ -104,25 +105,26 @@ $(document).ajaxStop(function () {
 	$.mobile.loading('hide');
 });
 $(document).ready(function(){
-var user = window.localStorage.getItem('username');
-var userID = window.localStorage.getItem('userID');
+ user = window.localStorage.getItem('username');
+ userID = window.localStorage.getItem('userID');
 //ERABILTZAILEAK LORTU
 		ardfitx = server+"PHP/erabDatuak.php?jsoncallback=?"
 		$.getJSON( ardfitx, { usuario:user, userID:userID})
 		.done(function(eraberantzuna) {
-			console.log("ONDO")
+			console.log("ONDO1")
 			$(eraberantzuna).each(function (index, o) {
 				$("#name").val(o.izena);
 				$("#surnames").val(o.abizenak);
 				$("#username").val(o.username)
-				$("#telf").val(o.telf);
+				$("#telf").val(o.telefonoa);
 				$("#email").val(o.email);
+				console.log(o.mota)
 				if(o.mota=="ard"){
 						/*SAILA BETE*/
 						kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
 						$.getJSON( kodefitx, { usuario:user})
 						.done(function(koderantzuna) {
-							console.log("ONDO")
+							console.log("ONDO2")
 							$(koderantzuna).each(function (index, u) {
 								if(o.saila==u.izena){
 									var $option = $("<option selected='selected'/>").attr("value", u.izena).text(u.izena);
@@ -155,23 +157,42 @@ var userID = window.localStorage.getItem('userID');
 		})
 		return false;		
 });
+//function ezabatu(){
+
+$("#ezabatu").click(function(){
+	// php-ari deitu, datuak ezabatzeko
+		if(confirm("Ziur erabiltzailea ezabatu nahi duzula?")==true){
+		erabfitx = server+"PHP/erabiltzaileaEzabatu.php?jsoncallback=?"
+		$.getJSON( erabfitx, { usuario:user, userID:userID})
+		.done(function(eraberantzuna) {
+			console.log(eraberantzuna.mezua)
+			window.location.replace("erabiltzaileaEditatu.html");
+		})
+		}
+		return false;
+});
 $('#erabForm').submit(function() { 
+console.log("LALALA")
 	// erabiltzailearen datuak bildu
 	var name = $("#name").val()
 	var surnames = $("#surnames").val()
 	var user = $("#username").val()
 	var pass = $("#password").val()
+	if(pass=="")
+		console.log("PASS")
 	var telf = $("#telf").val()
 	var email = $("#email").val()
 	var mota = $("#erabForm input[type='radio']:checked").val()
 	var saila = $("#saila").val()
 	// php-ari deitu, datuak balidatzeko
+	console.log(saila+"  a  "+ telf)
 		erabfitx = server+"PHP/erabiltzaileaEditatu.php?jsoncallback=?"
 		$.getJSON( erabfitx, { name:name, surnames:surnames, usuario:user ,password:pass, telf:telf, email:email, mota:mota, saila:saila})
 		.done(function(eraberantzuna) {
 			if(eraberantzuna.onarpena == "ok"){
+				console.log(pass+"a  "+ telf)
 				/// ondo balidatzen bada, menura joan
-				window.location.replace("menua.html");
+				//window.location.replace("menua.html");
 			}else{
 				alert(eraberantzuna.mezua);
 			}

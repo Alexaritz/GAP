@@ -68,16 +68,21 @@ img {
 				<div class="ui-grid-b">
 					<label> Erabiltzaile mota: </label>
 						<div class="ui-block-a">
-							<input type="radio" name="mota" id="irak" value="irak" checked="checked"  />
+							<input type="radio" name="mota" id="irak" value="irak" checked="checked"  onclick="ezkutatu();"/>
 							<label for="irak">Irakaslea</label>
 						</div>
 						<div class="ui-block-b">
-							<input type="radio" name="mota" id="ard" value="ard"  />
+							<input type="radio" name="mota" id="ard" value="ard" onclick="bistaratu();" />
 							<label for="ard">Arduraduna</label>
 						</div>
 						<div class="ui-block-c">
-							<input type="radio" name="mota" id="admin" value="admin"  />
+							<input type="radio" name="mota" id="admin" value="admin"  onclick="ezkutatu();"/>
 							<label for="admin">Administratzailea</label>
+						</div>
+						<div id="sailadiv" style="display: none;">
+						<select id="saila" name="saila" >
+							<option value="">Saila</option>
+						</select>
 						</div>
 				</div>
 				<input type="submit" value="Gorde" id="gorde" data-theme="b">
@@ -92,6 +97,32 @@ var server="http://gapalex.esy.es/"//
 function logout(){
 	window.localStorage.clear();
 	window.location.replace(server+"PHP/logout.php");
+}
+
+$(document).ready(function(){
+	user = window.localStorage.getItem('username');
+	admin = window.localStorage.getItem('admin');
+//SAILA BETE
+	kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
+	$.getJSON( kodefitx, { usuario:user})
+	.done(function(koderantzuna) {
+		console.log("ONDO")
+		$(koderantzuna).each(function (index, u) {
+			var $option = $("<option/>").attr("value", u.izena).text(u.izena);
+			$('#saila').append($option);
+			$('#saila').selectmenu("refresh");
+		});
+	})
+	.fail(function(koderantzuna,textStatus, error) {
+		var err = textStatus + ', ' + error;
+		console.log("Request Failed: " + err);
+	})
+});
+function bistaratu(){
+	$('#sailadiv').attr("style", "display: inline;")
+}
+function ezkutatu(){
+	$('#sailadiv').attr("style", "display: none;")
 }
 $('#erabForm').submit(function() { 
 	// erabiltzailearen datuak bildu

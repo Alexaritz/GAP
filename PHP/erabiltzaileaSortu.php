@@ -9,6 +9,9 @@ $pass = $_GET['password'];
 $telf = $_GET['telf'];
 $email = $_GET['email'];
 $mota = $_GET['mota'];
+if($mota=="ard"){
+	$saila = $_GET['saila'];
+}
 $salt = "pepper";//random_bytes(20);
 session_start();
 $erantzuna = array(); 
@@ -19,7 +22,7 @@ if(isset($_SESSION['logged']) && $_SESSION['logged'] == true && $_SESSION['admin
 		$erab->execute();
 		if($mota=="ard"){
 			$ard = $mysqli->prepare( "INSERT INTO arduraduna (username, saila) VALUES (?,?)");
-			$ard->bind_param("s", $user);
+			$ard->bind_param("ss", $user, $saila);
 			$ard->execute();
 		}
 		$erantzuna["mezua"] = "Datu zuzenak.";
