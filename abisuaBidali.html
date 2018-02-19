@@ -161,7 +161,7 @@ var user = window.localStorage.getItem('username');
 		arduradunaDafitx = server+"PHP/arduradunaDa.php?jsoncallback=?"
 		$.getJSON( arduradunaDafitx, { usuario:user})
 		.done(function(arduDaeran) {
-			if(arduDaeran.arduraduna == "bai")
+			//if(arduDaeran.arduraduna == "bai")
 				$("#bidaltzailea").val(user)
 		})
 			
@@ -210,7 +210,7 @@ var user = window.localStorage.getItem('username');
             console.log("Request Failed: " + err);
 		})	
 		
-		/*ARDURADUNA BETE*/
+		/*ARDURADUNA BETE
 		ardfitx = server+"PHP/arduradunaLortu.php?jsoncallback=?"
 		$.getJSON( ardfitx, { usuario:user})
 		.done(function(arderantzuna) {
@@ -223,7 +223,7 @@ var user = window.localStorage.getItem('username');
 		.fail(function(arderantzuna,textStatus, error) {
 			var err = textStatus + ', ' + error;
             console.log("Request Failed: " + err);
-		})
+		})*/
 		return false;		
 });
 $(document).ajaxStop(function () {
@@ -243,6 +243,27 @@ function readURL(input) {
 $("#fileToUpload").change(function() {
         var argazkia=$("#fileToUpload").val()
 		readURL(this);
+    });
+$("#arazoM").change(function() {
+      /*ARDURADUNA BETE*/
+		ardfitx = server+"PHP/arduradunaLortu.php?jsoncallback=?"
+		$.getJSON( ardfitx, { usuario:user})
+		.done(function(arderantzuna) {
+			console.log("ard dinamikoa zuzen")
+			$('#arduraduna').empty();
+			$(arderantzuna).each(function (index, o) {
+				if($("#arazoM").val()==o.saila)
+					var $option = $("<option selected/>").attr("value", o.username).text(o.username);
+				else
+				var $option = $("<option/>").attr("value", o.username).text(o.username);
+				$('#arduraduna').append($option);
+				$('#arduraduna').selectmenu("refresh");
+			});
+		})
+		.fail(function(arderantzuna,textStatus, error) {
+			var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+		})
     });
 $("form").submit(function(){
 	//event.preventDefault();

@@ -83,7 +83,7 @@ img {
 							<label for="admin">Administratzailea</label>
 						</div>
 				</div>
-				<select id="saila" name="saila" required>
+				<select id="saila" name="saila">
 							<option value="">Saila</option>
 				</select>
 				<input type="submit" value="Gorde" id="gorde" data-theme="b">
@@ -119,27 +119,28 @@ $(document).ready(function(){
 				$("#telf").val(o.telefonoa);
 				$("#email").val(o.email);
 				console.log(o.mota)
-				if(o.mota=="ard"){
-						/*SAILA BETE*/
-						kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
-						$.getJSON( kodefitx, { usuario:user})
-						.done(function(koderantzuna) {
-							console.log("ONDO2")
-							$(koderantzuna).each(function (index, u) {
-								if(o.saila==u.izena){
-									var $option = $("<option selected='selected'/>").attr("value", u.izena).text(u.izena);
-								}else
-									var $option = $("<option/>").attr("value", u.izena).text(u.izena);
-								$('#saila').append($option);
-								$('#saila').selectmenu("refresh");
-							});
-						})
-						.fail(function(koderantzuna,textStatus, error) {
-							var err = textStatus + ', ' + error;
-							console.log("Request Failed: " + err);
-						})	
+				//if(o.mota=="ard"){
+				/*SAILA BETE*/
+				kodefitx = server+"PHP/arazoMota.php?jsoncallback=?"
+				$.getJSON( kodefitx, { usuario:user})
+				.done(function(koderantzuna) {
+					console.log("ONDO2")
+					$(koderantzuna).each(function (index, u) {
+						if(o.mota=="ard" && o.saila==u.izena){
+							var $option = $("<option selected='selected'/>").attr("value", u.izena).text(u.izena);
+						}else
+							var $option = $("<option/>").attr("value", u.izena).text(u.izena);
+						$('#saila').append($option);
+						$('#saila').selectmenu("refresh");
+					});
+				})
+				.fail(function(koderantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Request Failed: " + err);
+				})	
+				if(o.mota=="ard")
 					$("#ard").prop("checked", true).checkboxradio("refresh");
-				}else if(o.mota=="admin")
+				else if(o.mota=="admin")
 					$("#admin").prop("checked", true)
 				else
 					console.log(o.mota+""+o.saila);
@@ -192,7 +193,7 @@ console.log("LALALA")
 			if(eraberantzuna.onarpena == "ok"){
 				console.log(pass+"a  "+ telf)
 				/// ondo balidatzen bada, menura joan
-				//window.location.replace("menua.html");
+				window.location.replace("menua.html");
 			}else{
 				alert(eraberantzuna.mezua);
 			}

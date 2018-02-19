@@ -5,7 +5,7 @@ $user = $_GET['usuario'];
 
 $erantzuna = array(); 
 
-		$erab = $mysqli->query( "SELECT izena FROM gela" );
+		$erab = $mysqli->query( "SELECT izena FROM gela order by id" );
 		$num_rows=mysqli_num_rows($erab);
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);

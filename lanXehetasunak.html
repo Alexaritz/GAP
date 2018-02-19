@@ -278,11 +278,12 @@ $('#lanid').val(id);
 				lanegoera=l.egoera;
 				egoAzalpena=l.azalpena;
 				$('#lehentasuna').text(l.lehentasuna);
-				if(ard!=user) $('#bidaltzailea').text(l.arduraduna);
-				else 
-					if(l.username!=l.bidaltzailea)
+				if(ard!=user && admin=="true") $('#bidaltzailea').text(l.username+"-"+l.arduraduna);
+				else if(ard!=user && admin!="true") $('#bidaltzailea').text(l.arduraduna);
+				else
+					/*if(l.username!=l.bidaltzailea)
 						$('#bidaltzailea').text(l.username+"-"+l.bidaltzailea);
-					else
+					else*/
 						$('#bidaltzailea').text(l.username);
 				$('#tokia').text(l.eraikina+l.pisua+"."+l.gela);
 				$('#data').text(l.data);
@@ -299,13 +300,18 @@ $('#lanid').val(id);
 			});
 			if(admin=="true"){
 				var editatu=$('<input onclick="abisuaEditatu();return false;" type="button" value="Abisua Editatu"/>')
+				var ezabatu=$('<input onclick="ezabatuAbisua();return false;" type="button" value="Abisua ezabatu"/>')
 				$("#fragment-1").append(editatu)
+				$("#fragment-1").append(ezabatu)
 				editatu.button()
+				ezabatu.button()
 				editatu.button("refresh")
+				ezabatu.button("refresh")
 			}
 			if(user==null || ard!=user){
 				$("#tab2").hide();
-				$("#bidal").text("Arduraduna");
+				if(admin=="true") $("#bidal").text("Bidaltzailea-Arduraduna");
+				else $("#bidal").text("Arduraduna");
 			//	$("#lanXehetasunak").fadeIn(500);
 				$.mobile.loading('hide');
 			}else{
@@ -475,6 +481,26 @@ $(document).ajaxStop(function () {
 });
 function abisuaEditatu(){
 	window.location.replace("abisuaEditatu.html");
+}
+function ezabatuAbisua(){
+	//Datu basean gordetako lanordua ezabatu
+		if (confirm("Ziur abisua eta lanaren datuak ezabatu nahi duzula?")==true){
+		console.log(id)
+			ezabaFitx = server+"PHP/abisuaEzabatu.php?jsoncallback=?"
+				$.getJSON( ezabaFitx, { usuario:user ,id:id})
+				.done(function(ezabaerantzuna) {
+					console.log(ezabaerantzuna.mezua)
+					if(ezabaerantzuna.zuzen == "ok"){
+						window.location.replace("menua.html");
+					}else{
+					console.log("Errorea");
+					}
+				})
+				.fail(function(ezabaerantzuna,textStatus, error) {
+					var err = textStatus + ', ' + error;
+					console.log("Delete Request Failed: " + err);
+				});
+		}else return false;
 }
 function ezabatuLangileOrduak(id, db){
 	//Datu basean gorde gabekoa ezabatu (oraindik interfazea soilik)

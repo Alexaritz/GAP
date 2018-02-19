@@ -47,7 +47,9 @@ if(user==null || user==undefined){
 var server="http://gapalex.esy.es/"
 $(document).ready(function(){
 admin="false";
+ard="false";
 admin = window.localStorage.getItem('admin');
+ard = window.localStorage.getItem('ard');
 	if(admin=="true"){
 			var dat=$('<input type="button" value="Datuak exportatu" id="datuakIkusi" onclick="location.href = \'datuak.html\';" data-theme="b"/>');
 			var preb=$('<input type="button" value="Lan prebentiboak sortu" id="prebetiboakSortu" onclick="location.href = \'prebentiboaSortu.html\';" data-theme="b"/>');
@@ -58,6 +60,11 @@ admin = window.localStorage.getItem('admin');
 			$('#content').append(erab);
 			$('#content').append(erabedit);
 			$('#content').trigger('create');
+	}
+	else if (ard=="true"){
+		var preb=$('<input type="button" value="Lan prebentiboak sortu" id="prebetiboakSortu" onclick="location.href = \'prebentiboaSortu.html\';" data-theme="b"/>');
+		$('#content').append(preb);
+		$('#content').trigger('create');
 	}
 	/*Prebentiboak begiratu*/
 		prebfitx = server+"PHP/esleitutakoPrebentiboak.php?jsoncallback=?"

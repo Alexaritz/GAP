@@ -8,7 +8,7 @@ $id = $_GET['lanid'];
 $erantzuna = array();
 $datuak = array();
 if($_SESSION['logged'] && $_SESSION['admin']==true ){
-		$erab = $mysqli->prepare( "SELECT lanagindua.id, lanagindua.username, lanagindua.bidaltzailea, lanagindua.eraikina, lanagindua.pisua, lanagindua.gela, lanagindua.lehentasuna, lanagindua.laburpena, lanagindua.deskribapena, lanagindua.data, lanagindua.azalpena, lanagindua.egoera, lanazalpena.lanid, lanazalpena.arduraduna, lanazalpena.azalpena, lanazalpena.materiala, lanazalpena.itxiData, lanagindua.saila, langileorduak.langilea, langileorduak.denborah, langileorduak.denboramin, langileorduak.lanEguna FROM lanagindua INNER JOIN lanazalpena ON lanagindua.id = lanazalpena.lanid INNER JOIN langileorduak ON lanazalpena.lanid=langileorduak.lanID" );
+		$erab = $mysqli->prepare( "SELECT lanagindua.id, lanagindua.username, lanagindua.bidaltzailea, lanagindua.eraikina, lanagindua.pisua, lanagindua.gela, lanagindua.lehentasuna, lanagindua.laburpena, lanagindua.deskribapena, lanagindua.data, lanagindua.azalpena, lanagindua.egoera, lanazalpena.lanid, lanazalpena.arduraduna, lanazalpena.azalpena, lanazalpena.materiala, lanazalpena.itxiData, lanagindua.saila, langileorduak.langilea, langileorduak.denborah, langileorduak.denboramin, langileorduak.lanEguna FROM lanagindua LEFT JOIN lanazalpena ON lanagindua.id = lanazalpena.lanid LEFT JOIN langileorduak ON lanazalpena.lanid=langileorduak.lanID" );
 		$erab->execute();
 		$erab->bind_result($id, $username, $bidaltzailea, $eraikina, $pisua, $gela, $lehentasuna, $laburpena, $deskribapena, $data, $egoAzalpena, $egoera, $lanid, $arduraduna, $azalpena, $materiala, $itxiData, $saila, $langilea, $denborah, $denboramin, $lanEguna);
 		while ($erab->fetch()) {

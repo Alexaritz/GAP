@@ -16,6 +16,9 @@ $erantzuna = array();
 				if($mota=="admin"){
 					$erantzuna["admin"] = "true";
 					$_SESSION['admin'] = true;
+				}else if($mota=="ard"){
+					$erantzuna["ard"] = "true";
+					$_SESSION['ard'] = true;
 				}
 				$_SESSION['logged'] = true;
 				$_SESSION['username'] = $user;

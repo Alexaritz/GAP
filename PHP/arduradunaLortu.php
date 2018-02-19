@@ -4,7 +4,7 @@ include 'dbcon.php';
 $user = $_GET['usuario'];
 
 $erantzuna = array(); 
-		$erab = $mysqli->query( "SELECT username FROM arduraduna" );
+		$erab = $mysqli->query( "SELECT username, saila FROM arduraduna" );
 		$num_rows=mysqli_num_rows($erab);
 		while($datos=mysqli_fetch_array($erab,MYSQLI_ASSOC)){
 			$erantzuna[]=array_map('utf8_encode', $datos);

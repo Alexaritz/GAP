@@ -64,7 +64,13 @@ $('#loginForm').submit(function() {
 				window.localStorage.setItem('password',pass);
 				if(loginerantzuna.admin == "true"){	
 					window.localStorage.setItem('admin',"true");
-				}else{
+					window.localStorage.setItem('ard',"false");
+				}else if(loginerantzuna.ard == "true"){
+					window.localStorage.setItem('ard',"true");
+					window.localStorage.setItem('admin',"false");
+				}
+				else{
+					window.localStorage.setItem('ard',"false");
 					window.localStorage.setItem('admin',"false");
 				}
 				window.location.replace("menua.html");
